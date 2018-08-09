@@ -32,7 +32,7 @@ public class UrlCrawler extends BreadthCrawler {
         addSeed(seed);
         addRegex(regex);
 
-        setThreads(5);
+        setThreads(50);
         setTopN(1000);
         setResumable(false);
         this.setExecuteInterval(1000);
