@@ -1,38 +1,61 @@
 package com.novel.model;
 
-import java.util.List;
-
+/**
+  *
+  * @Package:        com.novel.model
+  * @ClassName:
+  * @Description:    java类作用描述:小说信息表
+  * @Author:         林浩东
+  * @CreateDate:     2018/8/11/011 14:05
+  * @UpdateUser:     林浩东
+  * @UpdateDate:     2018/8/11/011 14:05
+  * @UpdateRemark:   更新说明：无
+  * @Version:        1.0
+ */
 public class Novel {
-    private String title;
-    private String Author;
-    private List<String> chapters;
-    private String status;
-    private String brief;
-    private String lastTime;
-    private String lastChapter;
+    private long    novelId;    //小说id
+    private String novelName;   //小说名字
+    private String author;      //作者
+    private int categoryId;    //类别id
+    private String brief;       //小说简介
+    private String status;      //状态（连载/完结）
+    private String lastTime;    //最后更新时间
+    private String novelUrl;    //小说链接
 
-    public String getTitle() {
-        return title;
+    public Novel(){
+        this.novelId = System.currentTimeMillis();
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public long getNovelId() {
+        return novelId;
+    }
+
+    public void setNovelId(int novelId) {
+        this.novelId = novelId;
+    }
+
+    public String getNovelName() {
+        return novelName;
+    }
+
+    public void setNovelName(String novelName) {
+        this.novelName = novelName;
     }
 
     public String getAuthor() {
-        return Author;
+        return author;
     }
 
     public void setAuthor(String author) {
-        Author = author;
+        this.author = author;
     }
 
-    public List<String> getChapters() {
-        return chapters;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setChapters(List<String> chapters) {
-        this.chapters = chapters;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getBrief() {
@@ -59,11 +82,27 @@ public class Novel {
         this.lastTime = lastTime;
     }
 
-    public String getLastChapter() {
-        return lastChapter;
+    public String getNovelUrl() {
+        return novelUrl;
     }
 
-    public void setLastChapter(String lastChapter) {
-        this.lastChapter = lastChapter;
+    public void setNovelUrl(String novelUrl) {
+        this.novelUrl = novelUrl;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Novel{" +
+                "novelId=" + novelId +
+                ", novelName='" + novelName + '\'' +
+                ", author='" + author + '\'' +
+                ", categoryId=" + categoryId +
+                ", brief='" + brief + '\'' +
+                ", status='" + status + '\'' +
+                ", lastTime='" + lastTime + '\'' +
+                ", novelUrl='" + novelUrl + '\'' +
+                '}';
     }
 }

@@ -11,8 +11,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+/**
+  *
+  * @Package:        com.novel.crawler
+  * @ClassName:
+  * @Description:    java类作用描述:爬取小说URL
+  * @Author:         林浩东
+  * @CreateDate:     2018/8/11/011 14:08
+  * @UpdateUser:     林浩东
+  * @UpdateDate:     2018/8/11/011 14:08
+  * @UpdateRemark:   更新说明：无
+  * @Version:        1.0
+ */
+
 
 public class UrlCrawler extends BreadthCrawler {
+
+
     //存放小说的url；
     private List<String> urlLists;
     private String seed = "https://www.biquge5.com/shuku/1/allvisit-0-1.html";
@@ -31,8 +46,7 @@ public class UrlCrawler extends BreadthCrawler {
         super(crawlPath, autoParse);
         addSeed(seed);
         addRegex(regex);
-
-        setThreads(50);
+        setThreads(20);
         setTopN(1000);
         setResumable(false);
         this.setExecuteInterval(1000);
@@ -43,13 +57,17 @@ public class UrlCrawler extends BreadthCrawler {
 
     @Override
     public void visit(Page page, CrawlDatums next) {
+
+
         if (page.matchUrl(regex)){
             Document document = page.doc();
             //获取小说链接
             Elements elements = document.select("div.col-md-5.col-sm-4.col-xs-9.text-overflow a");
             for (Element e:elements
                     ) {
+
                   urlLists.add(e.attr("href"));
+                  System.out.println(e.attr("href"));
 
             }
             Elements nextPageUrl = document.select("a.btn-primary");
@@ -75,12 +93,7 @@ public class UrlCrawler extends BreadthCrawler {
 
     }
 
-    public static void main(String[] args) {
-        UrlCrawler urlCrawler = new UrlCrawler("test",true);
-        try {
-            urlCrawler.start(100);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public List<String> getUrlLists() {
+        return urlLists;
     }
 }

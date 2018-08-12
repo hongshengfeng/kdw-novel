@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.novel.dao.ChapterMapper">
+
+
+    <insert id = "insertChapter0" parameterType="com.novel.model.Novel">
+        INSERT INTO chapterInfo0(novelId,chapter,content,chapterUrl)
+        VALUES(#{novelId},#{chapter},#{content},#{chapterUrl});
+    </insert>
+    <select id="findByNovelIdChapter0" parameterType="long" resultType="com.novel.model.Chapter">
+        SELECT * FROM chapterinfo0 WHERE NovelId = #{NovelId};
+    </select>
+    <!--根据chapterId更新章节名字以及内容 -->
+    <update id="updateChapter0" parameterType="com.novel.model.Chapter">
+        UPDATE chapterinfo0 SET chapter = #{chapter},content = #{content}
+        WHERE chapterId = #{chapterId};
+    </update>
+
+
+
+
+
+</mapper>
