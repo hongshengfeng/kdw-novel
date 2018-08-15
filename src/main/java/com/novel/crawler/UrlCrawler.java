@@ -3,6 +3,7 @@ package com.novel.crawler;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
+import cn.edu.hfut.dmic.webcollector.util.Config;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -51,6 +52,8 @@ public class UrlCrawler extends BreadthCrawler {
         setResumable(false);
         this.setExecuteInterval(1000);
         urlLists = new ArrayList<>();
+        Config.MAX_EXECUTE_COUNT = 3;
+        Config.TIMEOUT_CONNECT = 4000;
 
 
     }

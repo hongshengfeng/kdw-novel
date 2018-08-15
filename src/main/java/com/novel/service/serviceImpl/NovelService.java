@@ -38,4 +38,9 @@ public class NovelService implements NovelIService {
         return novelMapper.findAllNovelId();
     }
 
+    @Override
+    public List<Novel> findAllNovel() {
+        return novelMapper.findAllNovel();
+    }
+
 }

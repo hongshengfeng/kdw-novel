@@ -3,6 +3,7 @@ package com.novel.crawler;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
+import cn.edu.hfut.dmic.webcollector.util.Config;
 import com.novel.model.Chapter;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -41,6 +42,10 @@ public class ChapterCrawler extends BreadthCrawler {
         this.setResumable(false); //停止后下次继续爬取
         this.setExecuteInterval(1000); //线程之间的等待时间
         this.setTopN(100000);
+        Config.MAX_EXECUTE_COUNT = 3;
+        Config.TIMEOUT_CONNECT = 4000;
+
+
     }
 
     public Chapter getChapter() {

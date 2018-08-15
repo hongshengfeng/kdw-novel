@@ -23,7 +23,7 @@ public interface NovelMapper {
      void insertNovel(Novel novel);
 
      List<Long> findAllNovelId();
-
+     List<Novel> findAllNovel();
 
 
 }

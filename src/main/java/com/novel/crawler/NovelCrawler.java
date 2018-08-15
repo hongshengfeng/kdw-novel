@@ -3,6 +3,7 @@ package com.novel.crawler;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
+import cn.edu.hfut.dmic.webcollector.util.Config;
 import com.novel.model.Chapter;
 import com.novel.model.Novel;
 import com.novel.utils.UrlUtil;
@@ -41,6 +42,8 @@ public class NovelCrawler extends BreadthCrawler {
         this.setResumable(false); //停止后下次继续爬取
         this.setExecuteInterval(1000); //线程之间的等待时间
         this.setTopN(100000);
+        Config.MAX_EXECUTE_COUNT = 3;
+        Config.TIMEOUT_CONNECT = 4000;
 
         novelsList = Collections.synchronizedList(new ArrayList<>());
         ChapterList = Collections.synchronizedList(new ArrayList<>());
@@ -64,6 +67,7 @@ public class NovelCrawler extends BreadthCrawler {
 
         if(page.matchUrl(REGEX)){
             Novel novel = new Novel();
+            novel.setNovelId(System.currentTimeMillis());
             Document document = page.doc();
             Elements elements = document.select("div#info");
             if(!elements.isEmpty()){

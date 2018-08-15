@@ -21,5 +21,6 @@ public interface NovelIService {
 
     void insertNovel(Novel novel);
     List<Long> findAllNovelId();
+    List<Novel> findAllNovel();
 
 }

@@ -23,14 +23,14 @@ public class Novel {
     private String novelUrl;    //小说链接
 
     public Novel(){
-        this.novelId = System.currentTimeMillis();
+
     }
 
     public long getNovelId() {
         return novelId;
     }
 
-    public void setNovelId(int novelId) {
+    public void setNovelId(long novelId) {
         this.novelId = novelId;
     }
 

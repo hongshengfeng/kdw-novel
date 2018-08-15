@@ -28,14 +28,16 @@ import java.util.List;
  * @Version: 1.0
  */
 @RestController
-public class TestController {
+@RequestMapping("/Novel")
+public class NovelController {
     @Resource
     private NovelService novelService;
     @Resource
     private ChapterService chapterService;
-    @RequestMapping("/hello")
-    public String hello(){
-        UrlCrawler urlCrawler = new UrlCrawler("urlCrawler",true);
+    @RequestMapping("/NovelInfo")
+    public String NovelInfo(){
+            UrlCrawler urlCrawler = new UrlCrawler("urlCrawler",true);
+
         try {
             urlCrawler.start(2);
             while (urlCrawler.isResumable()){
@@ -43,12 +45,15 @@ public class TestController {
             }
             System.out.println("url爬取结束");
             List<String> urlList = urlCrawler.getUrlLists();
+            //List<String> urlList =new ArrayList<>();
+            //String tmp1 ="https://www.biquge5.com/28_28951/";
+            //String tmp2 ="https://www.biquge5.com/30_30278/";
+            //urlList.add(tmp1);
+            //urlList.add(tmp2);
             NovelCrawler novelCrawler = new NovelCrawler("novelCrawler",false);
             for (String url:urlList
                  ) {
-
                 novelCrawler.addSeed(url);
-
             }
             novelCrawler.start(1);
             while (novelCrawler.isResumable()){
@@ -62,8 +67,6 @@ public class TestController {
             for (Novel novel:novelsList
                     ) {
                 novelService.insertNovel(novel);
-
-
             }
             /*
             *
@@ -73,23 +76,17 @@ public class TestController {
             for (Chapter chapter:chapterList
                  ) {
                 chapterService.insertChapter(chapter);
-
             }
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-        return "hello";
+        return "NovelInfo";
     }
 
-    @RequestMapping("/test")
-    public  String test(){
-
-       // List<Chapter> chapters = chapterService.findByNovelIdChapter(Long.parseLong("1534051213252"));
+    @RequestMapping("/ChapterContent")
+    public String ChapterContent(){
+        // List<Chapter> chapters = chapterService.findByNovelIdChapter(Long.parseLong("1534051213252"));
         List<Long> novelIs = novelService.findAllNovelId();
         for (Long novelId:novelIs
              ) {
@@ -100,19 +97,16 @@ public class TestController {
                 try {
                     chapterCrawler.start(1);
                     while (chapterCrawler.isResumable()){
-
                     }
                     chapter = chapterCrawler.getChapter();
                     chapterService.updateChapter(chapter);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
             }
         }
-        System.out.println("111");
-     return "test";
+        System.out.println("ChapterContent");
+     return "ChapterContent";
     }
 
 }
