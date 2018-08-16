@@ -21,10 +21,9 @@ public class Novel {
     private String status;      //状态（连载/完结）
     private String lastTime;    //最后更新时间
     private String novelUrl;    //小说链接
+    private CategoryInfo category;    //小说类别
 
-    public Novel(){
 
-    }
 
     public long getNovelId() {
         return novelId;
@@ -90,7 +89,13 @@ public class Novel {
         this.novelUrl = novelUrl;
     }
 
+    public CategoryInfo getCategory() {
+        return category;
+    }
 
+    public void setCategory(CategoryInfo category) {
+        this.category = category;
+    }
 
     @Override
     public String toString() {

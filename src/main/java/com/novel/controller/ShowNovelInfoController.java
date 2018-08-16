@@ -1,8 +1,9 @@
 package com.novel.controller;
 
 import com.novel.model.Novel;
-import com.novel.service.serviceImpl.NovelService;
+import com.novel.service.serviceImpl.NovelServiceImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -21,25 +22,47 @@ import java.util.List;
  * @Version: 1.0
  */
 @RestController
-@RequestMapping("/ShowNovelInfo")
+@RequestMapping("/NovelInfo")
 public class ShowNovelInfoController {
 
     @Resource(name = "NovelService")
-    private NovelService novelService;
+    private NovelServiceImpl novelServiceImpl;
 
     /*
     *
     * 显示全部小说详细信息
     *
     * */
-    @RequestMapping("/ShowNovelInfo")
+    @RequestMapping("/ShowNovelAll")
     public List<Novel> ShowNovelList(){
 
 
         String  tmp =null;
-        List<Novel> novelList = novelService.findAllNovel();
+        List<Novel> novelList = novelServiceImpl.findAllNovel();
 
 
+        return novelList;
+    }
+
+
+    /*
+    *
+    *
+    * 通过查找关键字显示小说
+    *
+    * */
+    @RequestMapping("/showNovelByName")
+    public List<Novel> showNovelByName(@RequestParam(name = "novelName") String novelName){
+
+        List<Novel> novelList = novelServiceImpl.findNovelByName(novelName);
+        return novelList;
+    }
+
+    /*通过查找novelId显示小说*/
+    @RequestMapping("/showNovelById")
+    public List<Novel> showNovelById(@RequestParam(name = "novelName") String novelName){
+
+        List<Novel> novelList = novelServiceImpl.findNovelByName(novelName);
         return novelList;
     }
 

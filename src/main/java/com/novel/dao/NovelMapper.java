@@ -19,11 +19,16 @@ import java.util.List;
  */
 @Mapper
 public interface NovelMapper {
-
+     /*插入小说信息*/
      void insertNovel(Novel novel);
-
+     /*返回所有小说id*/
      List<Long> findAllNovelId();
+     /*返回所有小说信息*/
      List<Novel> findAllNovel();
+     /*通过小说名字查找小说，可模糊查询*/
+     List<Novel> findNovelByName(String novelName);
+     /*通过novelId查找小说*/
+     Novel findNovelById(long novel);
 
 
 }

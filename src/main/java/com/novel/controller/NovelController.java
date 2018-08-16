@@ -5,8 +5,8 @@ import com.novel.crawler.NovelCrawler;
 import com.novel.crawler.UrlCrawler;
 import com.novel.model.Chapter;
 import com.novel.model.Novel;
-import com.novel.service.serviceImpl.ChapterService;
-import com.novel.service.serviceImpl.NovelService;
+import com.novel.service.serviceImpl.ChapterServiceImpl;
+import com.novel.service.serviceImpl.NovelServiceImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,9 +31,9 @@ import java.util.List;
 @RequestMapping("/Novel")
 public class NovelController {
     @Resource
-    private NovelService novelService;
+    private NovelServiceImpl novelServiceImpl;
     @Resource
-    private ChapterService chapterService;
+    private ChapterServiceImpl chapterServiceImpl;
     @RequestMapping("/NovelInfo")
     public String NovelInfo(){
             UrlCrawler urlCrawler = new UrlCrawler("urlCrawler",true);
@@ -66,7 +66,7 @@ public class NovelController {
             * */
             for (Novel novel:novelsList
                     ) {
-                novelService.insertNovel(novel);
+                novelServiceImpl.insertNovel(novel);
             }
             /*
             *
@@ -75,7 +75,7 @@ public class NovelController {
             List<Chapter> chapterList = novelCrawler.getChapterList();
             for (Chapter chapter:chapterList
                  ) {
-                chapterService.insertChapter(chapter);
+                chapterServiceImpl.insertChapter(chapter);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,11 +86,11 @@ public class NovelController {
 
     @RequestMapping("/ChapterContent")
     public String ChapterContent(){
-        // List<Chapter> chapters = chapterService.findByNovelIdChapter(Long.parseLong("1534051213252"));
-        List<Long> novelIs = novelService.findAllNovelId();
+        // List<Chapter> chapters = chapterServiceImpl.findByNovelIdChapter(Long.parseLong("1534051213252"));
+        List<Long> novelIs = novelServiceImpl.findAllNovelId();
         for (Long novelId:novelIs
              ) {
-            List<Chapter> chapters = chapterService.findByNovelIdChapter(novelId);
+            List<Chapter> chapters = chapterServiceImpl.findByNovelIdChapter(novelId);
             for (Chapter chapter:chapters
                  ) {
                 ChapterCrawler chapterCrawler = new ChapterCrawler("chapter",false,chapter);
@@ -99,7 +99,7 @@ public class NovelController {
                     while (chapterCrawler.isResumable()){
                     }
                     chapter = chapterCrawler.getChapter();
-                    chapterService.updateChapter(chapter);
+                    chapterServiceImpl.updateChapter(chapter);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

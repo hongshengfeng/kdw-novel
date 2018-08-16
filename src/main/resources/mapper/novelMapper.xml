@@ -12,6 +12,22 @@
         <result column="novelUrl" jdbcType="VARCHAR" property="novelUrl" />
     </resultMap>
 
+    <resultMap id="NovelResultMap" type="com.novel.model.Novel">
+        <id column="novelId"   jdbcType="BIGINT" property="novelId" javaType="java.lang.Long"/>
+        <result column="novelName" jdbcType="VARCHAR" property="novelName" />
+        <result column="author" jdbcType="VARCHAR" property="author" />
+        <result column="categoryId" jdbcType="INTEGER" property="categoryId" />
+        <result column="brief" jdbcType="VARCHAR" property="brief" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="lastTime" jdbcType="VARCHAR" property="lastTime" />
+        <result column="novelUrl" jdbcType="VARCHAR" property="novelUrl" />
+        <association property="category" javaType="com.novel.model.CategoryInfo">
+            <result column="categoryId" jdbcType="INTEGER" property="categoryId"/>
+            <result column="category"   jdbcType="VARCHAR" property="category"/>
+
+        </association>
+    </resultMap>
+
     <!--返回全部小说id-->
     <select id = "findAllNovelId" resultType="Long" >
         SELECT novelId FROM  novelInfo;
@@ -19,6 +35,21 @@
     <!--返回全部小说信息-->
     <select id = "findAllNovel" resultMap="BaseResultMap" >
         SELECT * FROM  novelInfo;
+    </select>
+    <!--通过小说名字查找小说-->
+    <select id="findNovelByName" parameterType="String" resultMap="NovelResultMap">
+
+        SELECT * FROM  novelInfo,categoryInfo WHERE novelName Like #{novelName}
+        and novelInfo.categoryId = categoryInfo.categoryId ;
+
+
+    </select>
+    <!--通过小说id查找小说-->
+    <select id="findNovelById" parameterType="long" resultMap="BaseResultMap">
+
+        SELECT * FROM  novelInfo WHERE novelId Like #{novelId};
+
+
     </select>
 
 

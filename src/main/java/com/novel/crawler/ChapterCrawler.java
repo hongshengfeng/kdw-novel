@@ -42,7 +42,7 @@ public class ChapterCrawler extends BreadthCrawler {
         this.setResumable(false); //停止后下次继续爬取
         this.setExecuteInterval(1000); //线程之间的等待时间
         this.setTopN(100000);
-        Config.MAX_EXECUTE_COUNT = 3;
+        Config.MAX_EXECUTE_COUNT = 4;
         Config.TIMEOUT_CONNECT = 4000;
 
 
