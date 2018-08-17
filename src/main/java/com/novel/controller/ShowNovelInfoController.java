@@ -1,6 +1,8 @@
 package com.novel.controller;
 
+import com.novel.model.Chapter;
 import com.novel.model.Novel;
+import com.novel.service.serviceImpl.ChapterServiceImpl;
 import com.novel.service.serviceImpl.NovelServiceImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,11 +24,13 @@ import java.util.List;
  * @Version: 1.0
  */
 @RestController
-@RequestMapping("/NovelInfo")
+@RequestMapping("/ShowNovelInfo")
 public class ShowNovelInfoController {
 
-    @Resource(name = "NovelService")
-    private NovelServiceImpl novelServiceImpl;
+    @Resource
+    private NovelServiceImpl novelService;
+    @Resource
+    private ChapterServiceImpl chapterService;
 
     /*
     *
@@ -38,8 +42,7 @@ public class ShowNovelInfoController {
 
 
         String  tmp =null;
-        List<Novel> novelList = novelServiceImpl.findAllNovel();
-
+        List<Novel> novelList = novelService.findAllNovel();
 
         return novelList;
     }
@@ -54,16 +57,23 @@ public class ShowNovelInfoController {
     @RequestMapping("/showNovelByName")
     public List<Novel> showNovelByName(@RequestParam(name = "novelName") String novelName){
 
-        List<Novel> novelList = novelServiceImpl.findNovelByName(novelName);
+        List<Novel> novelList = novelService.findNovelByName(novelName);
         return novelList;
     }
 
     /*通过查找novelId显示小说*/
-    @RequestMapping("/showNovelById")
-    public List<Novel> showNovelById(@RequestParam(name = "novelName") String novelName){
+    @RequestMapping("/showNovelByNovelId")
+    public Novel showNovelByNovelId(@RequestParam(name = "novelId") long novelId){
 
-        List<Novel> novelList = novelServiceImpl.findNovelByName(novelName);
-        return novelList;
+        Novel novel = novelService.findNovelById(novelId);
+        return novel;
+    }
+    /*通过查找novelId显示小说章节列表*/
+    @RequestMapping("/showChapterlByNovelId")
+    public List<Chapter> showChapterlByNovelId(@RequestParam(name = "novelId") long novelId){
+
+        List<Chapter> chapterList = chapterService.findByNovelIdChapter(novelId);
+        return chapterList;
     }
 
 

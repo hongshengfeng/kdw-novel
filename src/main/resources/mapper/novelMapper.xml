@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.novel.dao.NovelMapper">
-    <resultMap id="BaseResultMap" type="com.novel.model.Novel">
-        <id column="novelId"   jdbcType="BIGINT" property="novelId" javaType="java.lang.Long"/>
-        <result column="novelName" jdbcType="VARCHAR" property="novelName" />
-        <result column="author" jdbcType="VARCHAR" property="author" />
-        <result column="categoryId" jdbcType="VARCHAR" property="categoryId" />
-        <result column="brief" jdbcType="VARCHAR" property="brief" />
-        <result column="status" jdbcType="VARCHAR" property="status" />
-        <result column="lastTime" jdbcType="VARCHAR" property="lastTime" />
-        <result column="novelUrl" jdbcType="VARCHAR" property="novelUrl" />
-    </resultMap>
-
     <resultMap id="NovelResultMap" type="com.novel.model.Novel">
         <id column="novelId"   jdbcType="BIGINT" property="novelId" javaType="java.lang.Long"/>
         <result column="novelName" jdbcType="VARCHAR" property="novelName" />
@@ -33,8 +22,9 @@
         SELECT novelId FROM  novelInfo;
     </select>
     <!--返回全部小说信息-->
-    <select id = "findAllNovel" resultMap="BaseResultMap" >
-        SELECT * FROM  novelInfo;
+    <select id = "findAllNovel" resultMap="NovelResultMap" >
+      SELECT * FROM  novelInfo,categoryInfo WHERE
+       novelInfo.categoryId = categoryInfo.categoryId;
     </select>
     <!--通过小说名字查找小说-->
     <select id="findNovelByName" parameterType="String" resultMap="NovelResultMap">
@@ -45,9 +35,10 @@
 
     </select>
     <!--通过小说id查找小说-->
-    <select id="findNovelById" parameterType="long" resultMap="BaseResultMap">
+    <select id="findNovelById" parameterType="long" resultMap="NovelResultMap">
 
-        SELECT * FROM  novelInfo WHERE novelId Like #{novelId};
+        SELECT * FROM  novelInfo,categoryInfo WHERE novelId = #{novelId}
+        and novelInfo.categoryId = categoryInfo.categoryId;
 
 
     </select>

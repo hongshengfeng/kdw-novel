@@ -25,12 +25,20 @@ public class ChapterServiceImpl implements ChapterService {
     @Resource
     private ChapterMapper chapterMapper;
 
-    /*插入章节*/
+    /*插入章节（后续分表在这里操作）*/
     @Override
     public void insertChapter(Chapter chapter) {
 
         chapterMapper.insertChapter0(chapter);
     }
+
+
+    /*更新章节列表（后续分表在这里操作）*/
+    @Override
+    public void updateChapter(Chapter chapter) {
+        chapterMapper.updateChapter0(chapter);
+    }
+
 
     /*通过小说id返回章节列表*/
     @Override
@@ -38,9 +46,4 @@ public class ChapterServiceImpl implements ChapterService {
         return chapterMapper.findByNovelIdChapter0(NovelId);
     }
 
-    /*更新章节列表*/
-    @Override
-    public void updateChapter(Chapter chapter) {
-        chapterMapper.updateChapter0(chapter);
-    }
 }

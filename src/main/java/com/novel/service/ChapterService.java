@@ -20,8 +20,10 @@ public interface ChapterService {
 
      /*插入章节*/
      void insertChapter(Chapter chapter);
-     /*通过小说id返回章节列表*/
-     List<Chapter> findByNovelIdChapter(long NovelId);
+
      /*更新章节列表*/
      void updateChapter(Chapter chapter);
+
+     /*通过小说id返回章节列表*/
+     List<Chapter> findByNovelIdChapter(long NovelId);
 }
