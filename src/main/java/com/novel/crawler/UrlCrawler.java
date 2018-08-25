@@ -31,8 +31,8 @@ public class UrlCrawler extends BreadthCrawler {
 
     //存放小说的url；
     private List<String> urlLists;
-    private String seed = "https://www.biquge5.com/shuku/1/allvisit-0-1.html";
-    private String regex = "https://www.biquge5.com/shuku/1/allvisit-0-[0-9]+.html";
+    //private String seed = "https://www.biquge5.com/shuku/1/allvisit-0-1.html";
+    private String regex ;
 
     /**
      * 构造一个基于伯克利DB的爬虫
@@ -45,8 +45,8 @@ public class UrlCrawler extends BreadthCrawler {
      */
     public UrlCrawler(String crawlPath, boolean autoParse) {
         super(crawlPath, autoParse);
-        addSeed(seed);
-        addRegex(regex);
+       // addSeed(seed);
+       // addRegex(regex);
         setThreads(20);
         setTopN(1000);
         setResumable(false);
@@ -98,5 +98,9 @@ public class UrlCrawler extends BreadthCrawler {
 
     public List<String> getUrlLists() {
         return urlLists;
+    }
+
+    public void setRegex(String regex) {
+        this.regex = regex;
     }
 }

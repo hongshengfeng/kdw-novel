@@ -3,6 +3,7 @@ package com.novel.controller;
 import com.novel.crawler.ChapterCrawler;
 import com.novel.crawler.NovelCrawler;
 import com.novel.crawler.UrlCrawler;
+import com.novel.enumUrl.EnumUrl;
 import com.novel.model.Chapter;
 import com.novel.model.Novel;
 import com.novel.service.serviceImpl.ChapterServiceImpl;
@@ -34,27 +35,34 @@ public class NovelController {
     private NovelServiceImpl novelServiceImpl;
     @Resource
     private ChapterServiceImpl chapterServiceImpl;
+
+    /*爬小说信息以及章节信息*/
     @RequestMapping("/NovelInfo")
-    public String NovelInfo(){
+    public String NovelInfo(int categoryId){
             UrlCrawler urlCrawler = new UrlCrawler("urlCrawler",true);
+            EnumUrl e =EnumUrl.getEnumUrl(categoryId);
+            if(e != null){
+                urlCrawler.addSeed(e.getUrl());
+                urlCrawler.addRegex(e.getRegex());
+                urlCrawler.setRegex(e.getRegex());
+            }
+
 
         try {
-            urlCrawler.start(2);
+            //深度暂时设为2
+            urlCrawler.start(1);
             while (urlCrawler.isResumable()){
                 System.out.println(".....");
             }
             System.out.println("url爬取结束");
             List<String> urlList = urlCrawler.getUrlLists();
-            //List<String> urlList =new ArrayList<>();
-            //String tmp1 ="https://www.biquge5.com/28_28951/";
-            //String tmp2 ="https://www.biquge5.com/30_30278/";
-            //urlList.add(tmp1);
-            //urlList.add(tmp2);
             NovelCrawler novelCrawler = new NovelCrawler("novelCrawler",false);
+            novelCrawler.setCategoryId(categoryId);
             for (String url:urlList
                  ) {
                 novelCrawler.addSeed(url);
             }
+
             novelCrawler.start(1);
             while (novelCrawler.isResumable()){
                 System.out.println(".....");
@@ -64,28 +72,38 @@ public class NovelController {
             /*
             * 将小说详细信息插入数据库
             * */
+            int i = 1;
             for (Novel novel:novelsList
                     ) {
                 novelServiceImpl.insertNovel(novel);
+                System.out.println("小说数"+i++);
             }
             /*
             *
             * 将章节URL和小说id插入数据库
             * */
+
             List<Chapter> chapterList = novelCrawler.getChapterList();
             for (Chapter chapter:chapterList
                  ) {
                 chapterServiceImpl.insertChapter(chapter);
+
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
-        return "NovelInfo";
+        return "NovelInfo0";
     }
 
+
+
+
+
+    /*爬章节内容*/
     @RequestMapping("/ChapterContent")
     public String ChapterContent(){
+        int i = 1;
         // List<Chapter> chapters = chapterServiceImpl.findByNovelIdChapter(Long.parseLong("1534051213252"));
         List<Long> novelIs = novelServiceImpl.findAllNovelId();
         for (Long novelId:novelIs
@@ -96,10 +114,12 @@ public class NovelController {
                 ChapterCrawler chapterCrawler = new ChapterCrawler("chapter",false,chapter);
                 try {
                     chapterCrawler.start(1);
+
                     while (chapterCrawler.isResumable()){
                     }
                     chapter = chapterCrawler.getChapter();
                     chapterServiceImpl.updateChapter(chapter);
+                    System.out.println("章节数"+i++);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -107,6 +127,21 @@ public class NovelController {
         }
         System.out.println("ChapterContent");
      return "ChapterContent";
+    }
+
+
+    @RequestMapping("/NovelAll")
+    public String NovelAll(){
+
+        //NovelInfo(0);
+        NovelInfo(1);
+        //NovelInfo(2);
+        //NovelInfo(3);
+        //NovelInfo(4);
+       // NovelInfo(5);
+        ChapterContent();
+
+        return  null;
     }
 
 }

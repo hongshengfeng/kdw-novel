@@ -20,14 +20,14 @@ import java.util.List;
 @Mapper
 public interface ChapterMapper {
     /*（chapterInfo0）插入章节*/
-    void insertChapter0(Chapter chapter);
+    void insertChapter(Chapter chapter);
 
     /*（chapterInfo0）更新章节信息*/
-    void updateChapter0(Chapter chapter);
+    void updateChapter(Chapter chapter);
 
 
 
     /*根据novelId返回章节信息*/
-    List<Chapter> findByNovelIdChapter0(long NovelId);
+    List<Chapter> findByNovelIdChapter(long NovelId);
 
 }

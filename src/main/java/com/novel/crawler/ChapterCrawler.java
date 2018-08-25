@@ -5,6 +5,7 @@ import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
 import cn.edu.hfut.dmic.webcollector.util.Config;
 import com.novel.model.Chapter;
+import com.novel.utils.ContentUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
@@ -62,7 +63,7 @@ public class ChapterCrawler extends BreadthCrawler {
         String chapterName = elements.get(0).text();
         chapter.setChapter(chapterName);
         Elements contents = document.select("div#content");
-        String content = contents.get(0).text();
+        String content = ContentUtil.filterEmoji(contents.get(0).text());
         chapter.setContent(content);
         System.out.println("aaa");
 

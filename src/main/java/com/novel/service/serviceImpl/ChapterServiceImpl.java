@@ -29,21 +29,21 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     public void insertChapter(Chapter chapter) {
 
-        chapterMapper.insertChapter0(chapter);
+        chapterMapper.insertChapter(chapter);
     }
 
 
     /*更新章节列表（后续分表在这里操作）*/
     @Override
     public void updateChapter(Chapter chapter) {
-        chapterMapper.updateChapter0(chapter);
+        chapterMapper.updateChapter(chapter);
     }
 
 
     /*通过小说id返回章节列表*/
     @Override
     public List<Chapter> findByNovelIdChapter(long NovelId) {
-        return chapterMapper.findByNovelIdChapter0(NovelId);
+        return chapterMapper.findByNovelIdChapter(NovelId);
     }
 
 }

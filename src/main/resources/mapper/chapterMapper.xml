@@ -4,14 +4,14 @@
 
 
     <!--根据小说id返回章节列表 -->
-    <select id="findByNovelIdChapter0" parameterType="long" resultType="com.novel.model.Chapter">
-        SELECT * FROM chapterInfo0 WHERE NovelId = #{NovelId};
+    <select id="findByNovelIdChapter" parameterType="long" resultType="com.novel.model.Chapter">
+        SELECT * FROM chapterInfo WHERE NovelId = #{NovelId};
     </select>
 
 
     <!--新增章节信息 -->
-    <insert id = "insertChapter0" parameterType="com.novel.model.Novel">
-        INSERT INTO chapterInfo0(novelId,chapter,content,chapterUrl)
+    <insert id = "insertChapter" parameterType="com.novel.model.Novel">
+        INSERT INTO chapterInfo(novelId,chapter,content,chapterUrl)
         VALUES(#{novelId},#{chapter},#{content},#{chapterUrl});
     </insert>
 
@@ -19,8 +19,8 @@
 
 
     <!--根据chapterId更新章节名字以及内容 -->
-    <update id="updateChapter0" parameterType="com.novel.model.Chapter">
-        UPDATE chapterInfo0 SET chapter = #{chapter},content = #{content}
+    <update id="updateChapter" parameterType="com.novel.model.Chapter">
+        UPDATE chapterInfo SET chapter = #{chapter},content = #{content}
         WHERE chapterId = #{chapterId} AND chapter is null;
     </update>
 

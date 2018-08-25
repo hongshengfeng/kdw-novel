@@ -6,6 +6,7 @@ import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
 import cn.edu.hfut.dmic.webcollector.util.Config;
 import com.novel.model.Chapter;
 import com.novel.model.Novel;
+import com.novel.utils.IdUtil;
 import com.novel.utils.UrlUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -67,7 +68,7 @@ public class NovelCrawler extends BreadthCrawler {
 
         if(page.matchUrl(REGEX)){
             Novel novel = new Novel();
-            novel.setNovelId(System.currentTimeMillis());
+            novel.setNovelId(IdUtil.getId());
             Document document = page.doc();
             Elements elements = document.select("div#info");
             if(!elements.isEmpty()){
@@ -103,14 +104,6 @@ public class NovelCrawler extends BreadthCrawler {
 
             novel.setCategoryId(categoryId);
             novelsList.add(novel);
-
-
-
-
-
-
-
-
 
 
 
