@@ -6,6 +6,7 @@ import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
 import cn.edu.hfut.dmic.webcollector.util.Config;
 import com.novel.model.Chapter;
 import com.novel.model.Novel;
+import com.novel.utils.AuthorUtil;
 import com.novel.utils.IdUtil;
 import com.novel.utils.UrlUtil;
 import org.jsoup.nodes.Document;
@@ -79,7 +80,7 @@ public class NovelCrawler extends BreadthCrawler {
                 String status = e.getElementsByTag("p").get(1).text();
                 String lastTime = e.getElementsByTag("p").get(2).text();
                 novel.setNovelName(title);
-                novel.setAuthor(author);
+                novel.setAuthor(AuthorUtil.tirmAuthor(author));
                 novel.setStatus(status);
                 novel.setLastTime(lastTime);
                 novel.setNovelUrl(page.getUrl());

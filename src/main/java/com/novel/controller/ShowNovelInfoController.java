@@ -4,11 +4,13 @@ import com.novel.model.Chapter;
 import com.novel.model.Novel;
 import com.novel.service.serviceImpl.ChapterServiceImpl;
 import com.novel.service.serviceImpl.NovelServiceImpl;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -23,7 +25,7 @@ import java.util.List;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-@RestController
+@Controller
 @RequestMapping("/ShowNovelInfo")
 public class ShowNovelInfoController {
 
@@ -34,17 +36,14 @@ public class ShowNovelInfoController {
 
     /*
     *
-    * 显示全部小说详细信息
+    * 显示全部小说列表
     *
     * */
     @RequestMapping("/ShowNovelAll")
-    public List<Novel> ShowNovelList(){
-
-
-        String  tmp =null;
+    public String ShowNovelList(HttpServletRequest request){
         List<Novel> novelList = novelService.findAllNovel();
-
-        return novelList;
+        request.setAttribute("novelList",novelList);
+        return "novelList";
     }
 
 
@@ -75,6 +74,17 @@ public class ShowNovelInfoController {
         List<Chapter> chapterList = chapterService.findByNovelIdChapter(novelId);
         return chapterList;
     }
+    /*显示小说信息*/
+    @RequestMapping("/showNovel")
+    public String showNovel(HttpServletRequest request,@RequestParam(name="novelId")long novelId){
 
+       Novel novel = novelService.findNovelById(novelId);
+       if (!StringUtils.isEmpty(novel)){
+           request.setAttribute("novel",novel);
+           request.setAttribute("category",novel.getCategory());
+       }
+        return "novelInfo";
+
+    }
 
 }

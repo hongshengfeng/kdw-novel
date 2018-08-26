@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>templates 测试页</title>
+</head>
+<body>
+<!--/*@thymesVar id="user" type="java.lang.String"*/-->
+<h1 th:text="${user}">Hello</h1>
+<table>
+    <tr th:each="str:${list}">
+        <td th:text="${str}">null</td>
+
+
+    </tr>
+
+
+
+</table>
+
+
+<h1 th:text="${session.shj}">Hello</h1>
+</body>
+</html>

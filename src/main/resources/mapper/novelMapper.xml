@@ -37,8 +37,8 @@
     <!--通过小说id查找小说-->
     <select id="findNovelById" parameterType="long" resultMap="NovelResultMap">
 
-        SELECT * FROM  novelInfo,categoryInfo WHERE novelId = #{novelId}
-        and novelInfo.categoryId = categoryInfo.categoryId;
+         SELECT * FROM  novelInfo,categoryInfo WHERE novelId Like #{novelId}
+        and novelInfo.categoryId = categoryInfo.categoryId ;
 
 
     </select>
