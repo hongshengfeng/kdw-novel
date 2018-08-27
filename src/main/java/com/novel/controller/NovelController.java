@@ -135,6 +135,7 @@ public class NovelController {
 
     @RequestMapping("/NovelAll")
     public String NovelAll(){
+
         ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(6);
         for (int i=0;i<6;i++){
             Thread thread = new Thread(new Runnable() {
@@ -154,6 +155,9 @@ public class NovelController {
         }
         //关掉线程池
         threadPoolExecutor.shutdown();
+
+
+
         ChapterContent();
 
         return  null;

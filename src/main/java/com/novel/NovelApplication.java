@@ -9,6 +9,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Properties;
 
+
+
 @SpringBootApplication
 @MapperScan("com.novel.dao")
 @EnableScheduling
