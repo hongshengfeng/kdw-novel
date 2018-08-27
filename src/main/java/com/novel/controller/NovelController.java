@@ -82,11 +82,12 @@ public class NovelController {
             *
             * 将章节URL和小说id插入数据库
             * */
-
+            int num =0;
             List<Chapter> chapterList = novelCrawler.getChapterList();
             for (Chapter chapter:chapterList
                  ) {
                 chapterServiceImpl.insertChapter(chapter);
+                System.out.println("章节数数"+num++);
 
             }
         } catch (Exception ex) {
@@ -133,12 +134,12 @@ public class NovelController {
     @RequestMapping("/NovelAll")
     public String NovelAll(){
 
-        //NovelInfo(0);
+        NovelInfo(0);
         NovelInfo(1);
-        //NovelInfo(2);
-        //NovelInfo(3);
-        //NovelInfo(4);
-       // NovelInfo(5);
+        NovelInfo(2);
+        NovelInfo(3);
+        NovelInfo(4);
+        NovelInfo(5);
         ChapterContent();
 
         return  null;

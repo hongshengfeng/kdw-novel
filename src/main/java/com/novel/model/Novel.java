@@ -22,6 +22,7 @@ public class Novel {
     private String lastTime;    //最后更新时间
     private String novelUrl;    //小说链接
     private CategoryInfo category;    //小说类别
+    private int chapterSize;   //小说章节数量
 
 
 
@@ -97,6 +98,14 @@ public class Novel {
         this.category = category;
     }
 
+    public int getChapterSize() {
+        return chapterSize;
+    }
+
+    public void setChapterSize(int chapterSize) {
+        this.chapterSize = chapterSize;
+    }
+
     @Override
     public String toString() {
         return "Novel{" +
@@ -108,6 +117,8 @@ public class Novel {
                 ", status='" + status + '\'' +
                 ", lastTime='" + lastTime + '\'' +
                 ", novelUrl='" + novelUrl + '\'' +
+                ", category=" + category +
+                ", chapterSize=" + chapterSize +
                 '}';
     }
 }
