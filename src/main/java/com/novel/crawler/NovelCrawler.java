@@ -6,7 +6,7 @@ import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
 import cn.edu.hfut.dmic.webcollector.util.Config;
 import com.novel.model.Chapter;
 import com.novel.model.Novel;
-import com.novel.utils.AuthorUtil;
+import com.novel.utils.SplitUtil;
 import com.novel.utils.IdUtil;
 import com.novel.utils.UrlUtil;
 import org.jsoup.nodes.Document;
@@ -80,9 +80,9 @@ public class NovelCrawler extends BreadthCrawler {
                 String status = e.getElementsByTag("p").get(1).text();
                 String lastTime = e.getElementsByTag("p").get(2).text();
                 novel.setNovelName(title);
-                novel.setAuthor(AuthorUtil.tirmAuthor(author));
-                novel.setStatus(status);
-                novel.setLastTime(lastTime);
+                novel.setAuthor(SplitUtil.tirmStr(author));
+                novel.setStatus(SplitUtil.tirmStr(status));
+                novel.setLastTime(SplitUtil.tirmStr(lastTime));
                 novel.setNovelUrl(page.getUrl());
             }
             Elements intro = document.select("div#intro");
@@ -92,7 +92,7 @@ public class NovelCrawler extends BreadthCrawler {
                 novel.setBrief(brief);
             }
             Elements chapter = document.select("ul._chapter li a");
-
+            int num = 0;
             for (Element e:chapter
                  ) {
                  Chapter chapterTmp =  new Chapter();
@@ -100,9 +100,9 @@ public class NovelCrawler extends BreadthCrawler {
                  chapterTmp.setNovelId(novel.getNovelId());
                  chapterTmp.setChapterUrl(UrlUtil.Urltrim(url));
                  ChapterList.add(chapterTmp);
-                
+                 num++;
             }
-
+            novel.setChapterSize(num);
             novel.setCategoryId(categoryId);
             novelsList.add(novel);
 

@@ -11,7 +11,7 @@ import java.util.List;
  * @ProjectName: novelSpider
  * @Package: com.novel.controller
  * @ClassName: UserController
- * @Description: java类作用描述
+ * @Description: java类作用描述:随便写写
  * @Author: 林浩东
  * @CreateDate: 2018/8/25/025 15:33
  * @UpdateUser: 更新者
@@ -36,7 +36,7 @@ public class UserController {
             }
             request.setAttribute("list",list1);
             request.setAttribute("user","hello thymeleaf");
-            request.getSession().setAttribute("shj","帅哥");
+
             return "user";
         }
 

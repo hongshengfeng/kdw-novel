@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @ProjectName: novelSpider
  * @Package: com.novel.utils
- * @ClassName: AuthorUtil
+ * @ClassName: SplitUtil
  * @Description: java类作用描述
  * @Author: 林浩东
  * @CreateDate: 2018/8/26/026 0:41
@@ -16,12 +16,12 @@ import java.util.List;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class AuthorUtil {
+public class SplitUtil {
 
-    public static String tirmAuthor(String author){
+    public static String tirmStr(String str){
         String result ="";
-        if(!StringUtil.isBlank(author)){
-            List<String>  tmp = Arrays.asList(author.split(":|/"));
+        if(!StringUtil.isBlank(str)){
+            List<String>  tmp = Arrays.asList(str.split("：|/"));
             if(tmp.size()>0){
                 result =tmp.get(tmp.size()-1);
             }

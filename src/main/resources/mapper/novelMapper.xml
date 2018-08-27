@@ -10,6 +10,7 @@
         <result column="status" jdbcType="VARCHAR" property="status" />
         <result column="lastTime" jdbcType="VARCHAR" property="lastTime" />
         <result column="novelUrl" jdbcType="VARCHAR" property="novelUrl" />
+        <result column="chapterSize" jdbcType="VARCHAR" property="chapterSize" />
         <association property="category" javaType="com.novel.model.CategoryInfo">
             <result column="categoryId" jdbcType="INTEGER" property="categoryId"/>
             <result column="category"   jdbcType="VARCHAR" property="category"/>
@@ -40,16 +41,12 @@
          SELECT * FROM  novelInfo,categoryInfo WHERE novelId Like #{novelId}
         and novelInfo.categoryId = categoryInfo.categoryId ;
 
-
     </select>
-
-
-
 
     <!--新增小说详细信息 -->
     <insert id = "insertNovel" parameterType="com.novel.model.Novel">
-        INSERT INTO novelInfo(novelId,novelName,author,categoryId,brief,status,lastTime,novelUrl)
-        VALUES(#{novelId},#{novelName},#{author},#{categoryId},#{brief},#{status},#{lastTime},#{novelUrl});
+        INSERT INTO novelInfo(novelId,novelName,author,categoryId,brief,status,lastTime,novelUrl,chapterSize)
+        VALUES(#{novelId},#{novelName},#{author},#{categoryId},#{brief},#{status},#{lastTime},#{novelUrl},#{chapterSize});
     </insert>
 
 

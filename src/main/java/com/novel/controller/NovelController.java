@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @ProjectName: novelSpider
@@ -82,11 +84,12 @@ public class NovelController {
             *
             * 将章节URL和小说id插入数据库
             * */
-
+            int num =0;
             List<Chapter> chapterList = novelCrawler.getChapterList();
             for (Chapter chapter:chapterList
                  ) {
                 chapterServiceImpl.insertChapter(chapter);
+                System.out.println("章节数数"+num++);
 
             }
         } catch (Exception ex) {
@@ -132,13 +135,25 @@ public class NovelController {
 
     @RequestMapping("/NovelAll")
     public String NovelAll(){
-
-        //NovelInfo(0);
-        NovelInfo(1);
-        //NovelInfo(2);
-        //NovelInfo(3);
-        //NovelInfo(4);
-       // NovelInfo(5);
+        ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(6);
+        for (int i=0;i<6;i++){
+            Thread thread = new Thread(new Runnable() {
+                int category = 0;
+                @Override
+                public void run() {
+                    if(category>=0&&category<=5){
+                        NovelInfo(category);
+                    }
+                }
+                public Runnable setCategory(int category) {
+                    this.category = category;
+                    return this;
+                }
+            }.setCategory(i));
+            threadPoolExecutor.execute(thread);
+        }
+        //关掉线程池
+        threadPoolExecutor.shutdown();
         ChapterContent();
 
         return  null;
