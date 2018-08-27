@@ -1,7 +1,6 @@
 package com.novel.utils;
 
 import org.jsoup.helper.StringUtil;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,7 +26,6 @@ public class AuthorUtil {
                 result =tmp.get(tmp.size()-1);
             }
         }
-
         return result;
     }
 }
