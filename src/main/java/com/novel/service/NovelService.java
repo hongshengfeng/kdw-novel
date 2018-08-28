@@ -1,5 +1,7 @@
 package com.novel.service;
 
+import cn.edu.hfut.dmic.webcollector.model.Page;
+import com.github.pagehelper.PageInfo;
 import com.novel.model.Novel;
 
 import java.util.List;
@@ -29,6 +31,9 @@ public interface NovelService {
     List<Novel> findNovelByName(String novelName);
     /*通过novelId查找小说*/
     Novel findNovelById(long novelId);
+    /*通过Novel实体查询Novel列表*/
+    List<Novel> queryNovelList(Novel novel);
 
+    PageInfo<Novel> selectAll(Integer page, Integer size);
 
 }

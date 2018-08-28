@@ -14,4 +14,8 @@ public class NovelSchedule {
         LocalDateTime localDateTime = LocalDateTime.now();
         System.out.println("当前时间为:" + localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     }
+
+    public void  novel(){
+
+    }
 }

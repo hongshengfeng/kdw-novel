@@ -39,7 +39,7 @@ public class NovelController {
     /*爬小说信息以及章节信息*/
     @RequestMapping("/NovelInfo")
     public String NovelInfo(int categoryId){
-            UrlCrawler urlCrawler = new UrlCrawler("urlCrawler",true);
+            UrlCrawler urlCrawler = new UrlCrawler("urlCrawler"+categoryId,true);
             EnumUrl e =EnumUrl.getEnumUrl(categoryId);
             if(e != null){
                 urlCrawler.addSeed(e.getUrl());
@@ -56,7 +56,7 @@ public class NovelController {
             }
             System.out.println("url爬取结束");
             List<String> urlList = urlCrawler.getUrlLists();
-            NovelCrawler novelCrawler = new NovelCrawler("novelCrawler",false);
+            NovelCrawler novelCrawler = new NovelCrawler("novelCrawler"+categoryId,false);
             novelCrawler.setCategoryId(categoryId);
             for (String url:urlList
                  ) {
@@ -75,8 +75,14 @@ public class NovelController {
             int i = 1;
             for (Novel novel:novelsList
                     ) {
-                novelServiceImpl.insertNovel(novel);
-                System.out.println("小说数"+i++);
+                try {
+                    novelServiceImpl.insertNovel(novel);
+                    System.out.println("小说数"+i++);
+                }catch (Exception exc){
+                    throw  exc;
+                    //TODO：做数据库插入失败处理 一般都是主键冲突
+                }
+
             }
             /*
             *
@@ -92,6 +98,7 @@ public class NovelController {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+            //TODO：做数据库插入失败处理
         }
 
         return "NovelInfo0";
