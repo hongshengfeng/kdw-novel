@@ -148,8 +148,6 @@ public class NovelController {
         NovelInfo(5);
 
 
-
-
         ChapterContent();
 
         return  null;
