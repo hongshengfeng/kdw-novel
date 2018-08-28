@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
  * @ProjectName: novelSpider
  * @Package: com.novel.utils
  * @ClassName: UrlUtil
- * @Description: java类作用描述
+ * @Description: java类作用描述：去掉空格换行
  * @Author: 林浩东
  * @CreateDate: 2018/8/11/011 23:56
  * @UpdateUser: 更新者

@@ -20,18 +20,18 @@
 
     <!--返回全部小说id-->
     <select id = "findAllNovelId" resultType="Long" >
-        SELECT novelId FROM  novelInfo;
+        SELECT novelId FROM  novelInfo
     </select>
     <!--返回全部小说信息-->
     <select id = "findAllNovel" resultMap="NovelResultMap" >
       SELECT * FROM  novelInfo,categoryInfo WHERE
-       novelInfo.categoryId = categoryInfo.categoryId;
+       novelInfo.categoryId = categoryInfo.categoryId
     </select>
     <!--通过小说名字查找小说-->
     <select id="findNovelByName" parameterType="String" resultMap="NovelResultMap">
 
         SELECT * FROM  novelInfo,categoryInfo WHERE novelName Like #{novelName}
-        and novelInfo.categoryId = categoryInfo.categoryId ;
+        and novelInfo.categoryId = categoryInfo.categoryId
 
 
     </select>
@@ -39,14 +39,40 @@
     <select id="findNovelById" parameterType="long" resultMap="NovelResultMap">
 
          SELECT * FROM  novelInfo,categoryInfo WHERE novelId Like #{novelId}
-        and novelInfo.categoryId = categoryInfo.categoryId ;
+        and novelInfo.categoryId = categoryInfo.categoryId
+
+    </select>
+
+
+    <select id="queryNovelList" parameterType="com.novel.model.Novel" resultMap="NovelResultMap">
+
+        SELECT * FROM novelInfo,categoryInfo
+        <where>
+            <if test="novelId!= null and novelId!=''and novelId!=0">
+                novelid = #{novelId}
+            </if>
+            <if test="novelName!= null and novelName!=''">
+                and   novelName = #{novelName}
+            </if>
+            <if test="author!= null and author!=''">
+                and    author = #{author}
+            </if>
+            <if test="categoryId!= null and categoryId!=''">
+                and  novelInfo.categoryId = #{categoryId}
+            </if>
+            <if test="status != null and status!=''">
+              and   status = #{status}
+            </if>
+            and novelInfo.categoryId = categoryInfo.categoryId
+        </where>
+
 
     </select>
 
     <!--新增小说详细信息 -->
     <insert id = "insertNovel" parameterType="com.novel.model.Novel">
         INSERT INTO novelInfo(novelId,novelName,author,categoryId,brief,status,lastTime,novelUrl,chapterSize)
-        VALUES(#{novelId},#{novelName},#{author},#{categoryId},#{brief},#{status},#{lastTime},#{novelUrl},#{chapterSize});
+        VALUES(#{novelId},#{novelName},#{author},#{categoryId},#{brief},#{status},#{lastTime},#{novelUrl},#{chapterSize})
     </insert>
 
 

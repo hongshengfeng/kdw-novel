@@ -29,6 +29,7 @@ public interface NovelMapper {
      List<Novel> findNovelByName(String novelName);
      /*通过novelId查找小说*/
      Novel findNovelById(long novel);
-
+     /*通过Novel实体查询Novel列表*/
+     List<Novel> queryNovelList(Novel novel);
 
 }

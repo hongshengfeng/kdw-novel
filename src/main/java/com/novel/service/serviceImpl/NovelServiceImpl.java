@@ -1,5 +1,7 @@
 package com.novel.service.serviceImpl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.novel.dao.NovelMapper;
 import com.novel.model.Novel;
 import com.novel.service.NovelService;
@@ -56,5 +58,19 @@ public class NovelServiceImpl implements NovelService {
     public Novel findNovelById(long novelId) {
         return novelMapper.findNovelById(novelId);
     }
+    /*通过Novel实体查询Novel列表*/
+    @Override
+    public List<Novel> queryNovelList(Novel novel) {
+        return novelMapper.queryNovelList(novel);
+    }
 
+    @Override
+    public PageInfo<Novel> selectAll(Integer page, Integer size) {
+        Novel novel = new Novel();
+        novel.setCategoryId(1);
+        PageHelper.startPage(page,size);
+        List<Novel> novelList = novelMapper.queryNovelList(novel);
+        PageInfo<Novel> pageInfo =new PageInfo<>(novelList);
+        return pageInfo;
+    }
 }

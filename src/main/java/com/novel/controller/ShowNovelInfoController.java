@@ -1,9 +1,12 @@
 package com.novel.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.novel.model.Chapter;
 import com.novel.model.Novel;
 import com.novel.service.serviceImpl.ChapterServiceImpl;
 import com.novel.service.serviceImpl.NovelServiceImpl;
+import com.sun.org.apache.bcel.internal.generic.NEW;
+import org.junit.Test;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -86,5 +89,19 @@ public class ShowNovelInfoController {
         return "novelInfo";
 
     }
+    /*测试*/
+    @RequestMapping("/index")
+    public String test(@RequestParam(name="pageId") int pageId){
+      /*  Novel novel = new Novel();
+        novel.setCategoryId(0);
+        List<Novel> list = novelService.queryNovelList(novel);
+        System.currentTimeMillis();*/
+       PageInfo<Novel> pageInfo = novelService.selectAll(1,10);
+       System.out.println(pageInfo.toString());
+       return "user";
+
+
+    }
+
 
 }

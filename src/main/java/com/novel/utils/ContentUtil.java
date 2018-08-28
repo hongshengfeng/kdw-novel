@@ -4,7 +4,7 @@ package com.novel.utils;
  * @ProjectName: novelSpider
  * @Package: com.novel.utils
  * @ClassName: ContentUtil
- * @Description: java类作用描述
+ * @Description: java类作用描述：去掉表情符
  * @Author: 林浩东
  * @CreateDate: 2018/8/23/023 0:39
  * @UpdateUser: 更新者

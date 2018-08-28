@@ -52,7 +52,7 @@ public class NovelController {
 
         try {
             //深度暂时设为2
-            urlCrawler.start(200);
+            urlCrawler.start(1);
             while (urlCrawler.isResumable()){
                 System.out.println(".....");
             }
@@ -100,7 +100,7 @@ public class NovelController {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            //TODO：做数据库插入失败处理 一般都是主键冲突
+            //TODO：做数据库插入失败处理
         }
 
         return "NovelInfo0";

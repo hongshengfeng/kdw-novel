@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @ProjectName: novelSpider
  * @Package: com.novel.utils
  * @ClassName: IdUtil
- * @Description: java类作用描述
+ * @Description: java类作用描述:生产随机数Id
  * @Author: 林浩东
  * @CreateDate: 2018/8/21/021 22:15
  * @UpdateUser: 更新者
