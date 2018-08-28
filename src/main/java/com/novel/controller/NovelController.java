@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -52,7 +53,7 @@ public class NovelController {
 
         try {
             //深度暂时设为2
-            urlCrawler.start(1);
+            urlCrawler.start(216);
             while (urlCrawler.isResumable()){
                 System.out.println(".....");
             }
@@ -116,24 +117,38 @@ public class NovelController {
         int i = 1;
         // List<Chapter> chapters = chapterServiceImpl.findByNovelIdChapter(Long.parseLong("1534051213252"));
         List<Long> novelIs = novelServiceImpl.findAllNovelId();
+        ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(40);
+
         for (Long novelId:novelIs
              ) {
-            List<Chapter> chapters = chapterServiceImpl.findByNovelIdChapter(novelId);
-            for (Chapter chapter:chapters
-                 ) {
-                ChapterCrawler chapterCrawler = new ChapterCrawler("chapter",false,chapter);
-                try {
-                    chapterCrawler.start(1);
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    List<Chapter> chapters = chapterServiceImpl.findByNovelIdChapter(novelId);
+                    for (Chapter chapter:chapters
+                            ) {
+                        ChapterCrawler chapterCrawler = new ChapterCrawler("chapterdb/"+"chapter"+novelId,false,chapter);
+                        try {
+                            chapterCrawler.start(1);
 
-                    while (chapterCrawler.isResumable()){
+                            while (chapterCrawler.isResumable()){
+                            }
+                            chapter = chapterCrawler.getChapter();
+                            chapterServiceImpl.updateChapter(chapter);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                    chapter = chapterCrawler.getChapter();
-                    chapterServiceImpl.updateChapter(chapter);
-                    System.out.println("章节数"+i++);
-                } catch (Exception e) {
-                    e.printStackTrace();
+
                 }
-            }
+
+            });
+            threadPoolExecutor.execute(thread);
+
+
+            System.out.println("小说数"+i++);
+
         }
         System.out.println("ChapterContent");
      return "ChapterContent";
@@ -143,6 +158,7 @@ public class NovelController {
     @RequestMapping("/NovelAll")
     public String NovelAll(){
         ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(6);
+
         for (int i=0;i<6;i++){
             Thread thread = new Thread(new Runnable() {
                 int category = 0;
