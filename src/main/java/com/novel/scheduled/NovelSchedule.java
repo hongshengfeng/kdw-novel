@@ -1,5 +1,6 @@
 package com.novel.scheduled;
 
+import com.novel.crawler.ChapterCrawler;
 import com.novel.crawler.NovelCrawler;
 import com.novel.model.Chapter;
 import com.novel.model.Novel;
@@ -43,9 +44,20 @@ public class NovelSchedule {
 
                 Novel tmp= novelCrawler.getNovelsList().get(0);
                 if(tmp.getChapterSize()>novel.getChapterSize()){
-                //TODO 查询章节号并更新
+                //TODO 查询章节号并更新(未测试)
                 List<Chapter> chapters = ChapterUtil.containChapter(novelCrawler.getChapterList(),novel.getChapterSize());
-                
+                    for (Chapter c :
+                            chapters) {
+                        c.setNovelId(novel.getNovelId());
+                        ChapterCrawler chapterCrawler = new ChapterCrawler("update/time/chapter"+novel.getNovelId(),false,c);
+                        chapterCrawler.start(1);
+
+                        while (chapterCrawler.isResumable()){
+                        }
+                         Chapter result = chapterCrawler.getChapter();
+                         chapterService.updateChapter(result);
+                    }
+
                 }
 
             } catch (Exception e) {
