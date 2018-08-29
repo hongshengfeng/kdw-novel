@@ -42,7 +42,7 @@ public class NovelController {
     /*爬小说信息以及章节信息*/
     @RequestMapping("/NovelInfo")
     public String NovelInfo(int categoryId){
-            UrlCrawler urlCrawler = new UrlCrawler("urlCrawler"+categoryId,true);
+            UrlCrawler urlCrawler = new UrlCrawler("insert/urlCrawler"+categoryId,true);
             EnumUrl e =EnumUrl.getEnumUrl(categoryId);
             if(e != null){
                 urlCrawler.addSeed(e.getUrl());
@@ -59,7 +59,7 @@ public class NovelController {
             }
             System.out.println("url爬取结束");
             List<String> urlList = urlCrawler.getUrlLists();
-            NovelCrawler novelCrawler = new NovelCrawler("novelCrawler"+categoryId,false);
+            NovelCrawler novelCrawler = new NovelCrawler("insert/novelCrawler"+categoryId,false);
             novelCrawler.setCategoryId(categoryId);
             for (String url:urlList
                  ) {
@@ -127,7 +127,7 @@ public class NovelController {
                     List<Chapter> chapters = chapterServiceImpl.findByNovelIdChapter(novelId);
                     for (Chapter chapter:chapters
                             ) {
-                        ChapterCrawler chapterCrawler = new ChapterCrawler("chapterdb/"+"chapter"+novelId,false,chapter);
+                        ChapterCrawler chapterCrawler = new ChapterCrawler("insert/Chapter/"+"chapter"+novelId,false,chapter);
                         try {
                             chapterCrawler.start(1);
 
