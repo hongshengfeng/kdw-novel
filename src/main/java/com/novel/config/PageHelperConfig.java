@@ -1,4 +1,4 @@
-package com.novel.mybatisConfig;
+package com.novel.config;
 
 import com.github.pagehelper.PageHelper;
 import org.springframework.context.annotation.Bean;
