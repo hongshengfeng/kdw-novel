@@ -21,7 +21,8 @@
 <div>
     <ul>
         <li th:each="prod : ${pageInfo.list}">
-            <a href="#" th:text="${prod.title}"></a>
+            <a href="#" th:text="${prod.novelName}"></a>
+
         </li>
     </ul>
 </div>
@@ -29,20 +30,20 @@
 <table class="gridtable" style="width:100%;text-align: center;">
     <tr>
         <td th:if="${pageInfo.hasPreviousPage}">
-            <a th:href="'?page=1'">首页</a>
+            <a th:href="'?page=1'+'&categoryId='+${categoryId}">首页</a>
         </td>
         <td th:if="${pageInfo.hasPreviousPage}">
-            <a th:href="'?page='+${pageInfo.prePage}">上一页</a>
+            <a th:href="'?page='+${pageInfo.prePage}+'&categoryId='+${categoryId}">上一页</a>
         </td>
         <td th:each="nav : ${pageInfo.navigatepageNums}">
-            <a th:href="'?page='+${nav}" th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a>
+            <a th:href="'?page='+${nav}+'&categoryId='+${categoryId}" th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a>
             <span style="font-weight: bold" th:if="${nav == pageInfo.pageNum}" th:text="${nav}"></span>
         </td>
         <td th:if="${pageInfo.hasNextPage}">
-            <a th:href="'?page='+${pageInfo.nextPage}">下一页</a>
+            <a th:href="'?page='+${pageInfo.nextPage}+'&categoryId='+${categoryId}">下一页</a>
         </td>
         <td th:if="${pageInfo.hasNextPage}">
-            <a th:href="'?page='+${pageInfo.pages}">尾页</a>
+            <a th:href="'?page='+${pageInfo.pages}+'&categoryId='+${categoryId}">尾页</a>
         </td>
     </tr>
 </table>

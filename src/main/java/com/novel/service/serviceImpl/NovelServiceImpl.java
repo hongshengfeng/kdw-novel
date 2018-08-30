@@ -65,9 +65,9 @@ public class NovelServiceImpl implements NovelService {
     }
 
     @Override
-    public PageInfo<Novel> selectAll(Integer page, Integer size) {
+    public PageInfo<Novel> selectAll(Integer page, Integer size,int categoryId ){
         Novel novel = new Novel();
-        novel.setCategoryId(1);
+        novel.setCategoryId(categoryId);
         PageHelper.startPage(page,size);
         List<Novel> novelList = novelMapper.queryNovelList(novel);
         PageInfo<Novel> pageInfo =new PageInfo<>(novelList);

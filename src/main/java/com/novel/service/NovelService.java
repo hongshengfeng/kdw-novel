@@ -34,6 +34,6 @@ public interface NovelService {
     /*通过Novel实体查询Novel列表*/
     List<Novel> queryNovelList(Novel novel);
 
-    PageInfo<Novel> selectAll(Integer page, Integer size);
+    PageInfo<Novel> selectAll(Integer page, Integer size,int categoryId);
 
 }

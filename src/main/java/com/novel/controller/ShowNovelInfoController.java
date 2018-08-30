@@ -92,18 +92,13 @@ public class ShowNovelInfoController {
         return "novelInfo";
 
     }
-    /*测试*/
+    /*分页*/
     @RequestMapping("/index")
-    public String test(@RequestParam(name="pageId") int pageId){
-      /*  Novel novel = new Novel();
-        novel.setCategoryId(0);
-        List<Novel> list = novelService.queryNovelList(novel);
-        System.currentTimeMillis();*/
-       PageInfo<Novel> pageInfo = novelService.selectAll(1,10);
-       System.out.println(pageInfo.toString());
+    public String test(HttpServletRequest request,@RequestParam(name="page") int page,@RequestParam(name="categoryId") int categoryId){
+       PageInfo<Novel> pageInfo = novelService.selectAll(page,10,categoryId);
+       request.setAttribute("pageInfo",pageInfo);
+       request.setAttribute("categoryId",categoryId);
        return "user";
-
-
     }
 
 
