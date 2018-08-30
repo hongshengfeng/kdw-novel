@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.novel.dao.NovelMapper;
 import com.novel.model.Novel;
 import com.novel.service.NovelService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
@@ -55,8 +56,11 @@ public class NovelServiceImpl implements NovelService {
 
     /*通过novelId查找小说*/
     @Override
+    @Cacheable(value = "novel",key = "#novelId")
     public Novel findNovelById(long novelId) {
+        System.out.println("qqqq");
         return novelMapper.findNovelById(novelId);
+
     }
     /*通过Novel实体查询Novel列表*/
     @Override

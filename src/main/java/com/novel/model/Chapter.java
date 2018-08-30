@@ -1,5 +1,7 @@
 package com.novel.model;
 
+import java.io.Serializable;
+
 /**
  * @ProjectName: novelSpider
  * @Package: com.novel.model
@@ -12,7 +14,8 @@ package com.novel.model;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class Chapter {
+public class Chapter implements Serializable {
+    private static final long serialVersionUID = -5309782578272943999L;
     private int chapterId;
     private long novelId;
     private String chapter;

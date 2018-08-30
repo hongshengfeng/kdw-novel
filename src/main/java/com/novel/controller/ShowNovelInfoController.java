@@ -5,9 +5,6 @@ import com.novel.model.Chapter;
 import com.novel.model.Novel;
 import com.novel.service.serviceImpl.ChapterServiceImpl;
 import com.novel.service.serviceImpl.NovelServiceImpl;
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import org.junit.Test;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,11 +77,9 @@ public class ShowNovelInfoController {
     }
     /*显示小说信息*/
     @RequestMapping("/showNovel")
-    @Cacheable(value = "novelId")
     public String showNovel(HttpServletRequest request,@RequestParam(name="novelId")long novelId){
 
        Novel novel = novelService.findNovelById(novelId);
-       System.out.println("1111");
        if (!StringUtils.isEmpty(novel)){
            request.setAttribute("novel",novel);
            request.setAttribute("category",novel.getCategory());
@@ -98,6 +93,7 @@ public class ShowNovelInfoController {
        PageInfo<Novel> pageInfo = novelService.selectAll(page,10,categoryId);
        request.setAttribute("pageInfo",pageInfo);
        request.setAttribute("categoryId",categoryId);
+
        return "user";
     }
 

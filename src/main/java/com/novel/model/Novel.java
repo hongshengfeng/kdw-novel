@@ -1,5 +1,7 @@
 package com.novel.model;
 
+import java.io.Serializable;
+
 /**
   *
   * @Package:        com.novel.model
@@ -12,7 +14,9 @@ package com.novel.model;
   * @UpdateRemark:   更新说明：无
   * @Version:        1.0
  */
-public class Novel {
+public class Novel implements Serializable {
+
+    private static final long serialVersionUID = -5809782578272943999L;
     private long    novelId;    //小说id
     private String novelName;   //小说名字
     private String author;      //作者
