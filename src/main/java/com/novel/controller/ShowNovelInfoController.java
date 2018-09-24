@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -95,6 +96,13 @@ public class ShowNovelInfoController {
        request.setAttribute("categoryId",categoryId);
 
        return "user";
+    }
+
+    @RequestMapping("/index")
+    @ResponseBody
+    public String  showNovelByName(){
+
+        return "可读小说后端接口";
     }
 
 
