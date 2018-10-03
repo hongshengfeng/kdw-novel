@@ -39,6 +39,30 @@ var app = new Vue({
         index: function() {
             console.log("111")
         },
+        infoClass: function (cateId) {
+            var category = "";
+            switch (cateId){
+                case 1:
+                    category = "coatard";
+                    break;
+                case 2:
+                    category = "city";
+                    break;
+                case 3:
+                    category = "across";
+                    break;
+                case 4:
+                    category = "fantasy";
+                    break;
+                case 5:
+                    category = "science";
+                    break;
+                default:
+                    category = "game";
+                    break;
+            }
+            return category;
+        },
         record: function() {
             console.log("record");
         },
@@ -65,20 +89,10 @@ var app = new Vue({
             });
         },
         info: function(id) {
-            this.$router.push({
-                path: '/info',
-                query: {
-                    novId: id
-                }
-            })
+
         },
         more: function(){
-            this.$router.push({
-                path: '/more',
-                query: {
-                    active: this.active
-                }
-            })
+            console.log("111");
         }
     }
 })

@@ -32,9 +32,16 @@
                         <el-menu-item v-for="item in catagorys" :index="item.categoryid">{{item.category}}</el-menu-item>
                     </el-menu>
                     <div class="nov_info">
-                        <el-card shadow="hover" class="science" v-for="novel in novelList" @click.native="info(novel.novelid)">
+                        <el-card shadow="hover" v-for="novel in novelList" :class="infoClass(novel.categoryid)" @click.native="info(novel.novelid)">
                             <div class="base-info">
-                                <span class="classify science" v-if="isReco">科幻</span>
+                                <span v-if="isReco">
+                                    <span class="classify coatard" v-if="novel.categoryid == 1">修真</span>
+                                    <span class="classify city" v-else-if="novel.categoryid == 2">都市</span>
+                                    <span class="classify across" v-else-if="novel.categoryid == 3">穿越</span>
+                                    <span class="classify fantasy" v-else-if="novel.categoryid == 4">玄幻</span>
+                                    <span class="classify science" v-else-if="novel.categoryid == 5">科幻</span>
+                                    <span class="classify game" v-else>网游</span>
+                                </span>
                                 <span class="name"><a href="#">{{novel.novelname}}</a></span>
                                 <span class="updateTime">{{novel.lasttime}}</span>
                             </div>
@@ -73,6 +80,14 @@
                             <div>作者：小小羽（连载中）</div>
                             <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
                         </el-collapse-item>
+                        <el-collapse-item title="餮仙传人在都市" name="5">
+                            <div>作者：小小羽（连载中）</div>
+                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
+                        </el-collapse-item>
+                        <el-collapse-item title="餮仙传人在都市" name="5">
+                            <div>作者：小小羽（连载中）</div>
+                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
+                        </el-collapse-item>
                     </el-collapse>
                     <el-collapse v-model="hotInfo" accordion class="hotInfo">
                         <div class="header">
@@ -92,6 +107,14 @@
                             <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
                         </el-collapse-item>
                         <el-collapse-item title="餮仙传人在都市" name="4">
+                            <div>作者：小小羽（连载中）</div>
+                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
+                        </el-collapse-item>
+                        <el-collapse-item title="餮仙传人在都市" name="5">
+                            <div>作者：小小羽（连载中）</div>
+                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
+                        </el-collapse-item>
+                        <el-collapse-item title="餮仙传人在都市" name="5">
                             <div>作者：小小羽（连载中）</div>
                             <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
                         </el-collapse-item>
