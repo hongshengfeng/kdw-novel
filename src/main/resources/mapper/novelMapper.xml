@@ -1,86 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.novel.dao.NovelMapper">
-    <resultMap id="NovelResultMap" type="com.novel.model.Novel">
-        <id column="novelId"   jdbcType="BIGINT" property="novelId" javaType="java.lang.Long"/>
-        <result column="novelName" jdbcType="VARCHAR" property="novelName" />
-        <result column="author" jdbcType="VARCHAR" property="author" />
-        <result column="categoryId" jdbcType="INTEGER" property="categoryId" />
-        <result column="brief" jdbcType="VARCHAR" property="brief" />
-        <result column="status" jdbcType="VARCHAR" property="status" />
-        <result column="lastTime" jdbcType="VARCHAR" property="lastTime" />
-        <result column="novelUrl" jdbcType="VARCHAR" property="novelUrl" />
-        <result column="chapterSize" jdbcType="VARCHAR" property="chapterSize" />
-        <association property="category" javaType="com.novel.model.CategoryInfo">
-            <result column="categoryId" jdbcType="INTEGER" property="categoryId"/>
-            <result column="category"   jdbcType="VARCHAR" property="category"/>
-
-        </association>
+<mapper namespace="com.keduw.dao.NovelMapper">
+    <resultMap id="BaseResultMap" type="com.keduw.model.Novel">
+        <id column="novelId" jdbcType="BIGINT" property="novelid"/>
+        <result column="novelName" jdbcType="VARCHAR" property="novelname"/>
+        <result column="author" jdbcType="VARCHAR" property="author"/>
+        <result column="categoryId" jdbcType="INTEGER" property="categoryid"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="lastTime" jdbcType="VARCHAR" property="lasttime"/>
+        <result column="novelUrl" jdbcType="VARCHAR" property="novelurl"/>
+        <result column="chapterSize" jdbcType="INTEGER" property="chaptersize"/>
     </resultMap>
-
-    <!--返回全部小说id-->
-    <select id = "findAllNovelId" resultType="Long" >
-        SELECT novelId FROM  novelInfo
-    </select>
-    <!--返回全部小说信息-->
-    <select id = "findAllNovel" resultMap="NovelResultMap" >
-      SELECT * FROM  novelInfo,categoryInfo WHERE
-       novelInfo.categoryId = categoryInfo.categoryId
-    </select>
-    <!--通过小说名字查找小说-->
-    <select id="findNovelByName" parameterType="String" resultMap="NovelResultMap">
-
-        SELECT * FROM  novelInfo,categoryInfo WHERE novelName Like #{novelName}
-        and novelInfo.categoryId = categoryInfo.categoryId
-
-
-    </select>
-    <!--通过小说id查找小说-->
-    <select id="findNovelById" parameterType="long" resultMap="NovelResultMap">
-
-         SELECT * FROM  novelInfo,categoryInfo WHERE novelId Like #{novelId}
-        and novelInfo.categoryId = categoryInfo.categoryId
-
-    </select>
-
-
-    <select id="queryNovelList" parameterType="com.novel.model.Novel" resultMap="NovelResultMap">
-
-        SELECT * FROM novelInfo,categoryInfo
-        <where>
-            <if test="novelId!= null and novelId!=''and novelId!=0">
-                novelid = #{novelId}
-            </if>
-            <if test="novelName!= null and novelName!=''">
-                and   novelName = #{novelName}
-            </if>
-            <if test="author!= null and author!=''">
-                and    author = #{author}
-            </if>
-            <if test="categoryId!= null and categoryId!=''">
-                and  novelInfo.categoryId = #{categoryId}
-            </if>
-            <if test="status != null and status!=''">
-              and   status = #{status}
-            </if>
-            and novelInfo.categoryId = categoryInfo.categoryId
-        </where>
-
-
-    </select>
-
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.keduw.model.Novel">
+        <result column="brief" jdbcType="LONGVARCHAR" property="brief"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        novelId, novelName, author, categoryId, status, lastTime, novelUrl, chapterSize, brief
+    </sql>
     <!--新增小说详细信息 -->
-    <insert id = "insertNovel" parameterType="com.novel.model.Novel">
-        INSERT INTO novelInfo(novelId,novelName,author,categoryId,brief,status,lastTime,novelUrl,chapterSize)
+    <insert id = "insertNovel" parameterType="com.keduw.model.Novel">
+        INSERT INTO novel(novelId,novelName,author,categoryId,brief,status,lastTime,novelUrl,chapterSize)
         VALUES(#{novelId},#{novelName},#{author},#{categoryId},#{brief},#{status},#{lastTime},#{novelUrl},#{chapterSize})
     </insert>
-
-
-
-
-
-
-
-
-
+    <!--通过小说名字查找小说-->
+    <select id="selectNovelByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM  novel WHERE novelName Like #{novelName}
+    </select>
+    <!--通过小说id查找小说-->
+    <select id="selectNovelById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM  novel WHERE novelId = #{novelId}
+    </select>
+    <!--查询所有小说的列表-->
+    <select id="selectNovel" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM  novel ORDER BY novelId DESC
+    </select>
+    <!--根据类别查询小说列表-->
+    <select id="selectNovelByCategory" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM novel WHERE categoryId=#{categoryId} ORDER BY novelId DESC
+    </select>
+    <!-- 返回全部小说信息-->
+    <select id="seletAllNovelInfo" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM novel
+    </select>
 </mapper>
