@@ -52,4 +52,16 @@
         <include refid="Base_Column_List" />
         FROM novel
     </select>
+    <!-- 查询最新小说-->
+    <select id="seletNewNovelInfo" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM novel ORDER BY lastTime DESC
+    </select>
+    <!-- 查询热门小说-->
+    <select id="seletHotNovelInfo" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM novel ORDER BY chapterSize DESC
+    </select>
 </mapper>

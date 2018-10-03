@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="可读小说，可读网旗下产品。个性化小说网站，简洁，方便，内容丰富"/>
     <title>可读小说</title>
     <link rel="stylesheet" href="/css/index.min.css" />
-    <link rel="stylesheet" href="/css/iconfont.css" />
     <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/iconfont.css" />
 </head>
-<body>
+<body style="display: none;">
 <div id="app" v-loading.fullscreen.lock="loading">
     <el-container>
         <el-header>
@@ -51,7 +51,7 @@
                                 <span v-else>还没获取到该小说的简介，简介只是冰山一角，内容才是真材实料。</span>
                             </div>
                         </el-card>
-                        <div class="more" @click="more">查看更多</div>
+                        <div class="more" @click="more()">查看更多</div>
                     </div>
                 </div>
                 <div class="content-right">
@@ -60,33 +60,13 @@
                             <i class="iconfont icon-icon--1"></i>
                             <span class="title">最新小说</span>
                         </div>
-                        <el-collapse-item title="餮仙传人在都市" name="1">
-                            <div>作者：小小羽（连载中）</div>
-                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
-                        </el-collapse-item>
-                        <el-collapse-item title="餮仙传人在都市" name="2">
-                            <div>作者：小小羽（连载中）</div>
-                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
-                        </el-collapse-item>
-                        <el-collapse-item title="餮仙传人在都市" name="3">
-                            <div>作者：小小羽（连载中）</div>
-                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
-                        </el-collapse-item>
-                        <el-collapse-item title="餮仙传人在都市" name="4">
-                            <div>作者：小小羽（连载中）</div>
-                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
-                        </el-collapse-item>
-                        <el-collapse-item title="餮仙传人在都市" name="5">
-                            <div>作者：小小羽（连载中）</div>
-                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
-                        </el-collapse-item>
-                        <el-collapse-item title="餮仙传人在都市" name="5">
-                            <div>作者：小小羽（连载中）</div>
-                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
-                        </el-collapse-item>
-                        <el-collapse-item title="餮仙传人在都市" name="5">
-                            <div>作者：小小羽（连载中）</div>
-                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
+                        <el-collapse-item v-for="(item,index) in newList" :title="item.novelname" :name="index+1">
+                            <div>作者：{{item.author}}（{{item.status}}）</div>
+                            <div v-if="item.brief != ''">{{item.brief}}</div>
+                            <div v-else>还没获取到该小说的简介。</div>
+                            <div class="detail">
+                                <a href="javascript:void(0);" @click="info(item.novelid)">阅读详情</a>
+                            </div>
                         </el-collapse-item>
                     </el-collapse>
                     <el-collapse v-model="hotInfo" accordion class="hotInfo">
@@ -94,36 +74,16 @@
                             <i class="iconfont icon-icon--1"></i>
                             <span class="title">热门小说</span>
                         </div>
-                        <el-collapse-item title="餮仙传人在都市" name="1">
-                            <div>作者：小小羽（连载中）</div>
-                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
-                        </el-collapse-item>
-                        <el-collapse-item title="餮仙传人在都市" name="2">
-                            <div>作者：小小羽（连载中）</div>
-                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
-                        </el-collapse-item>
-                        <el-collapse-item title="餮仙传人在都市" name="3">
-                            <div>作者：小小羽（连载中）</div>
-                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
-                        </el-collapse-item>
-                        <el-collapse-item title="餮仙传人在都市" name="4">
-                            <div>作者：小小羽（连载中）</div>
-                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
-                        </el-collapse-item>
-                        <el-collapse-item title="餮仙传人在都市" name="5">
-                            <div>作者：小小羽（连载中）</div>
-                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
-                        </el-collapse-item>
-                        <el-collapse-item title="餮仙传人在都市" name="5">
-                            <div>作者：小小羽（连载中）</div>
-                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
-                        </el-collapse-item>
-                        <el-collapse-item title="餮仙传人在都市" name="5">
-                            <div>作者：小小羽（连载中）</div>
-                            <div>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</div>
+                        <el-collapse-item v-for="item in hotList" :title="item.novelname">
+                            <div>作者：{{item.author}}（{{item.status}}）</div>
+                            <div v-if="item.brief != ''">{{item.brief}}</div>
+                            <div v-else>还没获取到该小说的简介。</div>
+                            <div class="detail">
+                                <a href="javascript:void(0);" @click="info(item.novelid)">阅读详情</a>
+                            </div>
                         </el-collapse-item>
                     </el-collapse>
-                    <transition name="fade">
+                    <transition name="el-zoom-in-top">
                         <div class="adv" v-if="advShow">
                             <span class="iconfont icon-close" @click="close()"></span> 广告位
                         </div>
@@ -133,17 +93,17 @@
         </el-main>
         <el-footer>
             <div class="kd-info">
-                <span class="about"><a href="#/about">关于可读</a></span>
-                <span class="link"><a href="#/linkway">联系我们</a></span>
-                <span class="link"><a href="#/cooperate">推广合作</a></span>
+                <span class="about"><a href="#">关于可读</a></span>
+                <span class="link"><a href="#">联系我们</a></span>
+                <span class="link"><a href="#">推广合作</a></span>
             </div>
             <div class="copyRight">Copyright &copy; 2017-2018 可读网 <a href="http://www.miitbeian.gov.cn" target="_black">粤ICP备17005112号</a></div>
         </el-footer>
     </el-container>
 </div>
+</body>
 <script type="text/javascript" src="/js/vue.min.js"></script>
 <script type="text/javascript" src="/js/index.min.js"></script>
 <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="/js/main.js"></script>
-</body>
 </html>

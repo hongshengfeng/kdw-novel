@@ -1,15 +1,17 @@
 var app = new Vue({
     el: '#app',
     data: {
-        keywords: '',
+        keywords: null,
         active: '0',
-        hotInfo: '1',
-        newInfo: '1',
+        hotInfo: [],
+        newInfo: [],
         advShow: true,
         loading: true,
         isReco: true,
         catagorys: null,
         novelList: null,
+        newList: null,
+        hotList: null
     },
     mounted: function () {
         var _self = this;
@@ -18,10 +20,45 @@ var app = new Vue({
             url: "/category/list",
             success: function(data){
                 _self.catagorys = data;
+            },
+            error: function () {
+                _self.$message({
+                    message: '系统错误，请稍后重试。',
+                    type: 'warning'
+                });
             }
         });
-        _self.handle(0);
-        _self.loading = false;
+        this.handle(0);
+        $.ajax({
+            async: false,
+            url: "/novel/new",
+            success: function(data){
+                _self.newList = data;
+                _self.newInfo.push("1");
+            },
+            error: function () {
+                _self.$message({
+                    message: '系统错误，请稍后重试。',
+                    type: 'warning'
+                });
+            }
+        });
+        $.ajax({
+            async: false,
+            url: "/novel/hot",
+            success: function(data){
+                _self.hotList = data;
+                _self.hotInfo.push("1");
+            },
+            error: function () {
+                _self.$message({
+                    message: '系统错误，请稍后重试。',
+                    type: 'warning'
+                });
+            }
+        });
+        this.loading = false;
+        $("body").css("display","block");
     },
     computed: {
         initInfo: function() {
@@ -89,10 +126,10 @@ var app = new Vue({
             });
         },
         info: function(id) {
-
+            window.location.href="/index/info/" + id;
         },
         more: function(){
-            console.log("111");
+            window.location.href="/index/category/" + 0;
         }
     }
 })

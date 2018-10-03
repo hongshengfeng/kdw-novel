@@ -20,4 +20,10 @@ public interface NovelService {
 
     //获取所有小说
     List<Novel> getAllNovelInfo();
+
+    //最新小说
+    List<Novel> getNewInfo();
+
+    //热门小说
+    List<Novel> getHotInfo();
 }

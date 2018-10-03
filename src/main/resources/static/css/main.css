@@ -321,6 +321,15 @@
     margin-top: 20px;
 }
 
+.newInfo .detail,.hotInfo .detail{
+    text-align: right;
+}
+
+.newInfo .detail a,.hotInfo .detail a{
+    text-decoration: underline;
+    color: #F7941E;
+}
+
 /* 广告 */
 .adv {
     width: 100%;

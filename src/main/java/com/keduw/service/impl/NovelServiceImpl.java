@@ -85,7 +85,7 @@ public class NovelServiceImpl implements NovelService {
         String fields = "novel" + novel;
         String info = jedisClient.hget(novelInfo, fields);
         if(info != null && !info.isEmpty()){
-            return JsonUtils.jsonToPojo(info, Novel.class);
+            novel = JsonUtils.jsonToPojo(info, Novel.class);
         }else{
             novel = novelMapper.selectNovelById(novelId);
             jedisClient.hset(novelInfo, fields, JsonUtils.objectToJson(novel));
@@ -97,5 +97,37 @@ public class NovelServiceImpl implements NovelService {
     @Override
     public List<Novel> getAllNovelInfo() {
         return novelMapper.seletAllNovelInfo();
+    }
+
+    //最新小说
+    @Override
+    public List<Novel> getNewInfo() {
+        List<Novel> list = new ArrayList<>();
+        String field = "newInfo";
+        String info = jedisClient.hget(novelList, field);
+        if(info != null && !info.isEmpty()){
+            list = JsonUtils.jsonToList(info, Novel.class);
+        }else{
+            PageHelper.startPage(1, 6);
+            list = novelMapper.seletNewNovelInfo();
+            jedisClient.hset(novelList, field, JsonUtils.objectToJson(list));
+        }
+        return list;
+    }
+
+    //热门小说
+    @Override
+    public List<Novel> getHotInfo() {
+        List<Novel> list = new ArrayList<>();
+        String field = "hotInfo";
+        String info = jedisClient.hget(novelList, field);
+        if(info != null && !info.isEmpty()){
+            list = JsonUtils.jsonToList(info, Novel.class);
+        }else{
+            PageHelper.startPage(1, 6);
+            list = novelMapper.seletHotNovelInfo();
+            jedisClient.hset(novelList, field, JsonUtils.objectToJson(list));
+        }
+        return list;
     }
 }

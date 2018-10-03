@@ -45,4 +45,18 @@ public class NovelController {
         List<Novel> list = novelService.getNovelList(curr, PAGE_SIZE);
         return list;
     }
+
+    //最新小说
+    @RequestMapping("/new")
+    public List<Novel> newNovelInfo(){
+        List<Novel> list = novelService.getNewInfo();
+        return list;
+    }
+
+    //热门小说
+    @RequestMapping("/hot")
+    public List<Novel> hotNovelInfo(){
+        List<Novel> list = novelService.getHotInfo();
+        return list;
+    }
 }

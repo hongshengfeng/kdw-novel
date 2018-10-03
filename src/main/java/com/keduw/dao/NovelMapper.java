@@ -29,4 +29,10 @@ public interface NovelMapper {
 
      //查询所有的小说列表
      List<Novel> seletAllNovelInfo();
+
+     //查询最新小说列表
+     List<Novel> seletNewNovelInfo();
+
+     //查询热门小说列表
+     List<Novel> seletHotNovelInfo();
 }
