@@ -1,7 +1,6 @@
 var app = new Vue({
     el: '#app',
     data: {
-        keywords: null,
         active: '0',
         hotInfo: [],
         newInfo: [],
@@ -70,12 +69,6 @@ var app = new Vue({
         }
     },
     methods: {
-        login: function() {
-            console.log("login")
-        },
-        index: function() {
-            console.log("111")
-        },
         infoClass: function (cateId) {
             var category = "";
             switch (cateId){
@@ -100,9 +93,6 @@ var app = new Vue({
             }
             return category;
         },
-        record: function() {
-            console.log("record");
-        },
         close: function() {
             this.advShow ? this.advShow = false : this.advShow = true;
         },
@@ -126,10 +116,10 @@ var app = new Vue({
             });
         },
         info: function(id) {
-            window.location.href="/index/info/" + id;
+            window.location.href="/info/" + id;
         },
         more: function(){
-            window.location.href="/index/category/" + 0;
+            window.location.href="/category/" + 0;
         }
     }
 })

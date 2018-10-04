@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="可读小说，可读网旗下产品。个性化小说网站，简洁，方便，内容丰富"/>
+    <title>可读小说</title>
+    <link rel="stylesheet" href="/css/index.min.css" />
+    <link rel="stylesheet" href="/css/iconfont.css" />
+    <link rel="stylesheet" href="/css/public.css" />
+    <link rel="stylesheet" href="/css/moreInfo.css" />
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/index.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+</head>
+<body style="display: none;">
+    <div th:replace="header::top"></div>
+    <el-main id="more">
+        <div class="topAdv" v-if="advShow">
+            <span class="iconfont icon-close" @click="close()"></span> 广告位
+        </div>
+        <div class="moreInfo">
+            <el-menu :default-active="active" class="el-menu-demo" mode="horizontal" @select="handle">
+                <el-menu-item index="1">推荐</el-menu-item>
+                <el-menu-item index="2">最新</el-menu-item>
+                <el-menu-item index="3">热门</el-menu-item>
+                <el-menu-item index="4">修真</el-menu-item>
+                <el-menu-item index="5">都市</el-menu-item>
+                <el-menu-item index="6">穿越</el-menu-item>
+                <el-menu-item index="7">科幻</el-menu-item>
+                <el-menu-item index="8">玄幻</el-menu-item>
+                <el-menu-item index="9">网游</el-menu-item>
+            </el-menu>
+        </div>
+        <div class="nov_info">
+            <el-card shadow="hover" class="science" @click.native="info(1)" v-for="(item, index) in counts">
+                <div class="base-info">
+                    <span class="classify science" v-if="isReco">科幻</span>
+                    <span class="name"><a href="#">餮仙传人在都市</a></span>
+                    <span class="updateTime">2018-08-30</span>
+                </div>
+                <div class="brief-info">
+                    <span>简介：</span><span>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</span>
+                </div>
+            </el-card>
+        </div>
+        <el-pagination background layout="prev, pager, next" :page-size="20" :total="200"></el-pagination>
+    </el-main>
+    <div th:replace="footer::bottom"></div>
+</body>
+<script type="text/javascript" src="/js/moreInfo.js"></script>
+<script type="text/javascript" src="/js/public.js"></script>
+</html>

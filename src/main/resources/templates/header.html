@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>可读小说</title>
+</head>
+<body>
+<el-header id="header" th:fragment="top">
+    <div class="topBar">
+        <div class="logo" @click="index()"></div>
+        <el-dropdown>
+            <el-button type="primary" size="small" icon="iconfont icon-wode" class="el-dropdown-link user" circle></el-button>
+            <el-dropdown-menu slot="dropdown" class="login-menu">
+                <el-dropdown-item @click.native="login">登录注册</el-dropdown-item>
+                <el-dropdown-item @click.native="record">阅读记录</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+        <el-input size="small" placeholder="搜索" prefix-icon="el-icon-search" v-model="keywords">
+        </el-input>
+    </div>
+</el-header>
+</body>
+</html>
