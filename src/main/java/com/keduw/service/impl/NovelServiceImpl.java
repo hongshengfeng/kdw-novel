@@ -1,7 +1,6 @@
 package com.keduw.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.keduw.dao.NovelMapper;
 import com.keduw.jedis.JedisClient;
 import com.keduw.model.Novel;
@@ -9,12 +8,9 @@ import com.keduw.service.NovelService;
 import com.keduw.util.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +56,9 @@ public class NovelServiceImpl implements NovelService {
         }else{
             list = novelMapper.selectNovelByCategory(category[0]);
         }
-        jedisClient.hset(novelList, fields.toString(), JsonUtils.objectToJson(list));
+        if(list != null && list.size() > 0){
+            jedisClient.hset(novelList, fields.toString(), JsonUtils.objectToJson(list));
+        }
         return list;
     }
 
@@ -82,13 +80,15 @@ public class NovelServiceImpl implements NovelService {
     @Override
     public Novel getNovelById(long novelId) {
         Novel novel = new Novel();
-        String fields = "novel" + novel;
+        String fields = "novel" + novelId;
         String info = jedisClient.hget(novelInfo, fields);
         if(info != null && !info.isEmpty()){
             novel = JsonUtils.jsonToPojo(info, Novel.class);
         }else{
             novel = novelMapper.selectNovelById(novelId);
-            jedisClient.hset(novelInfo, fields, JsonUtils.objectToJson(novel));
+            if(novel != null) {
+                jedisClient.hset(novelInfo, fields, JsonUtils.objectToJson(novel));
+            }
         }
         return novel;
     }
@@ -110,7 +110,9 @@ public class NovelServiceImpl implements NovelService {
         }else{
             PageHelper.startPage(1, 6);
             list = novelMapper.seletNewNovelInfo();
-            jedisClient.hset(novelList, field, JsonUtils.objectToJson(list));
+            if(list != null && list.size() > 0){
+                jedisClient.hset(novelList, field, JsonUtils.objectToJson(list));
+            }
         }
         return list;
     }
@@ -126,7 +128,9 @@ public class NovelServiceImpl implements NovelService {
         }else{
             PageHelper.startPage(1, 6);
             list = novelMapper.seletHotNovelInfo();
-            jedisClient.hset(novelList, field, JsonUtils.objectToJson(list));
+            if(list != null && list.size() > 0){
+                jedisClient.hset(novelList, field, JsonUtils.objectToJson(list));
+            }
         }
         return list;
     }

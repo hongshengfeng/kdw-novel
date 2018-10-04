@@ -1,15 +1,110 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>可读小说</title>
     <link rel="stylesheet" href="/css/index.min.css" />
     <link rel="stylesheet" href="/css/iconfont.css" />
+    <link rel="stylesheet" href="/css/public.css" />
+    <link rel="stylesheet" href="/css/info.css" />
     <script type="text/javascript" src="/js/vue.min.js"></script>
     <script type="text/javascript" src="/js/index.min.js"></script>
     <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 </head>
-<body>
-111
+<body style="display: none">
+    <div th:replace="header::top"></div>
+    <el-main id="app">
+        <div class="noveInfo">
+            <div class="content-left">
+                <div class="kd-top">
+                    <div class="kd-title" th:text="${novel.novelname}">小说名字</div>
+                    <div class="kd-bar">
+                        <div class="kd-txt" th:if="${novel.categoryid ==  1}">修真小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryid ==  2}">都市小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryid ==  3}">穿越小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryid ==  4}">玄幻小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryid ==  5}">科幻小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryid ==  6}">网游小说</div>
+                        <div class="kd-line"></div>
+                        <div class="kd-txt" th:text="${novel.author}">作者：</div>
+                        <div class="kd-line"></div>
+                        <div class="kd-txt" th:text="${novel.status}">连载中</div>
+                        <div class="kd-line"></div>
+                        <div class="kd-txt" th:text="${novel.lasttime}">2018-06-01</div>
+                    </div>
+                </div>
+                <div class="kd-art-content">小说内容</div>
+                <div class="options">
+                    <div class="share">
+                        <span class="iconfont icon-weixin" @click="share()"></span>
+                        <span class="iconfont icon-weibo" @click="share()"></span>
+                    </div>
+                    <div class="section">
+                        <div class="pre" @click="pre()">上一章</div>
+                        <div class="next" @click="next()">下一章</div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="current">第二十三章 美食评论家古争被餮(tie)</div>
+                <div class="list">
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                    <a href="#">1111</a>
+                </div>
+                <div class="counts">
+                    <span class="cur">已阅读：<el-progress :percentage="20"></el-progress></span>
+                    <span class="all">总章节：466</span>
+                </div>
+                <div class="notice">·文章内容来源于网络，如有侵权，请联系我们·</div>
+            </div>
+            <transition name="fade">
+                <div class="info-adv" v-if="rigAdv">
+                    <span class="iconfont icon-close" @click="rigClose()"></span> 广告位
+                </div>
+            </transition>
+        </div>
+        <transition name="fade">
+            <div class="tab-adv" v-if="tabAdv">
+                <span class="iconfont icon-close" @click="tabClose()"></span> 广告位
+            </div>
+        </transition>
+    </el-main>
+    <div th:replace="footer::bottom"></div>
 </body>
+<script type="text/javascript" src="/js/info.js"></script>
+<script type="text/javascript" src="/js/public.js"></script>
 </html>

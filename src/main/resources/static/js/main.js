@@ -116,7 +116,8 @@ var app = new Vue({
             });
         },
         info: function(id) {
-            window.location.href="/info/" + id;
+            console.log(id);
+            // window.location.href="/info/" + id;
         },
         more: function(){
             window.location.href="/category/" + 0;
