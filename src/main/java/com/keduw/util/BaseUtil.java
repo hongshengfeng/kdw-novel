@@ -37,7 +37,7 @@ public class BaseUtil {
 
     /**
      * 过滤空格和回车
-     * @param str
+     * @param url
      * @return
      */
     public static String urlTrim(String url){
