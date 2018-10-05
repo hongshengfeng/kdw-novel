@@ -6,7 +6,7 @@ package com.keduw.model;
 public class Chapter {
     private Integer chapterid;
 
-    private Long novelid;
+    private Integer novelid;
 
     private String chapter;
 
@@ -22,11 +22,11 @@ public class Chapter {
         this.chapterid = chapterid;
     }
 
-    public Long getNovelid() {
+    public Integer getNovelid() {
         return novelid;
     }
 
-    public void setNovelid(Long novelid) {
+    public void setNovelid(Integer novelid) {
         this.novelid = novelid;
     }
 

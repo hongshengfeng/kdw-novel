@@ -22,6 +22,6 @@ public interface ChapterMapper {
     void updateChapter(Chapter chapter);
 
     //根据novelId返回章节信息
-    List<Chapter> selectInfoByNovelId(long NovelId);
+    List<Chapter> selectInfoByNovelId(int novelId);
 
 }

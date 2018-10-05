@@ -47,16 +47,19 @@ public class ChapterServiceImpl implements ChapterService {
 
     //通过小说id返回章节列表
     @Override
-    public List<Chapter> findByNovelIdChapter(long NovelId) {
+    public List<Chapter> getChapterList(int NovelId) {
         List<Chapter> list = new ArrayList<Chapter>();
         String field = "chapter" + NovelId;
         String info = jedisClient.hget(keys, field);
+        System.out.println(NovelId);
         if(info != null && !info.isEmpty()){
             list = JsonUtils.jsonToList(info, Chapter.class);
         }else{
             list = chapterMapper.selectInfoByNovelId(NovelId);
             //添加数据到redis中
-            jedisClient.hset(keys, field, JsonUtils.objectToJson(list));
+            if(list != null && list.size() > 0){
+                jedisClient.hset(keys, field, JsonUtils.objectToJson(list));
+            }
         }
         return list;
     }

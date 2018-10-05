@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.keduw.dao.NovelMapper">
     <resultMap id="BaseResultMap" type="com.keduw.model.Novel">
-        <id column="novelId" jdbcType="BIGINT" property="novelid"/>
+        <id column="novelId" jdbcType="INTEGER" property="novelid"/>
         <result column="novelName" jdbcType="VARCHAR" property="novelname"/>
         <result column="author" jdbcType="VARCHAR" property="author"/>
         <result column="categoryId" jdbcType="INTEGER" property="categoryid"/>
@@ -29,7 +29,7 @@
         FROM  novel WHERE novelName Like #{novelName}
     </select>
     <!--通过小说id查找小说-->
-    <select id="selectNovelById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="selectNovelById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
         FROM  novel WHERE novelId = #{novelId}

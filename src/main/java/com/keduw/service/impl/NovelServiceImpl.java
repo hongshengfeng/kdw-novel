@@ -78,7 +78,7 @@ public class NovelServiceImpl implements NovelService {
 
     //通过novelId查找小说
     @Override
-    public Novel getNovelById(long novelId) {
+    public Novel getNovelById(int novelId) {
         Novel novel = new Novel();
         String fields = "novel" + novelId;
         String info = jedisClient.hget(novelInfo, fields);

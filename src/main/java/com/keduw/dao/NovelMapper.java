@@ -19,7 +19,7 @@ public interface NovelMapper {
      List<Novel> selectNovelByName(String novelName);
 
      //通过novelId查找小说
-     Novel selectNovelById(long novel);
+     Novel selectNovelById(int novel);
 
      //查询所有小说的列表
      List<Novel> selectNovel();

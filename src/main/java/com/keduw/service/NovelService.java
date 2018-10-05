@@ -16,7 +16,7 @@ public interface NovelService {
     List<Novel> getNovelByName(String novelName);
 
     //通过novelId查找小说
-    Novel getNovelById(long novelId);
+    Novel getNovelById(int novelId);
 
     //获取所有小说
     List<Novel> getAllNovelInfo();

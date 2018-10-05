@@ -26,7 +26,7 @@ public class IndexController {
     @RequestMapping("/info/{novelId}")
     public String detailInfo(@PathVariable("novelId") String novelId, Model model){
         Novel novel = new Novel();
-        Long id = Parser.parserLong(novelId, 0L);
+        int id = Parser.parserInt(novelId, 0);
         if(id > 0L){
             novel = novelService.getNovelById(id);
             model.addAttribute("novel", novel);

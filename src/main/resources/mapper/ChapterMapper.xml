@@ -3,7 +3,7 @@
 <mapper namespace="com.keduw.dao.ChapterMapper">
     <resultMap id="BaseResultMap" type="com.keduw.model.Chapter">
         <id column="chapterId" jdbcType="INTEGER" property="chapterid"/>
-        <result column="novelId" jdbcType="BIGINT" property="novelid"/>
+        <result column="novelId" jdbcType="INTEGER" property="novelid"/>
         <result column="chapter" jdbcType="VARCHAR" property="chapter"/>
         <result column="chapterUrl" jdbcType="VARCHAR" property="chapterurl"/>
     </resultMap>
@@ -27,11 +27,9 @@
         WHERE chapterId = #{chapterId} AND chapter is null;
     </update>
     <!--根据小说id返回章节列表 -->
-    <select id="selectInfoByNovelId" parameterType="java.lang.Long" resultType="com.keduw.model.Chapter">
+    <select id="selectInfoByNovelId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
-        ,
-        <include refid="Blob_Column_List" />
-        FROM chapter WHERE NovelId = #{NovelId};
+        FROM chapter WHERE novelId = #{novelId};
     </select>
 </mapper>

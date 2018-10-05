@@ -5,7 +5,7 @@ package com.keduw.model;
  * @author hsfeng
  */
 public class Novel {
-    private Long novelid;
+    private Integer novelid;
 
     private String novelname;
 
@@ -23,11 +23,11 @@ public class Novel {
 
     private String brief;
 
-    public Long getNovelid() {
+    public Integer getNovelid() {
         return novelid;
     }
 
-    public void setNovelid(Long novelid) {
+    public void setNovelid(Integer novelid) {
         this.novelid = novelid;
     }
 

@@ -3,106 +3,99 @@ package com.keduw.crawler;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
-import cn.edu.hfut.dmic.webcollector.util.Config;
 import com.keduw.model.Chapter;
 import com.keduw.model.Novel;
-import com.keduw.util.IdUtil;
-import com.keduw.util.SplitUtil;
-import com.keduw.util.UrlUtil;
+import com.keduw.model.NovelColl;
+import com.keduw.util.BaseUtil;
+import com.keduw.util.CateUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * 小说信息爬虫，用阻塞队列存储爬取小说和对应章节信息
+ */
 public class NovelCrawler extends BreadthCrawler {
 
-    private static String URL = "https://www.biquge5.com/16_16836/"; // 种子页面
-    private static String REGEX = "https://www.biquge5.com/[0-9]+_[0-9]+/?"; // 采集规则
-    private   List<Novel> novelsList;
-    private   List<Chapter> ChapterList;
-    private  int categoryId = 0;
+    private String URL = "https://www.biquge5.com"; // 种子页面
+    private String REGEX = "https://www.biquge5.com/[0-9]+_[0-9]+/?"; // 采集规则
+    private final int QUEUE_LENGTH = 10000 * 10; // 队列大小，10万本小说
+    public BlockingQueue<NovelColl> novelQueue = null;  //阻塞队列
 
-
-    /**
-     * 构造一个基于伯克利DB的爬虫
-     * 伯克利DB文件夹为crawlPath，crawlPath中维护了历史URL等信息
-     * 不同任务不要使用相同的crawlPath
-     * 两个使用相同crawlPath的爬虫并行爬取会产生错误
-     *
-     * @param crawlPath 伯克利DB使用的文件夹
-     * @param autoParse 是否根据设置的正则自动探测新URL
-     */
     public NovelCrawler(String crawlPath, boolean autoParse) {
         super(crawlPath, autoParse);
-        //this.addSeed(URL);
-       // this.addRegex(REGEX);
-        this.addRegex("-.*\\.(jpg|png|gif).*");
-        this.setThreads(10);
-        this.setResumable(false); //停止后下次继续爬取
-        this.setExecuteInterval(1000); //线程之间的等待时间
-        this.setTopN(100000);
-        Config.MAX_EXECUTE_COUNT = 3;
-        Config.TIMEOUT_CONNECT = 4000;
-
-        novelsList = Collections.synchronizedList(new ArrayList<>());
-        ChapterList = Collections.synchronizedList(new ArrayList<>());
-    }
-
-    public  List<Novel> getNovelsList() {
-        return novelsList;
-    }
-
-    public List<Chapter> getChapterList() {
-        return ChapterList;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+        this.addSeed(URL);
+        this.addRegex(REGEX);
+        this.addRegex("-.*\\.(jpg|png|gif).*"); //不匹配图片
+        this.addRegex("-.*#.*"); //不匹配#**的链接
+        this.setThreads(10); //线程数
+        this.setResumable(true); //停止后下次继续爬取
+        getConf().setExecuteInterval(1000); //设置线程之间的等待时间
+        getConf().setTopN(100000); //爬取URL上限
+        novelQueue = new LinkedBlockingQueue<NovelColl>(QUEUE_LENGTH);
     }
 
     @Override
-    public void visit(Page page, CrawlDatums next) {
-        if(page.matchUrl(REGEX)){
-            Novel novel = new Novel();
-            novel.setNovelid(IdUtil.getId());
+    public void visit(Page page, CrawlDatums crawlDatums) {
+        if(page.matchUrl(REGEX)) {
             Document document = page.doc();
-            Elements elements = document.select("div#info");
-            if(!elements.isEmpty()){
-                Element e = elements.get(0);
-                String title = e.getElementsByTag("h1").get(0).text();
-                System.out.println("title:"+title);
-                String author = e.getElementsByTag("p").get(0).text();
-                String status = e.getElementsByTag("p").get(1).text();
-                String lastTime = e.getElementsByTag("p").get(2).text();
+            Elements baseInfo = document.select("div[id=info]");
+            Novel novel = new Novel();
+            if(baseInfo != null && !baseInfo.isEmpty()){
+                Element info = baseInfo.get(0);
+                String title = info.getElementsByTag("h1").get(0).text(); //标题
+                String author = info.getElementsByTag("p").get(0).text(); //作者
+                String status = info.getElementsByTag("p").get(1).text(); //更新状态
+                String lastTime = info.getElementsByTag("p").get(2).text(); //最后更新时间
                 novel.setNovelname(title);
-                novel.setAuthor(SplitUtil.tirmStr(author));
-                novel.setStatus(SplitUtil.tirmStr(status));
-                novel.setLasttime(SplitUtil.tirmStr(lastTime));
-                novel.setNovelurl(page.getUrl());
+                novel.setAuthor(BaseUtil.tirmStr(author));
+                novel.setStatus(BaseUtil.tirmStr(status));
+                novel.setLasttime(BaseUtil.tirmStr(lastTime));
+                novel.setNovelurl(page.url());
             }
-            Elements intro = document.select("div#intro");
+            //类别
+            Elements conTop = document.select("div[class=con_top]");
+            if(!conTop.isEmpty()){
+                String category = conTop.get(0).getElementsByTag("a").get(4).text();
+                novel.setCategoryid(CateUtil.getId(category, 0));
+            }
+            //简介
+            Elements intro = document.select("div[id=intro]");
             if(!intro.isEmpty()){
-                Element e = intro.get(0);
-                String brief = e.getElementsByTag("p").get(0).text();
+                String brief = intro.get(0).getElementsByTag("p").get(0).text();
                 novel.setBrief(brief);
             }
-            Elements chapter = document.select("ul._chapter li a");
-            int num = 0;
-            for (Element e:chapter
-                 ) {
-                 Chapter chapterTmp =  new Chapter();
-                 String url =  e.attr("href");
-                 chapterTmp.setNovelid(novel.getNovelid());
-                 chapterTmp.setChapterurl(UrlUtil.Urltrim(url));
-                 ChapterList.add(chapterTmp);
-                 num++;
+            //章节
+            Elements chapter = document.select("ul[class=_chapter] li a");
+            List<Chapter> chapterList = new ArrayList<>();
+            for (Element element:chapter) {
+                Chapter info =  new Chapter();
+                String url =  element.attr("href");
+                info.setNovelid(novel.getNovelid());
+                info.setChapterurl(BaseUtil.urlTrim(url));
+                chapterList.add(info);
             }
-            novel.setChaptersize(num);
-            novel.setCategoryid(categoryId);
-            novelsList.add(novel);
+            novel.setChaptersize(chapter.size());
+            //将爬取信息存储到队列中
+            NovelColl novelColl = new NovelColl();
+            novelColl.setNovel(novel);
+            novelColl.setChapters(chapterList);
+            try {
+                novelQueue.put(novelColl);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
+    }
+
+    public static void main(String args[]) throws Exception{
+        NovelCrawler crawl = new NovelCrawler("crawl",true);
+        crawl.start(5);
+        System.out.println("爬虫结束");
     }
 }
