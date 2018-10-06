@@ -19,8 +19,8 @@ import java.util.List;
 @Component
 public class NovelSchedule {
 
-    //每周六的1点启动小说爬虫，爬取是否有新小说
-    @Scheduled(cron = "0 0 1 * * SAT")
+    //每周六的0点启动小说爬虫，爬取是否有新小说
+    @Scheduled(cron = "0 0 0 * * SAT")
     public void novelCollect() throws Exception{
         NovelCrawler crawl = new NovelCrawler("crawl",true);
         crawl.start(5);
@@ -29,8 +29,8 @@ public class NovelSchedule {
         thread.start();
     }
 
-    //每天1点30分检查连载中小说的章节更新情况
-    @Scheduled(cron = "0 30 1 * * ? ")
+    //每天0点30分检查连载中小说的章节更新情况
+    @Scheduled(cron = "0 30 0 * * ? ")
     public void infoCheck() throws Exception{
         //小说总数
         NovelService novelService = (NovelService) ApplicationUtil.getBean("novelService");
@@ -52,8 +52,8 @@ public class NovelSchedule {
         }
     }
 
-    //每天2点30分爬取章节内容
-    @Scheduled(cron = "0 25 22 * * ? ")
+    //每天1点爬取章节内容
+    @Scheduled(cron = "0 0 1 * * ? ")
     public void infoCollect() throws Exception{
         //获取总章节数
         ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
