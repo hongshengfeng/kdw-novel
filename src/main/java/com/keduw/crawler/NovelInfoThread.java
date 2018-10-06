@@ -56,6 +56,8 @@ public class NovelInfoThread implements Runnable{
                     }else {
                         continue;
                     }
+                    System.out.println("队列剩余消费个数：" + novelQueue.size());
+                    Thread.sleep(500);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

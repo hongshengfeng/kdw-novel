@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class NovelSchedule {
 
-    // 每天凌晨一点启动小说爬虫
-    @Scheduled(cron = "0 37 14 * * ? ")
+    // 每个月的6号15：30启动小说爬虫，会爬取所有小说
+    @Scheduled(cron = "0 31 15 6 * ? ")
     public void novelCollect() throws Exception{
         NovelCrawler crawl = new NovelCrawler("crawl",true);
         NovelInfoThread saveInfo = new NovelInfoThread(crawl.novelQueue);
