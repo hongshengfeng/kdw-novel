@@ -25,7 +25,7 @@ public class NovelCrawler extends BreadthCrawler {
     private String URL = "https://www.biquge5.com"; // 种子页面
     private String REGEX = "https://www.biquge5.com/[0-9]+_[0-9]+/?"; // 采集规则
     private final int QUEUE_LENGTH = 10000 * 10; // 队列大小，10万本小说
-    public BlockingQueue<NovelColl> novelQueue = null;  //阻塞队列
+    BlockingQueue<NovelColl> novelQueue = null;  //阻塞队列
 
     public NovelCrawler(String crawlPath, boolean autoParse) {
         super(crawlPath, autoParse);
@@ -91,11 +91,5 @@ public class NovelCrawler extends BreadthCrawler {
                 e.printStackTrace();
             }
         }
-    }
-
-    public static void main(String args[]) throws Exception{
-        NovelCrawler crawl = new NovelCrawler("crawl",true);
-        crawl.start(5);
-        System.out.println("爬虫结束");
     }
 }
