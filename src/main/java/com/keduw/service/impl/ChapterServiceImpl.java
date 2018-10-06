@@ -31,17 +31,29 @@ public class ChapterServiceImpl implements ChapterService {
     @Value("chapter")
     private String keys;
 
-    //插入章节（后续分表在这里操作）
+    //插入章节信息
     @Override
-    public void insertChapter(Chapter chapter) {
-        chapterMapper.insertChapter(chapter);
+    public void insertChapter(List<Chapter> chapterList) {
+        if(chapterList != null && chapterList.size() > 0){
+            chapterMapper.insertChapter(chapterList);
+            //清除对应小说的章节缓存
+            int novelId = chapterList.get(0).getNovelId();
+            String field = "chapter" + novelId;
+            jedisClient.hdel(keys, field);
+        }
     }
 
 
-    //更新章节列表（后续分表在这里操作）
+    //更新章节列表
     @Override
-    public void updateChapter(Chapter chapter) {
-        chapterMapper.updateChapter(chapter);
+    public void updateChapter(List<Chapter> chapterList) {
+        if(chapterList != null && chapterList.size() > 0){
+            chapterMapper.updateChapter(chapterList);
+            //清除对应小说的章节缓存
+            int novelId = chapterList.get(0).getNovelId();
+            String field = "chapter" + novelId;
+            jedisClient.hdel(keys, field);
+        }
     }
 
 

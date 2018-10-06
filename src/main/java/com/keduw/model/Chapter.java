@@ -4,30 +4,30 @@ package com.keduw.model;
  * 章节信息
  */
 public class Chapter {
-    private Integer chapterid;
+    private Integer chapterId;
 
-    private Integer novelid;
+    private Integer novelId;
 
     private String chapter;
 
-    private String chapterurl;
+    private String chapterUrl;
 
     private String content;
 
-    public Integer getChapterid() {
-        return chapterid;
+    public Integer getChapterId() {
+        return chapterId;
     }
 
-    public void setChapterid(Integer chapterid) {
-        this.chapterid = chapterid;
+    public void setChapterId(Integer chapterId) {
+        this.chapterId = chapterId;
     }
 
-    public Integer getNovelid() {
-        return novelid;
+    public Integer getNovelId() {
+        return novelId;
     }
 
-    public void setNovelid(Integer novelid) {
-        this.novelid = novelid;
+    public void setNovelId(Integer novelId) {
+        this.novelId = novelId;
     }
 
     public String getChapter() {
@@ -35,15 +35,15 @@ public class Chapter {
     }
 
     public void setChapter(String chapter) {
-        this.chapter = chapter == null ? null : chapter.trim();
+        this.chapter = chapter;
     }
 
-    public String getChapterurl() {
-        return chapterurl;
+    public String getChapterUrl() {
+        return chapterUrl;
     }
 
-    public void setChapterurl(String chapterurl) {
-        this.chapterurl = chapterurl == null ? null : chapterurl.trim();
+    public void setChapterUrl(String chapterUrl) {
+        this.chapterUrl = chapterUrl;
     }
 
     public String getContent() {
@@ -51,6 +51,6 @@ public class Chapter {
     }
 
     public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+        this.content = content;
     }
 }

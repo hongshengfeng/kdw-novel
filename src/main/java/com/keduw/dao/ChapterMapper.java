@@ -16,10 +16,10 @@ import java.util.List;
 @Mapper
 public interface ChapterMapper {
     //插入章节
-    void insertChapter(Chapter chapter);
+    void insertChapter(List<Chapter> chapterList);
 
     //更新章节信息
-    void updateChapter(Chapter chapter);
+    void updateChapter(List<Chapter> chapterList);
 
     //根据novelId返回章节信息
     List<Chapter> selectInfoByNovelId(int novelId);

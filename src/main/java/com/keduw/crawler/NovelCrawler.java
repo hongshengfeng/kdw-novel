@@ -18,7 +18,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * 小说信息爬虫，用阻塞队列存储爬取小说和对应章节信息
+ * 小说基础信息爬虫，更新小说章节信息，用阻塞队列存储爬取小说和对应章节信息
  */
 public class NovelCrawler extends BreadthCrawler {
 
@@ -52,17 +52,17 @@ public class NovelCrawler extends BreadthCrawler {
                 String author = info.getElementsByTag("p").get(0).text(); //作者
                 String status = info.getElementsByTag("p").get(1).text(); //更新状态
                 String lastTime = info.getElementsByTag("p").get(2).text(); //最后更新时间
-                novel.setNovelname(title);
+                novel.setNovelName(title);
                 novel.setAuthor(BaseUtil.tirmStr(author));
                 novel.setStatus(BaseUtil.tirmStr(status));
-                novel.setLasttime(BaseUtil.tirmStr(lastTime));
-                novel.setNovelurl(page.url());
+                novel.setLastTime(BaseUtil.tirmStr(lastTime));
+                novel.setNovelUrl(page.url());
             }
             //类别
             Elements conTop = document.select("div[class=con_top]");
             if(!conTop.isEmpty()){
                 String category = conTop.get(0).getElementsByTag("a").get(4).text();
-                novel.setCategoryid(CateUtil.getId(category, 0));
+                novel.setCategoryId(CateUtil.getId(category, 0));
             }
             //简介
             Elements intro = document.select("div[id=intro]");
@@ -76,11 +76,13 @@ public class NovelCrawler extends BreadthCrawler {
             for (Element element:chapter) {
                 Chapter info =  new Chapter();
                 String url =  element.attr("href");
-                info.setNovelid(novel.getNovelid());
-                info.setChapterurl(BaseUtil.urlTrim(url));
+                String content = element.text();
+                info.setNovelId(novel.getNovelId());
+                info.setChapter(content);
+                info.setChapterUrl(BaseUtil.urlTrim(url));
                 chapterList.add(info);
             }
-            novel.setChaptersize(chapter.size());
+            novel.setChapterSize(chapter.size());
             //将爬取信息存储到队列中
             NovelColl novelColl = new NovelColl();
             novelColl.setNovel(novel);

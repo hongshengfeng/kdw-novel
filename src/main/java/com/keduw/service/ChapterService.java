@@ -15,10 +15,10 @@ import java.util.List;
 public interface ChapterService {
 
      //插入章节
-     void insertChapter(Chapter chapter);
+     void insertChapter(List<Chapter> chapterList);
 
      //更新章节列表
-     void updateChapter(Chapter chapter);
+     void updateChapter(List<Chapter> chapterList);
 
      //通过小说id返回章节列表
      List<Chapter> getChapterList(int NovelId);

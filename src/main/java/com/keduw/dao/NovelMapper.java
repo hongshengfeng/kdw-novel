@@ -2,6 +2,8 @@ package com.keduw.dao;
 
 import com.keduw.model.Novel;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -13,7 +15,7 @@ import java.util.List;
 public interface NovelMapper {
 
      //插入小说信息
-     void insertNovel(Novel novel);
+     int insertNovel(Novel novel);
 
      //通过小说名字查找小说，可模糊查询
      List<Novel> selectNovelByName(String novelName);
@@ -35,4 +37,7 @@ public interface NovelMapper {
 
      //查询热门小说列表
      List<Novel> seletHotNovelInfo();
+
+     //根据名字和作者获取小说的基础信息
+     Novel selectInfoByName(@Param("name") String name, @Param("author") String author);
 }

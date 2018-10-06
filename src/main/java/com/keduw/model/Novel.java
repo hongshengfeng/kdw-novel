@@ -5,38 +5,38 @@ package com.keduw.model;
  * @author hsfeng
  */
 public class Novel {
-    private Integer novelid;
+    private Integer novelId;
 
-    private String novelname;
+    private String novelName;
 
     private String author;
 
-    private Integer categoryid;
+    private Integer categoryId;
 
     private String status;
 
-    private String lasttime;
+    private String lastTime;
 
-    private String novelurl;
+    private String novelUrl;
 
-    private Integer chaptersize;
+    private Integer chapterSize;
 
     private String brief;
 
-    public Integer getNovelid() {
-        return novelid;
+    public Integer getNovelId() {
+        return novelId;
     }
 
-    public void setNovelid(Integer novelid) {
-        this.novelid = novelid;
+    public void setNovelId(Integer novelId) {
+        this.novelId = novelId;
     }
 
-    public String getNovelname() {
-        return novelname;
+    public String getNovelName() {
+        return novelName;
     }
 
-    public void setNovelname(String novelname) {
-        this.novelname = novelname == null ? null : novelname.trim();
+    public void setNovelName(String novelName) {
+        this.novelName = novelName;
     }
 
     public String getAuthor() {
@@ -44,15 +44,15 @@ public class Novel {
     }
 
     public void setAuthor(String author) {
-        this.author = author == null ? null : author.trim();
+        this.author = author;
     }
 
-    public Integer getCategoryid() {
-        return categoryid;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoryid(Integer categoryid) {
-        this.categoryid = categoryid;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getStatus() {
@@ -60,31 +60,31 @@ public class Novel {
     }
 
     public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+        this.status = status;
     }
 
-    public String getLasttime() {
-        return lasttime;
+    public String getLastTime() {
+        return lastTime;
     }
 
-    public void setLasttime(String lasttime) {
-        this.lasttime = lasttime == null ? null : lasttime.trim();
+    public void setLastTime(String lastTime) {
+        this.lastTime = lastTime;
     }
 
-    public String getNovelurl() {
-        return novelurl;
+    public String getNovelUrl() {
+        return novelUrl;
     }
 
-    public void setNovelurl(String novelurl) {
-        this.novelurl = novelurl == null ? null : novelurl.trim();
+    public void setNovelUrl(String novelUrl) {
+        this.novelUrl = novelUrl;
     }
 
-    public Integer getChaptersize() {
-        return chaptersize;
+    public Integer getChapterSize() {
+        return chapterSize;
     }
 
-    public void setChaptersize(Integer chaptersize) {
-        this.chaptersize = chaptersize;
+    public void setChapterSize(Integer chapterSize) {
+        this.chapterSize = chapterSize;
     }
 
     public String getBrief() {
@@ -92,6 +92,6 @@ public class Novel {
     }
 
     public void setBrief(String brief) {
-        this.brief = brief == null ? null : brief.trim();
+        this.brief = brief;
     }
 }

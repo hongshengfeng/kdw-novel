@@ -10,7 +10,7 @@ public interface NovelService {
     List<Novel> getNovelList(int curr, int size, int...category);
 
     //插入小说信息
-    void insertNovel(Novel novel);
+    int insertNovel(Novel novel);
 
     //通过小说名字查找小说，可模糊查询
     List<Novel> getNovelByName(String novelName);
@@ -18,12 +18,12 @@ public interface NovelService {
     //通过novelId查找小说
     Novel getNovelById(int novelId);
 
-    //获取所有小说
-    List<Novel> getAllNovelInfo();
-
     //最新小说
     List<Novel> getNewInfo();
 
     //热门小说
     List<Novel> getHotInfo();
+
+    //判断小说是否存在或更新
+    int isExitOrUpdate(Novel novel);
 }

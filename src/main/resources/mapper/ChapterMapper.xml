@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.keduw.dao.ChapterMapper">
     <resultMap id="BaseResultMap" type="com.keduw.model.Chapter">
-        <id column="chapterId" jdbcType="INTEGER" property="chapterid"/>
-        <result column="novelId" jdbcType="INTEGER" property="novelid"/>
+        <id column="chapterId" jdbcType="INTEGER" property="chapterId"/>
+        <result column="novelId" jdbcType="INTEGER" property="novelId"/>
         <result column="chapter" jdbcType="VARCHAR" property="chapter"/>
-        <result column="chapterUrl" jdbcType="VARCHAR" property="chapterurl"/>
+        <result column="chapterUrl" jdbcType="VARCHAR" property="chapterUrl"/>
     </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.keduw.model.Chapter">
         <result column="content" jdbcType="LONGVARCHAR" property="content"/>
@@ -16,17 +16,24 @@
     <sql id="Blob_Column_List">
         content
     </sql>
-    <!--新增章节信息 -->
-    <insert id="insertChapter" parameterType="com.keduw.model.Chapter">
+    <!--新增章节信息-->
+    <insert id="insertChapter" parameterType="java.util.List">
         INSERT INTO chapter(novelId, chapter, content, chapterUrl)
-        VALUES(#{novelId}, #{chapter}, #{content}, #{chapterUrl});
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.novelId}, #{item.chapter}, #{item.content}, #{item.chapterUrl})
+        </foreach>
     </insert>
-    <!--更新章节名字以及内容 -->
-    <update id="updateChapter" parameterType="com.keduw.model.Chapter">
-        UPDATE chapterInfo SET chapter = #{chapter},content = #{content}
-        WHERE chapterId = #{chapterId} AND chapter is null;
-    </update>
-    <!--根据小说id返回章节列表 -->
+    <!--更新章节名字以及内容，存在更新章节名称，不存在插入-->
+    <insert id="updateChapter" parameterType="java.util.List">
+        INSERT INTO chapter(novelId, chapter, content, chapterUrl)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.novelId}, #{item.chapter}, #{item.content}, #{item.chapterUrl})
+        </foreach>
+        ON DUPLICATE KEY UPDATE chapter = VALUES(chapter)
+    </insert>
+    <!--根据小说id返回章节列表-->
     <select id="selectInfoByNovelId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />

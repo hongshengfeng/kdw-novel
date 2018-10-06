@@ -64,10 +64,16 @@ public class NovelServiceImpl implements NovelService {
 
     //插入小说信息
     @Override
-    public void insertNovel(Novel novel) {
-        novelMapper.insertNovel(novel);
-        //清除原有的redis缓存
-        jedisClient.del(novelList);
+    public int insertNovel(Novel novel) {
+        int novelId = 0;
+        if(novel != null){
+            novelId = novelMapper.insertNovel(novel);
+            if(novelId > 0){
+                //清除原有的redis缓存
+                jedisClient.del(novelList);
+            }
+        }
+        return novelId;
     }
 
     //通过关键字查询小说
@@ -91,12 +97,6 @@ public class NovelServiceImpl implements NovelService {
             }
         }
         return novel;
-    }
-
-    //获取所有的小说列表
-    @Override
-    public List<Novel> getAllNovelInfo() {
-        return novelMapper.seletAllNovelInfo();
     }
 
     //最新小说
@@ -133,5 +133,22 @@ public class NovelServiceImpl implements NovelService {
             }
         }
         return list;
+    }
+
+    //判断小说是否存在或更新
+    @Override
+    public int isExitOrUpdate(Novel novel) {
+        String name = novel.getNovelName();
+        String author = novel.getAuthor();
+        int size = novel.getChapterSize();
+        int result = 0; //0-小说不存在，1-存在，章节需要更新，2-无变化
+        if(name != null && !name.isEmpty()){
+            Novel info = novelMapper.selectInfoByName(name, author);
+            if(info != null){
+                novel.setNovelId(info.getNovelId());
+                result = info.getChapterSize() == size ? 2 : 1;
+            }
+        }
+        return result;
     }
 }

@@ -4,16 +4,16 @@ package com.keduw.model;
  * 类别信息
  */
 public class Category {
-    private Integer categoryid;
+    private Integer categoryId;
 
     private String category;
 
-    public Integer getCategoryid() {
-        return categoryid;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoryid(Integer categoryid) {
-        this.categoryid = categoryid;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getCategory() {
@@ -21,6 +21,6 @@ public class Category {
     }
 
     public void setCategory(String category) {
-        this.category = category == null ? null : category.trim();
+        this.category = category;
     }
 }
