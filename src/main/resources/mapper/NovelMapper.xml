@@ -70,4 +70,7 @@
         <include refid="Base_Column_List" />
         FROM novel WHERE novelname = #{name} AND author = #{author}
     </select>
+    <select id="selectInfoCount" resultType="java.lang.Integer">
+        SELECT count(novelId) FROM novel;
+    </select>
 </mapper>

@@ -151,4 +151,11 @@ public class NovelServiceImpl implements NovelService {
         }
         return result;
     }
+
+    //获取小说总数
+    @Override
+    public int getNovelCount() {
+        return novelMapper.selectInfoCount();
+    }
+
 }

@@ -40,4 +40,7 @@ public interface NovelMapper {
 
      //根据名字和作者获取小说的基础信息
      Novel selectInfoByName(@Param("name") String name, @Param("author") String author);
+
+     //查询小说的总数
+     int selectInfoCount();
 }

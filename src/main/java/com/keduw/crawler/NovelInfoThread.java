@@ -26,6 +26,7 @@ public class NovelInfoThread implements Runnable{
     @Override
     public void run() {
         while (true){
+            int timer = 0;
             if(novelQueue != null && novelQueue.size() > 0){
                 NovelColl novelColl = null;
                 try{
@@ -61,6 +62,12 @@ public class NovelInfoThread implements Runnable{
                 }catch (Exception e){
                     e.printStackTrace();
                 }
+            }else{
+                timer ++ ;
+            }
+            //timer大于3则表示队列已经被消费完，退出该循环
+            if(timer >= 3){
+                break;
             }
         }
     }

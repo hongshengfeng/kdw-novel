@@ -26,4 +26,7 @@ public interface NovelService {
 
     //判断小说是否存在或更新
     int isExitOrUpdate(Novel novel);
+
+    //获取小说总数
+    int getNovelCount();
 }
