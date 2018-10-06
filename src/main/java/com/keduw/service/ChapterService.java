@@ -22,4 +22,10 @@ public interface ChapterService {
 
      //通过小说id返回章节列表
      List<Chapter> getChapterList(int NovelId);
+
+     //获取章节总数
+     int getInfoCounts();
+
+     //查询章节内容为空的数据
+     List<Chapter> getChapterList(int start, int size);
 }

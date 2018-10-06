@@ -31,12 +31,22 @@
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.novelId}, #{item.chapter}, #{item.content}, #{item.chapterUrl})
         </foreach>
-        ON DUPLICATE KEY UPDATE chapter = VALUES(chapter)
+        ON DUPLICATE KEY UPDATE chapter = VALUES(chapter),content = VALUES(content)
     </insert>
     <!--根据小说id返回章节列表-->
     <select id="selectInfoByNovelId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
-        FROM chapter WHERE novelId = #{novelId};
+        FROM chapter WHERE novelId = #{novelId}
+    </select>
+    <!--获取章节总数-->
+    <select id="selectCounts" resultType="java.lang.Integer">
+        SELECT COUNT(chapterId) FROM chapter
+    </select>
+    <!--获取content为空的章节列表-->
+    <select id="selectInfoByContent" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM chapter WHERE content is null
     </select>
 </mapper>

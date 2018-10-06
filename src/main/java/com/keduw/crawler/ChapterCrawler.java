@@ -13,6 +13,7 @@ import org.jsoup.select.Elements;
 public class ChapterCrawler extends BreadthCrawler {
 
     private Chapter chapter;
+    private String REGEX = "https://www.biquge5.com/[0-9]+_[0-9]+/[0-9]+.html"; // 采集规则
 
     public ChapterCrawler(String crawlPath, boolean autoParse, Chapter curr) {
         super(crawlPath, autoParse);
@@ -25,10 +26,11 @@ public class ChapterCrawler extends BreadthCrawler {
 
     @Override
     public void visit(Page page, CrawlDatums crawlDatums) {
-        Document document = page.doc();
-        Elements contents = document.select("div#content");
-        String content = contents.get(0).text();
-        System.out.println(content);
-        chapter.setContent(content);
+        if(page.matchUrl(REGEX)) {
+            Document document = page.doc();
+            Elements contents = document.select("div[id=content]");
+            String content = contents.get(0).html();
+            chapter.setContent(content);
+        }
     }
 }

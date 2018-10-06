@@ -1,5 +1,6 @@
 package com.keduw.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.keduw.dao.ChapterMapper;
 import com.keduw.jedis.JedisClient;
 import com.keduw.model.Chapter;
@@ -73,6 +74,20 @@ public class ChapterServiceImpl implements ChapterService {
                 jedisClient.hset(keys, field, JsonUtils.objectToJson(list));
             }
         }
+        return list;
+    }
+
+    //获取章节总数
+    @Override
+    public int getInfoCounts() {
+        return chapterMapper.selectCounts();
+    }
+
+    //查询章节内容为空的数据
+    @Override
+    public List<Chapter> getChapterList(int start, int size) {
+        PageHelper.startPage(start, size);
+        List<Chapter> list = chapterMapper.selectInfoByContent();
         return list;
     }
 
