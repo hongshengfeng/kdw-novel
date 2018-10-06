@@ -18,21 +18,21 @@
         <div class="content">
             <div class="content-left">
                 <el-menu :default-active="active" class="el-menu-demo" mode="horizontal" @select="handle">
-                    <el-menu-item v-for="item in catagorys" :index="item.categoryid">{{item.category}}</el-menu-item>
+                    <el-menu-item v-for="item in catagorys" :index="item.categoryId">{{item.category}}</el-menu-item>
                 </el-menu>
                 <div class="nov_info">
-                    <el-card shadow="hover" v-for="novel in novelList" :class="infoClass(novel.categoryid)" @click.native="info(novel.novelid)">
+                    <el-card shadow="hover" v-for="novel in novelList" :class="infoClass(novel.categoryId)" @click.native="info(novel.novelId)">
                         <div class="base-info">
                             <span v-if="isReco">
-                                <span class="classify coatard" v-if="novel.categoryid == 1">修真</span>
-                                <span class="classify city" v-else-if="novel.categoryid == 2">都市</span>
-                                <span class="classify across" v-else-if="novel.categoryid == 3">穿越</span>
-                                <span class="classify fantasy" v-else-if="novel.categoryid == 4">玄幻</span>
-                                <span class="classify science" v-else-if="novel.categoryid == 5">科幻</span>
+                                <span class="classify coatard" v-if="novel.categoryId == 1">修真</span>
+                                <span class="classify city" v-else-if="novel.categoryId == 2">都市</span>
+                                <span class="classify across" v-else-if="novel.categoryId == 3">穿越</span>
+                                <span class="classify fantasy" v-else-if="novel.categoryId == 4">玄幻</span>
+                                <span class="classify science" v-else-if="novel.categoryId == 5">科幻</span>
                                 <span class="classify game" v-else>网游</span>
                             </span>
-                            <span class="name"><a href="#">{{novel.novelname}}</a></span>
-                            <span class="updateTime">{{novel.lasttime}}</span>
+                            <span class="name"><a href="#">{{novel.novelName}}</a></span>
+                            <span class="updateTime">{{novel.lastTime}}</span>
                         </div>
                         <div class="brief-info">
                             <span>简介：</span>
@@ -49,12 +49,12 @@
                         <i class="iconfont icon-icon--1"></i>
                         <span class="title">最新小说</span>
                     </div>
-                    <el-collapse-item v-for="(item,index) in newList" :title="item.novelname" :name="index+1">
+                    <el-collapse-item v-for="(item,index) in newList" :title="item.novelName" :name="index+1">
                         <div>作者：{{item.author}}（{{item.status}}）</div>
                         <div v-if="item.brief != ''">{{item.brief}}</div>
                         <div v-else>还没获取到该小说的简介。</div>
                         <div class="detail">
-                            <a href="javascript:void(0);" @click="info(item.novelid)">阅读详情</a>
+                            <a href="javascript:void(0);" @click="info(item.novelId)">阅读详情</a>
                         </div>
                     </el-collapse-item>
                 </el-collapse>
@@ -63,12 +63,12 @@
                         <i class="iconfont icon-icon--1"></i>
                         <span class="title">热门小说</span>
                     </div>
-                    <el-collapse-item v-for="item in hotList" :title="item.novelname">
+                    <el-collapse-item v-for="item in hotList" :title="item.novelName">
                         <div>作者：{{item.author}}（{{item.status}}）</div>
                         <div v-if="item.brief != ''">{{item.brief}}</div>
                         <div v-else>还没获取到该小说的简介。</div>
                         <div class="detail">
-                            <a href="javascript:void(0);" @click="info(item.novelid)">阅读详情</a>
+                            <a href="javascript:void(0);" @click="info(item.novelId)">阅读详情</a>
                         </div>
                     </el-collapse-item>
                 </el-collapse>

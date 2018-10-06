@@ -1,7 +1,7 @@
 var info = new Vue({
     el: '#app',
     data: {
-        chaptersize: novel.chapterSize,
+        chapterSize: novel.chapterSize,
         currChapter: 1,
         chapterList: null,
         rigAdv: true,
@@ -14,7 +14,6 @@ var info = new Vue({
             async: true,
             url: "/chapter/list/" + novel.novelId,
             success: function(data){
-                console.log(data);
                 _self.chapterList = data;
             },
             error: function () {

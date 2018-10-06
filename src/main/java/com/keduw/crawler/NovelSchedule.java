@@ -30,7 +30,7 @@ public class NovelSchedule {
     }
 
     //每天0点30分检查连载中小说的章节更新情况
-    @Scheduled(cron = "0 30 0 * * ? ")
+    @Scheduled(cron = "0 30 10 * * ? ")
     public void infoCheck() throws Exception{
         //小说总数
         NovelService novelService = (NovelService) ApplicationUtil.getBean("novelService");
@@ -53,7 +53,7 @@ public class NovelSchedule {
     }
 
     //每天1点爬取章节内容
-    @Scheduled(cron = "0 0 1 * * ? ")
+    @Scheduled(cron = "0 0 10 * * ? ")
     public void infoCollect() throws Exception{
         //获取总章节数
         ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");

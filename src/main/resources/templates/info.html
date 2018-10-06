@@ -17,20 +17,20 @@
         <div class="noveInfo">
             <div class="content-left">
                 <div class="kd-top">
-                    <div class="kd-title" th:text="${novel.novelname}">小说名字</div>
+                    <div class="kd-title" th:text="${novel.novelName}">小说名字</div>
                     <div class="kd-bar">
-                        <div class="kd-txt" th:if="${novel.categoryid ==  1}">修真小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryid ==  2}">都市小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryid ==  3}">穿越小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryid ==  4}">玄幻小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryid ==  5}">科幻小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryid ==  6}">网游小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryId ==  1}">修真小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryId ==  2}">都市小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryId ==  3}">穿越小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryId ==  4}">玄幻小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryId ==  5}">科幻小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryId ==  6}">网游小说</div>
                         <div class="kd-line"></div>
                         <div class="kd-txt" th:text="${novel.author}">作者：</div>
                         <div class="kd-line"></div>
                         <div class="kd-txt" th:text="${novel.status}">连载中</div>
                         <div class="kd-line"></div>
-                        <div class="kd-txt" th:text="${novel.lasttime}">2018-06-01</div>
+                        <div class="kd-txt" th:text="${novel.lastTime}">2018-06-01</div>
                     </div>
                 </div>
                 <div class="kd-art-content">小说内容</div>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="counts">
                     <span class="cur">已阅读：<el-progress :percentage="20"></el-progress></span>
-                    <span class="all">总章节：{{chaptersize}}</span>
+                    <span class="all">总章节：{{chapterSize}}</span>
                 </div>
                 <div class="notice">·文章内容来源于网络，如有侵权，请联系我们·</div>
             </div>
@@ -72,8 +72,8 @@
 </body>
 <script type="text/javascript" th:inline="javascript">
     var novel = {
-        novelId : [[${novel.novelid}]],
-        chapterSize : [[${novel.chaptersize}]]
+        novelId : [[${novel.novelId}]],
+        chapterSize : [[${novel.chapterSize}]]
     }
     console.log(novel);
 </script>
