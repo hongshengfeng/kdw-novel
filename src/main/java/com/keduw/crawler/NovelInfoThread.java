@@ -58,14 +58,18 @@ public class NovelInfoThread implements Runnable{
                         continue;
                     }
                     System.out.println("队列剩余消费个数：" + novelQueue.size());
-                    Thread.sleep(500);
-                }catch (Exception e){
+                }catch (InterruptedException e){
                     e.printStackTrace();
                 }
             }else{
+                try{
+                    Thread.sleep(3000);
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
                 timer ++ ;
             }
-            //timer大于3则表示队列已经被消费完，退出该循环
+            //timer大于3(9秒钟)，则表示队列已经被消费完，退出该循环
             if(timer >= 3){
                 break;
             }
