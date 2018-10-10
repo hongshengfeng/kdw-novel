@@ -144,4 +144,17 @@ public class JedisClientPool implements JedisClient {
             }
         }
     }
+
+    @Override
+    public Long sadd(String key, String... field) {
+        Jedis jedis = null;
+        try{
+            jedis = jedisPool.getResource();
+            return  jedis.sadd(key, field);
+        }finally {
+            if(jedis != null){
+                jedis.close();
+            }
+        }
+    }
 }
