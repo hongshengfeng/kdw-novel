@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50641
 File Encoding         : 65001
 
-Date: 2018-10-06 22:02:08
+Date: 2018-10-11 23:46:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,6 +24,17 @@ CREATE TABLE `category` (
   `category` varchar(20) NOT NULL,
   PRIMARY KEY (`categoryId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of category
+-- ----------------------------
+INSERT INTO `category` VALUES ('0', '推荐');
+INSERT INTO `category` VALUES ('1', '修真');
+INSERT INTO `category` VALUES ('2', '都市');
+INSERT INTO `category` VALUES ('3', '穿越');
+INSERT INTO `category` VALUES ('4', '玄幻');
+INSERT INTO `category` VALUES ('5', '科幻');
+INSERT INTO `category` VALUES ('6', '网游');
 
 -- ----------------------------
 -- Table structure for chapter
@@ -41,6 +52,10 @@ CREATE TABLE `chapter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of chapter
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for chapter0
 -- ----------------------------
 DROP TABLE IF EXISTS `chapter0`;
@@ -53,7 +68,11 @@ CREATE TABLE `chapter0` (
   PRIMARY KEY (`chapterId`),
   KEY `novelId` (`novelId`) USING BTREE,
   KEY `chapterId` (`chapterId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=205085 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of chapter0
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for chapter1
@@ -68,7 +87,11 @@ CREATE TABLE `chapter1` (
   PRIMARY KEY (`chapterId`),
   KEY `chapterId` (`chapterId`) USING BTREE,
   KEY `novelId` (`novelId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=204376 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of chapter1
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for chapter2
@@ -83,7 +106,11 @@ CREATE TABLE `chapter2` (
   PRIMARY KEY (`chapterId`),
   KEY `novelId` (`novelId`) USING BTREE,
   KEY `chapterId` (`chapterId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=196697 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of chapter2
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for chapter3
@@ -98,7 +125,11 @@ CREATE TABLE `chapter3` (
   PRIMARY KEY (`chapterId`),
   KEY `novelId` (`novelId`) USING BTREE,
   KEY `chapterId` (`chapterId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=190506 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of chapter3
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for chapter4
@@ -113,7 +144,11 @@ CREATE TABLE `chapter4` (
   PRIMARY KEY (`chapterId`),
   KEY `chapterId` (`chapterId`) USING BTREE,
   KEY `novelId` (`novelId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=186966 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of chapter4
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for chapter5
@@ -128,7 +163,11 @@ CREATE TABLE `chapter5` (
   PRIMARY KEY (`chapterId`),
   KEY `chapterId` (`chapterId`) USING BTREE,
   KEY `novelId` (`novelId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=184707 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of chapter5
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for chapter6
@@ -143,7 +182,11 @@ CREATE TABLE `chapter6` (
   PRIMARY KEY (`chapterId`),
   KEY `chapterId` (`chapterId`) USING BTREE,
   KEY `novelId` (`novelId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=198362 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of chapter6
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for chapter7
@@ -158,7 +201,11 @@ CREATE TABLE `chapter7` (
   PRIMARY KEY (`chapterId`),
   KEY `novelId` (`novelId`) USING BTREE,
   KEY `chapterId` (`chapterId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=208292 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of chapter7
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for chapter8
@@ -173,7 +220,11 @@ CREATE TABLE `chapter8` (
   PRIMARY KEY (`chapterId`),
   KEY `chapterId` (`chapterId`) USING BTREE,
   KEY `novelId` (`novelId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=201411 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of chapter8
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for chapter9
@@ -188,7 +239,11 @@ CREATE TABLE `chapter9` (
   PRIMARY KEY (`chapterId`),
   KEY `chapterId` (`chapterId`) USING BTREE,
   KEY `novelId` (`novelId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=178654 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of chapter9
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for novel
@@ -207,4 +262,8 @@ CREATE TABLE `novel` (
   PRIMARY KEY (`novelId`),
   KEY `category` (`categoryId`) USING BTREE,
   KEY `novelId` (`novelId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3359 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of novel
+-- ----------------------------
