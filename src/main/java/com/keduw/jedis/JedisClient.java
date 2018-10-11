@@ -14,7 +14,8 @@ public interface JedisClient {
     //删除String类型数据
     Long del(String... key);
 
-    //判断key是否存在
+    //判断ke
+    // 是否存在
     Boolean exists(String key);
 
     //修改key的生存时间
@@ -34,7 +35,6 @@ public interface JedisClient {
 
     //删除hash数据类型
     Long hdel(String key, String... field);
-
-
-
+    //添加set数据类型
+    Long sadd(String key, String... field);
 }
