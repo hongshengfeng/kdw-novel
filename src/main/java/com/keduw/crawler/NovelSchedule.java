@@ -32,17 +32,17 @@ public class NovelSchedule {
     }
 
     //每天0点30分检查连载中小说的章节更新情况
-    @Scheduled(cron = "0 30 10 * * ? ")
+    @Scheduled(cron = "0 30 0 * * ? ")
     public void infoCheck() throws Exception{
         //小说总数
         NovelService novelService = (NovelService) ApplicationUtil.getBean("novelService");
         int counts = novelService.getNovelCount();
-        int times = counts / 1000;
-        times = counts % 1000 == 0 ? times : times + 1;
+        int times = counts / 100;
+        times = counts % 100 == 0 ? times : times + 1;
         // 分批次检查小说的章节
         List<Novel> novelList = new ArrayList<>();
         for(int i = 1; i <= times; i++){
-            novelList = novelService.getNovelList(i, 1000);
+            novelList = novelService.getNovelList(i, 100);
             for(Novel novel : novelList){
                 if(novel.getStatus().equals("连载中")){
                     CheckCrawler crawler = new CheckCrawler("crawl",true, novel);
@@ -55,31 +55,28 @@ public class NovelSchedule {
     }
 
     //每天1点爬取章节内容
-    @Scheduled(cron = "0 22 20 * * ? ")
+    @Scheduled(cron = "0 51 21 * * ? ")
     public void infoCollect() throws Exception{
         //获取总章节数
         ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
         int counts = chapterService.getInfoCounts();
-        int times = counts / 1000;
-        times = counts % 1000 == 0 ? times : times + 1;
+        int times = counts / 100;
+        times = counts % 100 == 0 ? times : times + 1;
         List<Chapter> chapterList = new ArrayList<>();
         for(int i = 1; i <= times; i++){
-            chapterList = chapterService.getChapterList(i, 1000);
+            chapterList = chapterService.getChapterList(i, 100);
             // 阻塞队列用于存储一个章节内有多个页面的章节
             BlockingQueue<Chapter> chapterQueue = new LinkedBlockingQueue<Chapter>(10000 * 10);
             for(Chapter chapter : chapterList){
                 ChapterCrawler crawler = new ChapterCrawler("crawl", true, chapter, chapterQueue);
                 crawler.start(1);
-                while (crawler.isResumable()){
-                }
             }
             // 爬取下一页
             while (chapterQueue.size() > 0){
                 Chapter chapter = chapterQueue.poll(100, TimeUnit.MILLISECONDS);
                 ChapterCrawler crawler = new ChapterCrawler("crawl", true, chapter, chapterQueue);
                 crawler.start(1);
-                while (crawler.isResumable()){
-                }
+                System.out.println("章节内容：" + JsonUtils.objectToJson(chapter));
             }
             // 更新章节内容
             chapterService.updateChapter(chapterList);
