@@ -29,7 +29,7 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-			 b  <groupId>org.springframework.boot</groupId>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
@@ -111,6 +111,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
 </project>

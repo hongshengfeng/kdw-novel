@@ -24,14 +24,12 @@
             (#{item.novelId}, #{item.chapter}, #{item.content}, #{item.chapterUrl})
         </foreach>
     </insert>
-    <!--更新章节名字以及内容，存在更新章节名称，不存在插入-->
+    <!--更新章节名字以及内容-->
     <insert id="updateChapter" parameterType="java.util.List">
-        INSERT INTO chapter(novelId, chapter, content, chapterUrl)
-        VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.novelId}, #{item.chapter}, #{item.content}, #{item.chapterUrl})
+            UPDATE chapter SET chapter = #{item.chapter},content = #{item.content}
+            WHERE chapterId = #{item.chapterId} AND novelId = #{item.novelId}
         </foreach>
-        ON DUPLICATE KEY UPDATE chapter = VALUES(chapter),content = VALUES(content)
     </insert>
     <!--根据小说id返回章节列表-->
     <select id="selectInfoByNovelId" parameterType="java.lang.Integer" resultMap="BaseResultMap">

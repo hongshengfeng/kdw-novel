@@ -50,8 +50,22 @@ public class ChapterServiceImpl implements ChapterService {
     public void updateChapter(List<Chapter> chapterList) {
         if(chapterList != null && chapterList.size() > 0){
             chapterMapper.updateChapter(chapterList);
-            //清除对应小说的章节缓存
             int novelId = chapterList.get(0).getNovelId();
+            List<Chapter> newList = new ArrayList<>();  //存放新的章节
+            List<String> titleList = new ArrayList<>(); //已存在的章节名称集合
+            List<Chapter> currList = chapterMapper.selectInfoByNovelId(novelId);
+            for(Chapter currChapter : currList){
+                titleList.add(currChapter.getChapter());
+            }
+            for(Chapter chapter : chapterList){
+                //是否存在该章节
+                boolean flag = titleList.contains(chapter.getChapter());
+                if(!flag){
+                    newList.add(chapter);
+                }
+            }
+            chapterMapper.insertChapter(newList);
+            //清除对应小说的章节缓存
             String field = "chapter" + novelId;
             jedisClient.hdel(keys, field);
         }
