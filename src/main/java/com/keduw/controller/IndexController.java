@@ -6,6 +6,7 @@ import com.keduw.service.NovelService;
 import com.keduw.util.IpListUtil;
 import com.keduw.util.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,11 +24,17 @@ public class IndexController {
     private NovelService novelService;
     @Autowired
     private JedisClient jedisClient;
+    @Value("userIp")
+    private String keys;
 
     @RequestMapping("/")
     public String home(HttpServletRequest request){
         //获取访问服务器的ip并存储到redis中
-        jedisClient.sadd("ip",IpListUtil.getLocalIp(request));
+        String ip = IpListUtil.getLocalIp(request);
+        String fields = "ip_" + ip;
+        if(jedisClient.hget(keys, fields) == null){
+            jedisClient.hset(keys, fields, ip);
+        }
         return "index";
     }
 
