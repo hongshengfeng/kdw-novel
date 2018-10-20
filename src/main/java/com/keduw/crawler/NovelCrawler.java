@@ -58,7 +58,6 @@ public class NovelCrawler extends BreadthCrawler {
                     novel.setLastTime(BaseUtil.tirmStr(lastTime));
                     novel.setNovelUrl(page.url());
                 }
-                System.out.println(JsonUtils.objectToJson(novel));
                 //类别
                 Elements conTop = document.select("div[class=con_top]");
                 if(!conTop.isEmpty()){

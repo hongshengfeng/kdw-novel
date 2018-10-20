@@ -4,6 +4,7 @@ import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
 import com.keduw.model.Chapter;
+import com.keduw.util.JsonUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -16,7 +17,7 @@ import java.util.concurrent.BlockingQueue;
 public class ChapterCrawler extends BreadthCrawler {
 
     private Chapter chapter;
-    private String REGEX = "https://www.biquge5.com/[0-9]+_[0-9]+/[0-9]+[_[0-9]+]?.html"; // 采集规则
+    private String REGEX = "https://www.biquge5.com/[0-9]+_[0-9]+/[0-9]+.+.html"; // 采集规则
     private BlockingQueue<Chapter> chapterQueue = null; // 有多页面则替换链接后存储到该队列
 
     public ChapterCrawler(String crawlPath, boolean autoParse, Chapter curr, BlockingQueue<Chapter> queue) {
@@ -45,18 +46,19 @@ public class ChapterCrawler extends BreadthCrawler {
             Elements nextPage = document.select("div[class=bottem1]");
             Element element = nextPage.get(0).getElementsByTag("a").get(4);
             String nextContent = element.text();
-            if(nextContent.equals("下一页")){
+            if(nextContent.equals("下一页")) {
                 // 有下一页则进行内容替换和存储到队列里
                 String nextUrl = element.attr("href");
                 String preUrl = chapter.getChapterUrl();
                 nextUrl = preUrl.substring(0, preUrl.lastIndexOf("/") + 1) + nextUrl;
                 chapter.setChapterUrl(nextUrl);
-                try{
+                try {
                     chapterQueue.put(chapter);
-                }catch (InterruptedException e){
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
+            System.out.println(JsonUtils.objectToJson(chapter));
         }
     }
 }
