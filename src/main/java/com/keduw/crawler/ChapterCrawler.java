@@ -58,7 +58,6 @@ public class ChapterCrawler extends BreadthCrawler {
                     e.printStackTrace();
                 }
             }
-            System.out.println(JsonUtils.objectToJson(chapter));
         }
     }
 }

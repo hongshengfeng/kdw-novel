@@ -25,11 +25,10 @@
         </foreach>
     </insert>
     <!--更新章节名字以及内容-->
-    <insert id="updateChapter" parameterType="java.util.List">
-        <foreach collection="list" item="item" index="index" separator=",">
-            UPDATE chapter SET chapter = #{item.chapter},content = #{item.content}
-            WHERE chapterId = #{item.chapterId} AND novelId = #{item.novelId}
-        </foreach>
+    <insert id="updateChapter" parameterType="com.keduw.model.Chapter">
+        UPDATE chapter
+        SET chapter = #{chapter},content = #{content}
+        WHERE chapterId = #{chapterId} AND novelId = #{novelId}
     </insert>
     <!--根据小说id返回章节列表-->
     <select id="selectInfoByNovelId" parameterType="java.lang.Integer" resultMap="BaseResultMap">

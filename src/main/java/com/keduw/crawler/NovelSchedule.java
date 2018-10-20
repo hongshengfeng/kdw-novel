@@ -80,7 +80,7 @@ public class NovelSchedule {
     }
 
     //每天1点爬取章节内容
-    @Scheduled(cron = "0 12 15 * * ?")
+    @Scheduled(cron = "0 18 16 * * ?")
     public void infoCollect() throws Exception{
         if(isOpen){
             //获取总章节数
@@ -111,7 +111,7 @@ public class NovelSchedule {
                                     crawler.start(1);
                                 }
                                 // 更新章节内容
-                                chapterService.updateChapter(chapterList);
+                                chapterService.updateChapterContent(chapterList);
                             }
                             collStart ++;
                         }catch (Exception e){

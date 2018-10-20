@@ -19,7 +19,7 @@ public interface ChapterMapper {
     void insertChapter(List<Chapter> chapterList);
 
     //更新章节信息
-    void updateChapter(List<Chapter> chapterList);
+    void updateChapter(Chapter info);
 
     //根据novelId返回章节信息
     List<Chapter> selectInfoByNovelId(int novelId);
