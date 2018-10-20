@@ -133,7 +133,7 @@ public class NovelSchedule {
         }
     }
 
-    private boolean isOpen = true;
+    private boolean isOpen = false;
     private volatile int collStart = 1;
     private int checkTimes = 0; //检查小说章节的总批次
     private int collTimes = 0; //爬取章节的总批次

@@ -25,7 +25,7 @@ public class ChapterController {
     public List<Chapter> infoList(@PathVariable("id") String id){
         int novelId = Parser.parserInt(id, 0);
         List<Chapter> chapters = new ArrayList<>();
-        if(novelId > 0L){
+        if(novelId > 0){
             chapters = chapterService.getChapterList(novelId);
         }
         return chapters;

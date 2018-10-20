@@ -5,7 +5,7 @@ var info = new Vue({
         currChapter: 1,
         chapterList: null,
         rigAdv: true,
-        tabAdv: true
+        tabAdv: true,
     },
     mounted() {
         var _self = this;
@@ -45,6 +45,20 @@ var info = new Vue({
         },
         tabClose(){
             this.tabAdv = false;
+        },
+        changeInfo(chapterId){
+            console.log(chapterId);
         }
     }
+});
+
+$(document).ready(function(){
+    $("body").on("click", "#list a", function (){
+        var allElem = $("#list a");
+        for(var i = 0; i < allElem.length; i++){
+            allElem[i].className="";
+        }
+        $(this).addClass("active");
+        console.log($(this).text());
+    })
 });

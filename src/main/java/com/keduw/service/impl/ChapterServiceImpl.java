@@ -97,7 +97,6 @@ public class ChapterServiceImpl implements ChapterService {
         List<Chapter> list = new ArrayList<Chapter>();
         String field = "chapter" + NovelId;
         String info = jedisClient.hget(keys, field);
-        System.out.println(NovelId);
         if(info != null && !info.isEmpty()){
             list = JsonUtils.jsonToList(info, Chapter.class);
         }else{

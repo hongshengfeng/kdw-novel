@@ -19,12 +19,12 @@
                 <div class="kd-top">
                     <div class="kd-title" th:text="${novel.novelName}">小说名字</div>
                     <div class="kd-bar">
-                        <div class="kd-txt" th:if="${novel.categoryId ==  1}">修真小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryId ==  2}">都市小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryId ==  3}">穿越小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryId ==  4}">玄幻小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryId ==  5}">科幻小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryId ==  6}">网游小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryId == 1}">修真小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryId == 2}">都市小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryId == 3}">穿越小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryId == 4}">玄幻小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryId == 5}">科幻小说</div>
+                        <div class="kd-txt" th:if="${novel.categoryId == 6}">网游小说</div>
                         <div class="kd-line"></div>
                         <div class="kd-txt" th:text="${novel.author}">作者：</div>
                         <div class="kd-line"></div>
@@ -46,9 +46,9 @@
                 </div>
             </div>
             <div class="content-right">
-                <div class="current">第二十三章 美食评论家古争被餮(tie)</div>
-                <div class="list">
-                    <a href="#">1111</a>
+                <div class="current">章节列表</div>
+                <div class="list" id="list">
+                    <a href="javascript:void(0)" v-for="chapter in chapterList" @click="changeInfo(chapter.chapterId)">{{chapter.chapter}}</a>
                 </div>
                 <div class="counts">
                     <span class="cur">已阅读：<el-progress :percentage="20"></el-progress></span>
@@ -75,7 +75,6 @@
         novelId : [[${novel.novelId}]],
         chapterSize : [[${novel.chapterSize}]]
     }
-    console.log(novel);
 </script>
 <script type="text/javascript" src="/js/info.js"></script>
 <script type="text/javascript" src="/js/public.js"></script>
