@@ -123,4 +123,9 @@ public class ChapterServiceImpl implements ChapterService {
         return list;
     }
 
+    @Override
+    public String getChapterContent(int novelId, int chapterId) {
+        return chapterMapper.selectContentById(novelId, chapterId);
+    }
+
 }

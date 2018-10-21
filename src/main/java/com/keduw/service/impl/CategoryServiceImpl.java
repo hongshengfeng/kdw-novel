@@ -25,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService{
     private CategoryMapper categoryMapper;
     @Autowired
     private JedisClient jedisClient;
-    @Value("catagory")
+    @Value("catagory_info")
     private String keys;
 
     //查询章节列表

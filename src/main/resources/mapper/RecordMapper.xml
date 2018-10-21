@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keduw.mapper.RecordMapper">
+  <resultMap id="BaseResultMap" type="com.keduw.model.Record">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="novelId" jdbcType="INTEGER" property="novelid" />
+    <result column="chapterId" jdbcType="INTEGER" property="chapterid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, userId, novelId, chapterId
+  </sql>
+  <select id="selectByNovelId" resultType="java.lang.Integer">
+    select chapterId from record
+    where userId = #{userId} AND novelId = #{novelId}
+  </select>
+
+</mapper>

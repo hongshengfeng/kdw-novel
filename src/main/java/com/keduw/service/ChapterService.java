@@ -31,4 +31,7 @@ public interface ChapterService {
 
      //查询章节内容为空的数据
      List<Chapter> getChapterList(int start, int size);
+
+     //获取章节内容
+     String getChapterContent(int novelId, int chapterId);
 }

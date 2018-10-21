@@ -46,4 +46,10 @@
         <include refid="Base_Column_List" />
         FROM chapter WHERE content is null
     </select>
+    <!--获取章节内容-->
+    <select id="selectContentById" resultType="java.lang.String">
+        SELECT
+        <include refid="Blob_Column_List" />
+        FROM chapter WHERE novelId = #{novelId} and chapterId = #{chapterId}
+    </select>
 </mapper>

@@ -29,4 +29,7 @@ public interface NovelService {
 
     //获取小说总数
     int getNovelCount();
+
+    //获取某个类别的小说总数
+    int getNovelCountByCategory(int category);
 }

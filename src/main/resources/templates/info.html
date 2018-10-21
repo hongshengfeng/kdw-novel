@@ -33,7 +33,7 @@
                         <div class="kd-txt" th:text="${novel.lastTime}">2018-06-01</div>
                     </div>
                 </div>
-                <div class="kd-art-content">小说内容</div>
+                <div class="kd-art-content" v-html="chapterContent"></div>
                 <div class="options">
                     <div class="share">
                         <span class="iconfont icon-weixin" @click="share()"></span>

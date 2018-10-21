@@ -2,6 +2,7 @@ package com.keduw.util;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,5 +49,15 @@ public class BaseUtil {
             newUrl = m.replaceAll("");
         }
         return newUrl;
+    }
+
+    /**
+     * 获取随机数
+     * @param num
+     * @return
+     */
+    public static int betweenRandom(int num){
+        int result = (int) (Math.round(Math.random() * num));
+        return result;
     }
 }

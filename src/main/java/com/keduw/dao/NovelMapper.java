@@ -21,13 +21,13 @@ public interface NovelMapper {
      List<Novel> selectNovelByName(String novelName);
 
      //通过novelId查找小说
-     Novel selectNovelById(int novel);
+     Novel selectNovelById(Integer novel);
 
      //查询所有小说的列表
      List<Novel> selectNovel();
 
      //根据类别查询小说列表
-     List<Novel> selectNovelByCategory(int categoryId);
+     List<Novel> selectNovelByCategory(Integer categoryId);
 
      //查询所有的小说列表
      List<Novel> seletAllNovelInfo();
@@ -43,4 +43,7 @@ public interface NovelMapper {
 
      //查询小说的总数
      int selectInfoCount();
+
+     //查询某个类别的小说总数
+     int selectInfoCountByCategory(int category);
 }

@@ -58,7 +58,8 @@ public class LogAspect {
     //打印输出结果
     @AfterReturning(pointcut = "log()",returning = "object")
     public void doAfterReturing(Object object){
-        LOGGER.info("response={}",object.toString());
+        String result = object != null ? object.toString() : "";
+        LOGGER.info("response={}",result);
     }
 
 }

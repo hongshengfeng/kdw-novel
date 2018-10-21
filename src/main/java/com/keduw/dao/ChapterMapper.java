@@ -2,6 +2,7 @@ package com.keduw.dao;
 
 import com.keduw.model.Chapter;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,11 +23,13 @@ public interface ChapterMapper {
     void updateChapter(Chapter info);
 
     //根据novelId返回章节信息
-    List<Chapter> selectInfoByNovelId(int novelId);
+    List<Chapter> selectInfoByNovelId(Integer novelId);
 
     //获取章节总数
     int selectCounts();
 
     //获取content为空的章节列表
     List<Chapter> selectInfoByContent();
+
+    String selectContentById(@Param("novelId")Integer novelId, @Param("chapterId")Integer chapterId);
 }

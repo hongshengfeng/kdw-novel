@@ -2,17 +2,21 @@ var info = new Vue({
     el: '#app',
     data: {
         chapterSize: novel.chapterSize,
+        novelId: novel.novelId,
         currChapter: 1,
         chapterList: null,
+        chapterContent: null,
         rigAdv: true,
         tabAdv: true,
     },
     mounted() {
         var _self = this;
+        var chapterId = this.currChapter;
+        var novelId = this.novelId;
         $.ajax({
             type: "post",
             async: true,
-            url: "/chapter/list/" + novel.novelId,
+            url: "/chapter/list/" + novelId,
             success: function(data){
                 _self.chapterList = data;
             },
@@ -23,16 +27,21 @@ var info = new Vue({
                 });
             }
         });
+        this.changeInfo(chapterId);
         $("body").css("display", "block");
     },
     methods: {
         pre() {
-            this.section--;
-            console.log(this.section);
+            var page = this.currChapter;
+            this.currChapter = page > 1 ? page - 1 : 1;
+            this.changeInfo(this.currChapter);
+            $(window).scrollTop(0);
         },
         next() {
-            this.section++;
-            console.log(this.section);
+            var page = this.currChapter;
+            this.currChapter = page <= this.chapterSize ? page + 1 : page;
+            this.changeInfo(this.currChapter);
+            $(window).scrollTop(0);
         },
         share() {
             this.$message({
@@ -47,7 +56,22 @@ var info = new Vue({
             this.tabAdv = false;
         },
         changeInfo(chapterId){
-            console.log(chapterId);
+            var _self = this;
+            var novelId = this.novelId;
+            $.ajax({
+                type: "post",
+                async: true,
+                url: "/chapter/content/" + novelId + "/" + chapterId,
+                success: function(data){
+                    _self.chapterContent = data;
+                },
+                error: function () {
+                    _self.$message({
+                        message: "系统错误，请稍后重试。",
+                        type: "warning"
+                    });
+                }
+            });
         }
     }
 });
@@ -59,6 +83,5 @@ $(document).ready(function(){
             allElem[i].className="";
         }
         $(this).addClass("active");
-        console.log($(this).text());
     })
 });

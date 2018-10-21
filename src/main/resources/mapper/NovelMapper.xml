@@ -70,7 +70,12 @@
         <include refid="Base_Column_List" />
         FROM novel WHERE novelname = #{name} AND author = #{author}
     </select>
+    <!-- 查询小说总数 -->
     <select id="selectInfoCount" resultType="java.lang.Integer">
-        SELECT count(novelId) FROM novel;
+        SELECT count(novelId) FROM novel
+    </select>
+    <!-- 查询某个类别的小说总数 -->
+    <select id="selectInfoCountByCategory" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT count(novelId) FROM novel where categoryId = #{category}
     </select>
 </mapper>

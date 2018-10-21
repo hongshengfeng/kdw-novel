@@ -39,7 +39,7 @@ public class NovelServiceImpl implements NovelService {
     public List<Novel> getNovelList(int curr, int size, int...category) {
         List<Novel> list = new ArrayList<Novel>();
         StringBuilder fields = new StringBuilder();
-        fields.append("novelList");
+        fields.append(novelList);
         fields.append(curr);
         if(category.length > 0){
             fields.append(category[0]);
@@ -156,6 +156,12 @@ public class NovelServiceImpl implements NovelService {
     @Override
     public int getNovelCount() {
         return novelMapper.selectInfoCount();
+    }
+
+    //获取某个类别的小说总数
+    @Override
+    public int getNovelCountByCategory(int category) {
+        return novelMapper.selectInfoCountByCategory(category);
     }
 
 }

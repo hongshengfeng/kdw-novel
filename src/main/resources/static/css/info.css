@@ -263,3 +263,7 @@
 .content-right .list .active{
     color: #F7941E;
 }
+
+#app::-webkit-scrollbar{
+    width: 0;
+}
