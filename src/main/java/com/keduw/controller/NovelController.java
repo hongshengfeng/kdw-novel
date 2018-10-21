@@ -33,7 +33,6 @@ public class NovelController {
         // 获取小说总数
         int counts = category == 0 ? novelService.getNovelCount() : novelService.getNovelCountByCategory(category);
         int curr = BaseUtil.betweenRandom(counts - PAGE_SIZE);
-        curr = curr > 0 ? curr : 1;
         List<Novel> list = new ArrayList<Novel>();
         if(category > 0) {
             list = novelService.getNovelList(curr, PAGE_SIZE, category);

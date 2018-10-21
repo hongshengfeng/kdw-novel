@@ -36,8 +36,8 @@
                         </div>
                         <div class="brief-info">
                             <span>简介：</span>
-                            <span v-if="novel.brief != ''" v-html="novel.brief"></span>
-                            <span v-else>还没获取到该小说的简介，简介只是冰山一角，内容才是真材实料。</span>
+                            <span v-if="novel.brief != ''" v-html="novel.brief" :title="novel.brief"></span>
+                            <span v-else>还没获取到该小说的简介。</span>
                         </div>
                     </el-card>
                     <div class="more" @click="more()">查看更多</div>

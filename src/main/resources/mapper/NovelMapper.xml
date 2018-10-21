@@ -38,13 +38,17 @@
     <select id="selectNovel" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
-        FROM  novel ORDER BY novelId DESC
+        FROM novel WHERE novelId in
+        (SELECT n.novelId from (SELECT novelId from novel limit #{curr},#{size}) as n)
+        ORDER BY novelId DESC
     </select>
     <!--根据类别查询小说列表-->
-    <select id="selectNovelByCategory" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectNovelByCategory" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
-        FROM novel WHERE categoryId=#{categoryId} ORDER BY novelId DESC
+        FROM novel WHERE novelId in
+        (SELECT n.novelId from (SELECT novelId from novel where categoryId=#{categoryId} limit #{curr},#{size}) as n)
+        ORDER BY novelId DESC
     </select>
     <!-- 返回全部小说信息-->
     <select id="seletAllNovelInfo" resultMap="BaseResultMap">

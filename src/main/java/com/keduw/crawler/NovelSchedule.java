@@ -21,7 +21,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class NovelSchedule {
 
     //每周六的0点启动小说爬虫，爬取是否有新小说
-    @Scheduled(cron = "0 12 22 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void novelCollect() throws Exception{
         if(isOpen){
             NovelCrawler crawl = new NovelCrawler("crawl",true);
@@ -33,7 +33,7 @@ public class NovelSchedule {
     }
 
     //每天0点30分检查连载中小说的章节更新情况
-    @Scheduled(cron = "0 34 10 * * ?")
+    @Scheduled(cron = "0 30 0 * * ?")
     public void infoCheck() throws Exception{
         if(isOpen){
             //小说总数
@@ -80,7 +80,7 @@ public class NovelSchedule {
     }
 
     //每天1点爬取章节内容
-    @Scheduled(cron = "0 18 16 * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
     public void infoCollect() throws Exception{
         if(isOpen){
             //获取总章节数
@@ -133,7 +133,7 @@ public class NovelSchedule {
         }
     }
 
-    private boolean isOpen = false;
+    private boolean isOpen = false; //启动开关，日常关闭
     private volatile int collStart = 1;
     private int checkTimes = 0; //检查小说章节的总批次
     private int collTimes = 0; //爬取章节的总批次

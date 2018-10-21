@@ -24,10 +24,10 @@ public interface NovelMapper {
      Novel selectNovelById(Integer novel);
 
      //查询所有小说的列表
-     List<Novel> selectNovel();
+     List<Novel> selectNovel(@Param("curr")int curr, @Param("size")int size);
 
      //根据类别查询小说列表
-     List<Novel> selectNovelByCategory(Integer categoryId);
+     List<Novel> selectNovelByCategory(@Param("categoryId")int categoryId, @Param("curr")int curr, @Param("size")int size);
 
      //查询所有的小说列表
      List<Novel> seletAllNovelInfo();

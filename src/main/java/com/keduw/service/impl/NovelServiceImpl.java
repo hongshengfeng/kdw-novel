@@ -50,14 +50,21 @@ public class NovelServiceImpl implements NovelService {
             return list;
         }
         //redis数据不存在，查询后加入缓存
-        PageHelper.startPage(curr, size);
-        if(category.length == 0){
-            list = novelMapper.selectNovel();
+        if(category.length > 0){
+            list = novelMapper.selectNovelByCategory(category[0], curr, size);
         }else{
-            list = novelMapper.selectNovelByCategory(category[0]);
+            list = novelMapper.selectNovel(curr, size);
         }
         if(list != null && list.size() > 0){
             jedisClient.hset(novelList, fields.toString(), JsonUtils.objectToJson(list));
+        }else {
+            // 获取为空则放回第一页数据
+            curr = 1;
+            if(category.length > 0){
+                list = novelMapper.selectNovelByCategory(category[0], curr, size);
+            }else{
+                list = novelMapper.selectNovel(curr, size);
+            }
         }
         return list;
     }
