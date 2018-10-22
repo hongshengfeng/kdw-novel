@@ -43,10 +43,16 @@ public class NovelController {
     }
 
     //分页查询小说列表
-    @RequestMapping("/list/{page}")
-    public List<Novel> novelList(@PathVariable("page") String page){
+    @RequestMapping("/list/{category}/{page}")
+    public List<Novel> novelList(@PathVariable("category") String category, @PathVariable("page") String page){
         int curr = Parser.parserInt(page, 1);
-        List<Novel> list = novelService.getNovelList(curr, PAGE_SIZE);
+        int categoryId = Parser.parserInt(category, 0);
+        List<Novel> list = new ArrayList<Novel>();
+        if(categoryId > 0){
+            list = novelService.getNovelList(curr, PAGE_SIZE, categoryId);
+        }else{
+            list = novelService.getNovelList(curr, PAGE_SIZE);
+        }
         return list;
     }
 
@@ -62,5 +68,18 @@ public class NovelController {
     public List<Novel> hotNovelInfo(){
         List<Novel> list = novelService.getHotInfo();
         return list;
+    }
+
+    //获取小说总数
+    @RequestMapping("/counts/{category}")
+    public int counts(@PathVariable("category")String category){
+        int categoryId = Parser.parserInt(category, 0);
+        int counts = 0;
+        if(categoryId > 0){
+            counts = novelService.getNovelCountByCategory(categoryId);
+        }else{
+            counts = novelService.getNovelCount();
+        }
+        return counts;
     }
 }

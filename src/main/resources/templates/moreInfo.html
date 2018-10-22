@@ -20,30 +20,31 @@
         </div>
         <div class="moreInfo">
             <el-menu :default-active="active" class="el-menu-demo" mode="horizontal" @select="handle">
-                <el-menu-item index="1">推荐</el-menu-item>
-                <el-menu-item index="2">最新</el-menu-item>
-                <el-menu-item index="3">热门</el-menu-item>
-                <el-menu-item index="4">修真</el-menu-item>
-                <el-menu-item index="5">都市</el-menu-item>
-                <el-menu-item index="6">穿越</el-menu-item>
-                <el-menu-item index="7">科幻</el-menu-item>
-                <el-menu-item index="8">玄幻</el-menu-item>
-                <el-menu-item index="9">网游</el-menu-item>
+                <el-menu-item v-for="item in catagorys" :index="item.categoryId">{{item.category}}</el-menu-item>
             </el-menu>
         </div>
-        <div class="nov_info">
-            <el-card shadow="hover" class="science" @click.native="info(1)" v-for="(item, index) in counts">
+        <div class="nov_info" v-loading="loading">
+            <el-card shadow="hover" v-for="novel in novelList" :class="infoClass(novel.categoryId)" @click.native="info(novel.novelId)">
                 <div class="base-info">
-                    <span class="classify science" v-if="isReco">科幻</span>
-                    <span class="name"><a href="#">餮仙传人在都市</a></span>
-                    <span class="updateTime">2018-08-30</span>
+                    <span v-if="isReco">
+                        <span class="classify coatard" v-if="novel.categoryId == 1">修真</span>
+                        <span class="classify city" v-else-if="novel.categoryId == 2">都市</span>
+                        <span class="classify across" v-else-if="novel.categoryId == 3">穿越</span>
+                        <span class="classify fantasy" v-else-if="novel.categoryId == 4">玄幻</span>
+                        <span class="classify science" v-else-if="novel.categoryId == 5">科幻</span>
+                        <span class="classify game" v-else>网游</span>
+                    </span>
+                    <span class="name"><a href="#">{{novel.novelName}}</a></span>
+                    <span class="updateTime">{{novel.lastTime}}</span>
                 </div>
                 <div class="brief-info">
-                    <span>简介：</span><span>美食评论家古争被餮(tie)仙选中，成为都市餮仙传人，在餮仙令器灵的种种考验之下，提升自身，最终成为有史以来最伟大的食仙。（古争：“仙界对食材也划分了等级？地球上最好的食材只是普通级别？你让我用现有的食材做出最高级别的美食，器灵你出来，我绝对不打你！）</span>
+                    <span>简介：</span>
+                    <span v-if="novel.brief != ''" v-html="novel.brief" :title="novel.brief"></span>
+                    <span v-else>还没获取到该小说的简介。</span>
                 </div>
             </el-card>
         </div>
-        <el-pagination background layout="prev, pager, next" :page-size="20" :total="200"></el-pagination>
+        <el-pagination background layout="prev, pager, next" :page-size="15" :total="counts" @current-change="pageInfo"></el-pagination>
     </el-main>
     <div th:replace="footer::bottom"></div>
 </body>

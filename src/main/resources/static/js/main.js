@@ -2,10 +2,10 @@ var app = new Vue({
     el: '#app',
     data: {
         active: '0',
-        hotInfo: [],
-        newInfo: [],
+        hotInfo: ['1'],
+        newInfo: ['1'],
         advShow: true,
-        loading: true,
+        loading: false,
         isReco: true,
         catagorys: null,
         novelList: null,
@@ -13,50 +13,10 @@ var app = new Vue({
         hotList: null
     },
     mounted: function () {
-        var _self = this;
-        $.ajax({
-            async: false,
-            url: "/category/list",
-            success: function(data){
-                _self.catagorys = data;
-            },
-            error: function () {
-                _self.$message({
-                    message: '系统错误，请稍后重试。',
-                    type: 'warning'
-                });
-            }
-        });
         this.handle(0);
-        $.ajax({
-            async: false,
-            url: "/novel/new",
-            success: function(data){
-                _self.newList = data;
-                _self.newInfo.push("1");
-            },
-            error: function () {
-                _self.$message({
-                    message: '系统错误，请稍后重试。',
-                    type: 'warning'
-                });
-            }
-        });
-        $.ajax({
-            async: false,
-            url: "/novel/hot",
-            success: function(data){
-                _self.hotList = data;
-                _self.hotInfo.push("1");
-            },
-            error: function () {
-                _self.$message({
-                    message: '系统错误，请稍后重试。',
-                    type: 'warning'
-                });
-            }
-        });
-        this.loading = false;
+        this.categoryInfo();
+        this.getNewsInfo();
+        this.getHotInfo();
         $("body").css("display","block");
     },
     computed: {
@@ -96,7 +56,60 @@ var app = new Vue({
         close: function() {
             this.advShow ? this.advShow = false : this.advShow = true;
         },
+        getNewsInfo: function() {
+            var _self = this;
+            $.ajax({
+                async: false,
+                url: "/novel/new",
+                success: function(data){
+                    _self.newList = data;
+                },
+                error: function () {
+                    _self.$message({
+                        message: '系统错误，请稍后重试。',
+                        type: 'warning'
+                    });
+                }
+            });
+        },
+        getHotInfo: function(){
+            var _self = this;
+            $.ajax({
+                async: false,
+                url: "/novel/hot",
+                success: function(data){
+                    _self.hotList = data;
+                },
+                error: function () {
+                    _self.$message({
+                        message: '系统错误，请稍后重试。',
+                        type: 'warning'
+                    });
+                }
+            });
+        },
+        categoryInfo: function(){
+            var _self = this;
+            $.ajax({
+                async: false,
+                url: "/category/list",
+                success: function(data){
+                    _self.catagorys = data;
+                },
+                error: function () {
+                    _self.$message({
+                        message: '系统错误，请稍后重试。',
+                        type: 'warning'
+                    });
+                }
+            });
+        },
         handle:function(key) {
+            this.loading = true;
+            var infoElem = $(".nov_info").height();
+            if(infoElem > 0){
+                $(".el-loading-spinner").css("top", "10%");
+            }
             this.active = key;
             key == 0 ? this.isReco = true : this.isReco = false;
             var _self = this;
@@ -106,6 +119,7 @@ var app = new Vue({
                 url: "/novel/info/" + key,
                 success: function(data){
                     _self.novelList = data;
+                    _self.loading = false;
                 },
                 error: function () {
                     _self.$message({
@@ -119,7 +133,7 @@ var app = new Vue({
             window.location.href="/info/" + id;
         },
         more: function(){
-            window.location.href="/category/" + 0;
+            window.location.href="/category/0";
         }
     }
 })

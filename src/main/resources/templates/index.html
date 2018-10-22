@@ -12,7 +12,7 @@
     <script type="text/javascript" src="/js/index.min.js"></script>
     <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 </head>
-<body style="display: none;" v-loading.fullscreen.lock="loading">
+<body style="display: none;">
     <div th:replace="header::top"></div>
     <el-main id="app">
         <div class="content">
@@ -20,7 +20,7 @@
                 <el-menu :default-active="active" class="el-menu-demo" mode="horizontal" @select="handle">
                     <el-menu-item v-for="item in catagorys" :index="item.categoryId">{{item.category}}</el-menu-item>
                 </el-menu>
-                <div class="nov_info">
+                <div class="nov_info" v-loading="loading">
                     <el-card shadow="hover" v-for="novel in novelList" :class="infoClass(novel.categoryId)" @click.native="info(novel.novelId)">
                         <div class="base-info">
                             <span v-if="isReco">
@@ -49,7 +49,7 @@
                         <i class="iconfont icon-icon--1"></i>
                         <span class="title">最新小说</span>
                     </div>
-                    <el-collapse-item v-for="(item,index) in newList" :title="item.novelName" :name="index+1">
+                    <el-collapse-item v-for="(item,index) in newList" :key="item.novelId" :title="item.novelName" :name="index">
                         <div>作者：{{item.author}}（{{item.status}}）</div>
                         <div v-if="item.brief != ''">{{item.brief}}</div>
                         <div v-else>还没获取到该小说的简介。</div>
@@ -63,7 +63,7 @@
                         <i class="iconfont icon-icon--1"></i>
                         <span class="title">热门小说</span>
                     </div>
-                    <el-collapse-item v-for="item in hotList" :title="item.novelName">
+                    <el-collapse-item v-for="(item,index) in hotList" :key="item.novelId" :title="item.novelName" :name="index">
                         <div>作者：{{item.author}}（{{item.status}}）</div>
                         <div v-if="item.brief != ''">{{item.brief}}</div>
                         <div v-else>还没获取到该小说的简介。</div>
