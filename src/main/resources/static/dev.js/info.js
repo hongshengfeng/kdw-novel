@@ -9,7 +9,7 @@ var info = new Vue({
         rigAdv: true,
         tabAdv: true,
     },
-    mounted() {
+    mounted: function() {
         var _self = this;
         var chapterId = this.currChapter;
         var novelId = this.novelId;
@@ -31,31 +31,31 @@ var info = new Vue({
         $("body").css("display", "block");
     },
     methods: {
-        pre() {
+        pre:function() {
             var page = this.currChapter;
             this.currChapter = page > 1 ? page - 1 : 1;
             this.changeInfo(this.currChapter);
             $(window).scrollTop(0);
         },
-        next() {
+        next:function() {
             var page = this.currChapter;
             this.currChapter = page <= this.chapterSize ? page + 1 : page;
             this.changeInfo(this.currChapter);
             $(window).scrollTop(0);
         },
-        share() {
+        share:function() {
             this.$message({
                 message: '功能未开通，程序员小哥哥正在努力实现，请期待！',
                 type: 'warning'
             });
         },
-        rigClose(){
+        rigClose:function(){
             this.rigAdv = false;
         },
-        tabClose(){
+        tabClose:function(){
             this.tabAdv = false;
         },
-        changeInfo(chapterId){
+        changeInfo:function(chapterId){
             var _self = this;
             var novelId = this.novelId;
             $.ajax({
