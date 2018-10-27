@@ -21,7 +21,6 @@ public class ExceptionHandle {
 
     //判断是否已定义的错误，不是则由未知错误代替
     @ExceptionHandler(value = Exception.class)
-    @ResponseBody
     public Result exceptionGet(Exception exception){
         if(exception instanceof DescribeException){
             DescribeException e = (DescribeException) exception;

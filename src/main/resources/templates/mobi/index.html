@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="可读小说，可读网旗下产品。个性化小说网站，简洁，方便，内容丰富"/>
+    <title>可读小说</title>
+    <link rel="stylesheet" href="/css/mobi/index.min.css"/>
+</head>
+<body>
+<div id="app">
+    <mt-button @click.native="handleClick">按钮</mt-button>
+</div>
+</body>
+<script type="text/javascript" src="/js/vue.min.js"></script>
+<script type="text/javascript" src="/js/mobi/index.min.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        methods: {
+            handleClick: function() {
+                this.$toast('Hello world!')
+            }
+        }
+    })
+</script>
+</html>

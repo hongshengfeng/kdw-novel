@@ -82,4 +82,10 @@ public class NovelController {
         }
         return counts;
     }
+
+    //小说搜索
+    @RequestMapping("/search/{keyword}")
+    public List<Novel> search(@PathVariable("keyword")String keyword){
+        return null;
+    }
 }
