@@ -16,5 +16,8 @@
 </el-main>
 <div th:replace="footer::bottom"></div>
 </body>
+<script type="text/javascript" th:inline="javascript">
+    var keywords = [[${novel.novelId}]];
+</script>
 <script type="text/javascript" src="/js/public.js"></script>
 </html>

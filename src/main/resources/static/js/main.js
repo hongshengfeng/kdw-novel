@@ -106,10 +106,6 @@ var app = new Vue({
         },
         handle:function(key) {
             this.loading = true;
-            var infoElem = $(".nov_info").height();
-            if(infoElem > 0){
-                $(".el-loading-spinner").css("top", "10%");
-            }
             this.active = key;
             key == 0 ? this.isReco = true : this.isReco = false;
             var _self = this;

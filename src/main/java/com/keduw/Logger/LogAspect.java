@@ -45,8 +45,10 @@ public class LogAspect {
         Result result = null;
         try {
 
-        } catch (Exception e) {
-            return handle.exceptionGet(e);
+        } catch (Exception exception) {
+            ServletRequestAttributes attributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+            HttpServletRequest request = attributes.getRequest();
+            return handle.exceptionGet(request, exception);
         }
         if(result == null){
             return proceedingJoinPoint.proceed();
