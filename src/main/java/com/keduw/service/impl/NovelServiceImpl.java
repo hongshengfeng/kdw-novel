@@ -91,13 +91,13 @@ public class NovelServiceImpl implements NovelService {
         int counts = novelMapper.selectNovelCountByName(wd);
         int size = result.getRows();
         int totalPage = counts % size == 0 ? counts/size : counts/size + 1;
-        start = start > totalPage ? totalPage : start;
+        start = start > totalPage ? totalPage * size : start * size;
         List<Novel> list = novelMapper.selectNovelByName(wd, start, size);
+        result.setTotalRecord(counts);
         result.setTotalPage(totalPage);
         result.setKeyWord(wd);
         result.setStart(start);
         result.setList(list);
-        result.setTotalPage(counts);
         return result;
     }
 

@@ -3,7 +3,7 @@ var app = new Vue({
     data: {
         advShow: false,
         loading: false,
-        novelList: null,
+        novelList: [],
         currPage: 1,
         counts: 1,
         isEnd: false,
@@ -19,12 +19,7 @@ var app = new Vue({
         }
         header.keywords = this.wd
         this.handle();
-    },
-    computed: {
-        moreInfo: function () {
-            var windowHight = $(window).height();
-            console.log(windowHight)
-        }
+        this.moreInfo();
     },
     methods: {
         infoClass: function (cateId) {
@@ -67,10 +62,18 @@ var app = new Vue({
                 async: true,
                 url: "/novel/search/" + this.wd + "/" + this.currPage,
                 success: function(data){
-                    _self.novelList = data.list;
-                    _self.counts = data.totalPage
-                    _self.loading = false;
-                    _self.isEnd = true;
+                    if(data.list.length > 0){
+                        for(var i = 0; i < data.list.length; i++){
+                            _self.novelList.push(data.list[i]);
+                        }
+                        _self.counts = data.totalPage;
+                        _self.loading = false;
+                        if(_self.counts == 1){
+                            _self.isEnd = true;
+                        }
+                    }else{
+                        _self.isEnd = true;
+                    }
                 },
                 error: function () {
                     _self.$message({
@@ -79,6 +82,43 @@ var app = new Vue({
                     });
                 }
             });
+        },
+        moreInfo: function () {
+            var _self = this;
+            $(window).scroll(function(){
+                if ($(window).scrollTop() + $(window).height() == $(document).height() && !_self.isEnd) {
+                    _self.currPage ++;
+                    _self.isMore = true;
+                    $.ajax({
+                        type: "post",
+                        async: true,
+                        url: "/novel/search/" + _self.wd + "/" + _self.currPage,
+                        success: function(data){
+                            if(data.list.length > 0){
+                                _self.counts = data.totalPage;
+                                setTimeout(function(){
+                                    _self.isMore = false;
+                                },3000);
+                                for(var i = 0; i < data.list.length; i++){
+                                    _self.novelList.push(data.list[i]);
+                                }
+                            }else{
+                                setTimeout(function(){
+                                    _self.isMore = false;
+                                },3000);
+                                _self.isEnd = true;
+                            }
+                        },
+                        error: function () {
+                            _self.$message({
+                                message: '系统错误，请稍后重试。',
+                                type: 'warning'
+                            });
+                        }
+                    });
+                }
+            });
+
         },
         info: function(id) {
             window.location.href="/info/" + id;
