@@ -22,11 +22,15 @@
         INSERT INTO novel(novelName,author,categoryId,brief,status,lastTime,novelUrl,chapterSize)
         VALUES(#{novelName},#{author},#{categoryId},#{brief},#{status},#{lastTime},#{novelUrl},#{chapterSize})
     </insert>
-    <!--通过小说名字查找小说-->
-    <select id="selectNovelByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--通过小说名字查找小说列表-->
+    <select id="selectNovelByName" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
-        FROM  novel WHERE novelName Like #{novelName}
+        FROM  novel WHERE novelName Like concat(concat('%',#{novelName}),'%') limit #{curr},#{size}
+    </select>
+    <!--通过小说名字查找小说总数-->
+    <select id="selectNovelCountByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT count(novelId) FROM  novel WHERE novelName Like concat(concat('%',#{novelName}),'%')
     </select>
     <!--通过小说id查找小说-->
     <select id="selectNovelById" parameterType="java.lang.Integer" resultType="com.keduw.model.Novel">

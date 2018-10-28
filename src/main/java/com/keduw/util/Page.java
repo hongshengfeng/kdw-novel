@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class Page<T> implements Serializable {
 	private static final long serialVersionUID = 337297181251071639L;
 	private Integer page=1;//当前页
-	private Integer rows=10;//页大小
+	private Integer rows=15;//页大小
 	private Integer totalRecord=0;// 总记录数
 	private Integer firstPage;  //首页
 	private Integer endPage;  //末页 

@@ -6,6 +6,7 @@ import com.keduw.jedis.JedisClient;
 import com.keduw.model.Novel;
 import com.keduw.service.NovelService;
 import com.keduw.util.JsonUtils;
+import com.keduw.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -85,8 +86,19 @@ public class NovelServiceImpl implements NovelService {
 
     //通过关键字查询小说
     @Override
-    public List<Novel> getNovelByName(String novelName) {
-        return novelMapper.selectNovelByName(novelName + "%");
+    public Page<Novel> getNovelByName(String wd, int start) {
+        Page<Novel> result = new Page<>();
+        int counts = novelMapper.selectNovelCountByName(wd);
+        int size = result.getRows();
+        int totalPage = counts % size == 0 ? counts/size : counts/size + 1;
+        start = start > totalPage ? totalPage : start;
+        List<Novel> list = novelMapper.selectNovelByName(wd, start, size);
+        result.setTotalPage(totalPage);
+        result.setKeyWord(wd);
+        result.setStart(start);
+        result.setList(list);
+        result.setTotalPage(counts);
+        return result;
     }
 
     //通过novelId查找小说

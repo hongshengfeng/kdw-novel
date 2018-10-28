@@ -1,6 +1,7 @@
 package com.keduw.service;
 
 import com.keduw.model.Novel;
+import com.keduw.util.Page;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface NovelService {
     int insertNovel(Novel novel);
 
     //通过小说名字查找小说，可模糊查询
-    List<Novel> getNovelByName(String novelName);
+    Page<Novel> getNovelByName(String wd, int start);
 
     //通过novelId查找小说
     Novel getNovelById(int novelId);

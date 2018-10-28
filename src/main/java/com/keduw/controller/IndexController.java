@@ -65,9 +65,10 @@ public class IndexController {
         return "moreInfo";
     }
 
-    @RequestMapping("/search/{keywords}")
-    public String searchNovel(@PathVariable("keywords") String keywords, Model model){
-        model.addAttribute("keywords", keywords);
+    @RequestMapping("/search")
+    public String searchNovel(HttpServletRequest request, Model model){
+        String wd = request.getParameter("wd");
+        model.addAttribute("wd", wd);
         return "search";
     }
 }

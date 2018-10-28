@@ -1,7 +1,7 @@
 var header = new Vue({
     el: '#header',
     data: {
-        keywords: null
+        keywords: ""
     },
     methods: {
         index: function () {
@@ -11,7 +11,15 @@ var header = new Vue({
             console.log("login")
         },
         record: function() {
-            console.log("record");
+            var wd = $.trim(this.keywords);
+            if(wd != ""){
+                window.location.href = "/search?wd=" + wd;
+            }else{
+                this.$message({
+                    message: "请输入您想要搜索的小说",
+                    type: 'warning'
+                });
+            }
         }
     }
 });

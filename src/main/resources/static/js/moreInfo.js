@@ -20,7 +20,7 @@ var app = new Vue({
     },
     mounted() {
         var _self = this;
-        if(!_self.getCookie("topAdv")){
+        if(!_self.getCookie("more-topAdv")){
             setTimeout(function () {
                 _self.advShow = true;
             }, 1000);
