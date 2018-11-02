@@ -17,23 +17,23 @@
         <div class="noveInfo">
             <div class="content-left">
                 <div class="kd-top">
-                    <div class="kd-title" th:text="${novel.novelName}">小说名字</div>
+                    <div class="kd-title" th:text="${novel.name}">小说名字</div>
                     <div class="kd-bar">
-                        <div class="kd-txt" th:if="${novel.categoryId == 1}">修真小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryId == 2}">都市小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryId == 3}">穿越小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryId == 4}">玄幻小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryId == 5}">科幻小说</div>
-                        <div class="kd-txt" th:if="${novel.categoryId == 6}">网游小说</div>
+                        <div class="kd-txt" th:if="${novel.cId == 1}">修真小说</div>
+                        <div class="kd-txt" th:if="${novel.cId == 2}">都市小说</div>
+                        <div class="kd-txt" th:if="${novel.cId == 3}">穿越小说</div>
+                        <div class="kd-txt" th:if="${novel.cId == 4}">玄幻小说</div>
+                        <div class="kd-txt" th:if="${novel.cId == 5}">科幻小说</div>
+                        <div class="kd-txt" th:if="${novel.cId == 6}">网游小说</div>
                         <div class="kd-line"></div>
                         <div class="kd-txt" th:text="${novel.author}">作者：</div>
                         <div class="kd-line"></div>
                         <div class="kd-txt" th:text="${novel.status}">连载中</div>
                         <div class="kd-line"></div>
-                        <div class="kd-txt" th:text="${novel.lastTime}">2018-06-01</div>
+                        <div class="kd-txt" th:text="${novel.update}">2018-06-01</div>
                     </div>
                 </div>
-                <div class="kd-art-content" v-html="chapterContent"></div>
+                <div class="kd-art-content" v-html="content"></div>
                 <div class="options">
                     <div class="share">
                         <span class="iconfont icon-weixin" @click="share()"></span>
@@ -48,11 +48,11 @@
             <div class="content-right">
                 <div class="current">章节列表</div>
                 <div class="list" id="list">
-                    <a href="javascript:void(0)" v-for="chapter in chapterList" @click="changeInfo(chapter.chapterId)">{{chapter.chapter}}</a>
+                    <a href="javascript:void(0)" v-for="chapter in chapterList" @click="changeInfo(chapter.id)">{{chapter.name}}</a>
                 </div>
                 <div class="counts">
                     <span class="cur">已阅读：<el-progress :percentage="20"></el-progress></span>
-                    <span class="all">总章节：{{chapterSize}}</span>
+                    <span class="all">总章节：{{size}}</span>
                 </div>
                 <div class="notice">·文章内容来源于网络，如有侵权，请联系我们·</div>
             </div>
@@ -72,8 +72,8 @@
 </body>
 <script type="text/javascript" th:inline="javascript">
     var novel = {
-        novelId : [[${novel.novelId}]],
-        chapterSize : [[${novel.chapterSize}]]
+        id : [[${novel.id}]],
+        size : [[${novel.size}]]
     }
 </script>
 <script type="text/javascript" src="/js/info.js"></script>

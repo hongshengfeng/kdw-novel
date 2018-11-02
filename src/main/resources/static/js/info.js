@@ -1,8 +1,8 @@
 var info = new Vue({
     el: '#app',
     data: {
-        chapterSize: novel.chapterSize,
-        novelId: novel.novelId,
+        chapterSize: novel.size,
+        novelId: novel.id,
         currChapter: 1,
         chapterList: null,
         chapterContent: null,
