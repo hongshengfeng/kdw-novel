@@ -40,7 +40,7 @@ public class ChapterServiceImpl implements ChapterService {
         }
         chapterMapper.insertChapter(chapterList);
         //清除对应小说的章节缓存
-        int novelId = chapterList.get(0).getNovelId();
+        int novelId = chapterList.get(0).getnId();
         String field = "chapter" + novelId;
         jedisClient.hdel(keys, field);
     }
@@ -55,13 +55,13 @@ public class ChapterServiceImpl implements ChapterService {
         List<Chapter> newList = new ArrayList<>();  //存放新的章节
         List<String> titleList = new ArrayList<>(); //已存在的章节名称集合
         for(Chapter chapter : chapterList){
-            int novelId = chapter.getNovelId();
+            int novelId = chapter.getnId();
             List<Chapter> currList = chapterMapper.selectInfoByNovelId(novelId);
             for(Chapter currChapter : currList){
-                titleList.add(currChapter.getChapter());
+                titleList.add(currChapter.getName());
             }
             //是否存在该章节
-            boolean flag = titleList.contains(chapter.getChapter());
+            boolean flag = titleList.contains(chapter.getName());
             if(!flag){
                 newList.add(chapter);
                 //清除对应小说的章节缓存
@@ -82,7 +82,7 @@ public class ChapterServiceImpl implements ChapterService {
         }
         for (Chapter chapter : chapterList){
             chapterMapper.updateChapter(chapter);
-            int novelId = chapter.getNovelId();
+            int novelId = chapter.getnId();
             String field = "chapter" + novelId;
             if(jedisClient.hget(keys, field) != null){
                 jedisClient.hdel(keys, field);

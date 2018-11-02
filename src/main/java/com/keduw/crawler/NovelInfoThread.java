@@ -41,17 +41,17 @@ public class NovelInfoThread implements Runnable{
                         //增加小说和章节信息
                         int inResult = novelService.insertNovel(novel);
                         if(inResult == 1){
-                            int novelId = novel.getNovelId();
+                            int novelId = novel.getId();
                             for(Chapter chapter : chapterList){
-                                chapter.setNovelId(novelId);
+                                chapter.setnId(novelId);
                             }
                             chapterService.insertChapter(chapterList);
                         }
                     }else if(result == 1){
                         //已存在该小说，只需更新章节信息
-                        int novelId = novel.getNovelId();
+                        int novelId = novel.getId();
                         for(Chapter chapter : chapterList){
-                            chapter.setNovelId(novelId);
+                            chapter.setnId(novelId);
                         }
                         chapterService.updateChapter(chapterList);
                     }else {

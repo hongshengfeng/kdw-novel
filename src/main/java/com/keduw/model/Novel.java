@@ -1,42 +1,47 @@
 package com.keduw.model;
 
-/**
- * 小说信息
- * @author hsfeng
- */
+//小说信息
 public class Novel {
-    private Integer novelId;
+    private Integer id;    //小说id
 
-    private String novelName;
+    private Integer cId;   //类别id
 
-    private String author;
+    private String name;   //小说名称
 
-    private Integer categoryId;
+    private String author; //作者
 
-    private String status;
+    private String brief;  //简介
 
-    private String lastTime;
+    private String status; //状态，完结/连载中
 
-    private String novelUrl;
+    private String update; //更新时间
 
-    private Integer chapterSize;
+    private String link;   //小说地址
 
-    private String brief;
+    private Integer size;  //章节总数
 
-    public Integer getNovelId() {
-        return novelId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setNovelId(Integer novelId) {
-        this.novelId = novelId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getNovelName() {
-        return novelName;
+    public Integer getcId() {
+        return cId;
     }
 
-    public void setNovelName(String novelName) {
-        this.novelName = novelName;
+    public void setcId(Integer cId) {
+        this.cId = cId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAuthor() {
@@ -47,12 +52,12 @@ public class Novel {
         this.author = author;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
+    public String getBrief() {
+        return brief;
     }
 
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setBrief(String brief) {
+        this.brief = brief;
     }
 
     public String getStatus() {
@@ -63,35 +68,27 @@ public class Novel {
         this.status = status;
     }
 
-    public String getLastTime() {
-        return lastTime;
+    public String getUpdate() {
+        return update;
     }
 
-    public void setLastTime(String lastTime) {
-        this.lastTime = lastTime;
+    public void setUpdate(String update) {
+        this.update = update;
     }
 
-    public String getNovelUrl() {
-        return novelUrl;
+    public String getLink() {
+        return link;
     }
 
-    public void setNovelUrl(String novelUrl) {
-        this.novelUrl = novelUrl;
+    public void setLink(String link) {
+        this.link = link;
     }
 
-    public Integer getChapterSize() {
-        return chapterSize;
+    public Integer getSize() {
+        return size;
     }
 
-    public void setChapterSize(Integer chapterSize) {
-        this.chapterSize = chapterSize;
-    }
-
-    public String getBrief() {
-        return brief;
-    }
-
-    public void setBrief(String brief) {
-        this.brief = brief;
+    public void setSize(Integer size) {
+        this.size = size;
     }
 }

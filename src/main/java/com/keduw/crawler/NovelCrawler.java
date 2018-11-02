@@ -52,17 +52,17 @@ public class NovelCrawler extends BreadthCrawler {
                     String author = info.getElementsByTag("p").get(0).text(); //作者
                     String status = info.getElementsByTag("p").get(1).text(); //更新状态
                     String lastTime = info.getElementsByTag("p").get(2).text(); //最后更新时间
-                    novel.setNovelName(title);
+                    novel.setName(title);
                     novel.setAuthor(BaseUtil.tirmStr(author));
                     novel.setStatus(BaseUtil.tirmStr(status));
-                    novel.setLastTime(BaseUtil.tirmStr(lastTime));
-                    novel.setNovelUrl(page.url());
+                    novel.setUpdate(BaseUtil.tirmStr(lastTime));
+                    novel.setLink(page.url());
                 }
                 //类别
                 Elements conTop = document.select("div[class=con_top]");
                 if(!conTop.isEmpty()){
                     String category = conTop.get(0).getElementsByTag("a").get(4).text();
-                    novel.setCategoryId(CateUtil.getId(category, 0));
+                    novel.setId(CateUtil.getId(category, 0));
                 }
                 //简介
                 Elements intro = document.select("div[id=intro]");
@@ -77,12 +77,12 @@ public class NovelCrawler extends BreadthCrawler {
                     Chapter info =  new Chapter();
                     String url =  element.attr("href");
                     String content = element.text();
-                    info.setNovelId(novel.getNovelId());
-                    info.setChapter(content);
-                    info.setChapterUrl(BaseUtil.urlTrim(url));
+                    info.setId(novel.getId());
+                    info.setContent(content);
+                    info.setLink(BaseUtil.urlTrim(url));
                     chapterList.add(info);
                 }
-                novel.setChapterSize(chapter.size());
+                novel.setSize(chapter.size());
                 //将爬取信息存储到队列中
                 NovelColl novelColl = new NovelColl();
                 novelColl.setNovel(novel);

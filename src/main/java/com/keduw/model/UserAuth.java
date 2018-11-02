@@ -3,7 +3,7 @@ package com.keduw.model;
 public class UserAuth {
     private Integer id;
 
-    private Integer userid;
+    private Integer uId;
 
     private String token;
 
@@ -17,12 +17,12 @@ public class UserAuth {
         this.id = id;
     }
 
-    public Integer getUserid() {
-        return userid;
+    public Integer getuId() {
+        return uId;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setuId(Integer uId) {
+        this.uId = uId;
     }
 
     public String getToken() {

@@ -3,16 +3,16 @@
 <mapper namespace="com.keduw.mapper.RecordMapper">
   <resultMap id="BaseResultMap" type="com.keduw.model.Record">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="userId" jdbcType="INTEGER" property="userid" />
-    <result column="novelId" jdbcType="INTEGER" property="novelid" />
-    <result column="chapterId" jdbcType="INTEGER" property="chapterid" />
+    <result column="uId" jdbcType="INTEGER" property="uId" />
+    <result column="nId" jdbcType="INTEGER" property="nId" />
+    <result column="cId" jdbcType="INTEGER" property="cId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, userId, novelId, chapterId
+    id, uId, nId, cId
   </sql>
   <select id="selectByNovelId" resultType="java.lang.Integer">
-    select chapterId from record
-    where userId = #{userId} AND novelId = #{novelId}
+    select cId from record
+    where uId = #{userId} AND nId = #{novelId}
   </select>
 
 </mapper>

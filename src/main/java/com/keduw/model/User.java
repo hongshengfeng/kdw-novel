@@ -5,13 +5,13 @@ import java.util.Date;
 public class User {
     private Integer id;
 
-    private String account;
+    private String sacct; //账号
 
-    private String password;
+    private String pwd;   //密码
 
-    private String username;
+    private String name;  //昵称
 
-    private Date registtime;
+    private Date registTime; //注册时间
 
     public Integer getId() {
         return id;
@@ -21,35 +21,35 @@ public class User {
         this.id = id;
     }
 
-    public String getAccount() {
-        return account;
+    public String getSacct() {
+        return sacct;
     }
 
-    public void setAccount(String account) {
-        this.account = account == null ? null : account.trim();
+    public void setSacct(String sacct) {
+        this.sacct = sacct;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Date getRegisttime() {
-        return registtime;
+    public Date getRegistTime() {
+        return registTime;
     }
 
-    public void setRegisttime(Date registtime) {
-        this.registtime = registtime;
+    public void setRegistTime(Date registTime) {
+        this.registTime = registTime;
     }
 }

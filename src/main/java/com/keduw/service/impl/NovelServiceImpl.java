@@ -145,15 +145,15 @@ public class NovelServiceImpl implements NovelService {
     //判断小说是否存在或更新
     @Override
     public int isExitOrUpdate(Novel novel) {
-        String name = novel.getNovelName();
+        String name = novel.getName();
         String author = novel.getAuthor();
-        int size = novel.getChapterSize();
+        int size = novel.getSize();
         int result = 0; //0-小说不存在，1-存在，章节需要更新，2-无变化
         if(name != null && !name.isEmpty()){
             Novel info = novelMapper.selectInfoByName(name, author);
             if(info != null){
-                novel.setNovelId(info.getNovelId());
-                result = info.getChapterSize() == size ? 2 : 1;
+                novel.setId(info.getId());
+                result = info.getSize() == size ? 2 : 1;
             }
         }
         return result;

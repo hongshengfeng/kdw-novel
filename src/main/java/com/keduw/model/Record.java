@@ -1,13 +1,14 @@
 package com.keduw.model;
 
+//阅读记录
 public class Record {
     private Integer id;
 
-    private Integer userid;
+    private Integer uId; //用户id
 
-    private Integer novelid;
+    private Integer nId; //小说id
 
-    private Integer chapterid;
+    private Integer cId; //章节id
 
     public Integer getId() {
         return id;
@@ -17,27 +18,27 @@ public class Record {
         this.id = id;
     }
 
-    public Integer getUserid() {
-        return userid;
+    public Integer getuId() {
+        return uId;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setuId(Integer uId) {
+        this.uId = uId;
     }
 
-    public Integer getNovelid() {
-        return novelid;
+    public Integer getnId() {
+        return nId;
     }
 
-    public void setNovelid(Integer novelid) {
-        this.novelid = novelid;
+    public void setnId(Integer nId) {
+        this.nId = nId;
     }
 
-    public Integer getChapterid() {
-        return chapterid;
+    public Integer getcId() {
+        return cId;
     }
 
-    public void setChapterid(Integer chapterid) {
-        this.chapterid = chapterid;
+    public void setcId(Integer cId) {
+        this.cId = cId;
     }
 }

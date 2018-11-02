@@ -1,49 +1,39 @@
 package com.keduw.model;
 
-/**
- * 章节信息
- */
+//章节信息
 public class Chapter {
-    private Integer chapterId;
+    private Integer id;  //章节id
 
-    private Integer novelId;
+    private Integer nId; //小说id
 
-    private String chapter;
+    private String name; //章节名称
 
-    private String chapterUrl;
+    private String content; //章节内容
 
-    private String content;
+    private String link; //章节链接
 
-    public Integer getChapterId() {
-        return chapterId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setChapterId(Integer chapterId) {
-        this.chapterId = chapterId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getNovelId() {
-        return novelId;
+    public Integer getnId() {
+        return nId;
     }
 
-    public void setNovelId(Integer novelId) {
-        this.novelId = novelId;
+    public void setnId(Integer nId) {
+        this.nId = nId;
     }
 
-    public String getChapter() {
-        return chapter;
+    public String getName() {
+        return name;
     }
 
-    public void setChapter(String chapter) {
-        this.chapter = chapter;
-    }
-
-    public String getChapterUrl() {
-        return chapterUrl;
-    }
-
-    public void setChapterUrl(String chapterUrl) {
-        this.chapterUrl = chapterUrl;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getContent() {
@@ -52,5 +42,13 @@ public class Chapter {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

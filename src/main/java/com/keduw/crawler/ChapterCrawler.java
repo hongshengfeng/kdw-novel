@@ -22,7 +22,7 @@ public class ChapterCrawler extends BreadthCrawler {
 
     public ChapterCrawler(String crawlPath, boolean autoParse, Chapter curr, BlockingQueue<Chapter> queue) {
         super(crawlPath, autoParse);
-        this.addSeed(curr.getChapterUrl());
+        this.addSeed(curr.getLink());
         this.addRegex("-.*\\.(jpg|png|gif).*");
         this.setThreads(1);
         this.setResumable(false); //停止后下次继续爬取
@@ -49,9 +49,9 @@ public class ChapterCrawler extends BreadthCrawler {
             if(nextContent.equals("下一页")) {
                 // 有下一页则进行内容替换和存储到队列里
                 String nextUrl = element.attr("href");
-                String preUrl = chapter.getChapterUrl();
+                String preUrl = chapter.getLink();
                 nextUrl = preUrl.substring(0, preUrl.lastIndexOf("/") + 1) + nextUrl;
-                chapter.setChapterUrl(nextUrl);
+                chapter.setLink(nextUrl);
                 try {
                     chapterQueue.put(chapter);
                 } catch (InterruptedException e) {

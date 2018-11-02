@@ -26,7 +26,7 @@ public class CheckCrawler extends BreadthCrawler {
     public CheckCrawler(String crawlPath, boolean autoParse, Novel curr) {
         super(crawlPath, autoParse);
         this.novel = curr;
-        this.addSeed(novel.getNovelUrl());
+        this.addSeed(novel.getLink());
         this.addRegex("-.*\\.(jpg|png|gif).*");
         this.setThreads(1);
         this.setResumable(false); //停止后下次继续爬取
@@ -43,14 +43,14 @@ public class CheckCrawler extends BreadthCrawler {
                 Chapter info = new Chapter();
                 String url = element.attr("href");
                 String content = element.text();
-                info.setNovelId(novel.getNovelId());
-                info.setChapter(content);
-                info.setChapterUrl(BaseUtil.urlTrim(url));
+                info.setId(novel.getId());
+                info.setName(content);
+                info.setLink(BaseUtil.urlTrim(url));
                 chapterList.add(info);
             }
             System.out.println(chapterList.size());
             //更新章节信息列表
-            if (chapterList.size() > novel.getChapterSize()) {
+            if (chapterList.size() > novel.getSize()) {
                 ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
                 chapterService.updateChapter(chapterList);
             }

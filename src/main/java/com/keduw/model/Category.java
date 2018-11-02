@@ -1,19 +1,17 @@
 package com.keduw.model;
 
-/**
- * 类别信息
- */
+//类别信息
 public class Category {
-    private Integer categoryId;
+    private Integer id;
 
     private String category;
 
-    public Integer getCategoryId() {
-        return categoryId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCategory() {
