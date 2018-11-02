@@ -3,6 +3,7 @@ package com.keduw.controller;
 import com.keduw.model.Novel;
 import com.keduw.service.NovelService;
 import com.keduw.util.BaseUtil;
+import com.keduw.util.Page;
 import com.keduw.util.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -81,5 +82,12 @@ public class NovelController {
             counts = novelService.getNovelCount();
         }
         return counts;
+    }
+
+    //小说搜索
+    @RequestMapping("/search/{wd}/{curr}")
+    public Page<Novel> search(@PathVariable("wd")String wd, @PathVariable("curr")String curr){
+        int start = Parser.parserInt(curr, 1);
+        return novelService.getNovelByName(wd, start);
     }
 }

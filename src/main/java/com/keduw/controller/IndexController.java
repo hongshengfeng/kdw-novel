@@ -28,14 +28,25 @@ public class IndexController {
     private String keys;
 
     @RequestMapping("/")
-    public String home(HttpServletRequest request){
-        //获取访问服务器的ip并存储到redis中
+    public String index(HttpServletRequest request){
+        //获取访问电脑版网站的ip
         String ip = IpListUtil.getLocalIp(request);
-        String fields = "ip_" + ip;
+        String fields = "site_" + ip;
         if(jedisClient.hget(keys, fields) == null){
             jedisClient.hset(keys, fields, ip);
         }
         return "index";
+    }
+
+    @RequestMapping("/m")
+    public String mobiIndex(HttpServletRequest request){
+        //获取访问手机端网站的ip
+        String ip = IpListUtil.getLocalIp(request);
+        String fields = "mobi_" + ip;
+        if(jedisClient.hget(keys, fields) == null){
+            jedisClient.hset(keys, fields, ip);
+        }
+        return "/mobi/index";
     }
 
     @RequestMapping("/info/{novelId}")
@@ -49,8 +60,15 @@ public class IndexController {
         return "info";
     }
 
-    @RequestMapping("/category/{category}")
-    public String categoryInfo(@PathVariable("category") String cate, Model model){
+    @RequestMapping("/category")
+    public String categoryInfo(){
         return "moreInfo";
+    }
+
+    @RequestMapping("/search")
+    public String searchNovel(HttpServletRequest request, Model model){
+        String wd = request.getParameter("wd");
+        model.addAttribute("wd", wd);
+        return "search";
     }
 }

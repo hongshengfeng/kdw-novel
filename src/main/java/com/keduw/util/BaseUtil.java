@@ -1,5 +1,6 @@
 package com.keduw.util;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -59,5 +60,18 @@ public class BaseUtil {
     public static int betweenRandom(int num){
         int result = (int) (Math.round(Math.random() * num));
         return result;
+    }
+
+    /**
+     * 判断是否为ajax发起的请求
+     * @param request
+     * @return
+     */
+    public static boolean isAjax(HttpServletRequest request){
+        boolean result = false;
+        if(request.getHeader("X-Requested-With") == null){
+            return result;
+        }
+        return "XMLHttpRequest".equals(request.getHeader("X-Requested-With").toString());
     }
 }
