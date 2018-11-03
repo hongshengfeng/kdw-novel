@@ -94,7 +94,7 @@ var app = new Vue({
                         async: true,
                         url: "/novel/search/" + _self.wd + "/" + _self.currPage,
                         success: function(data){
-                            if(data.list.length > 0){
+                            if(data != null && data.list.length > 0){
                                 _self.counts = data.totalPage;
                                 setTimeout(function(){
                                     _self.isMore = false;

@@ -19,18 +19,18 @@
                 <div class="kd-top">
                     <div class="kd-title" th:text="${novel.name}">小说名字</div>
                     <div class="kd-bar">
-                        <div class="kd-txt" th:if="${novel.cId == 1}">修真小说</div>
-                        <div class="kd-txt" th:if="${novel.cId == 2}">都市小说</div>
-                        <div class="kd-txt" th:if="${novel.cId == 3}">穿越小说</div>
-                        <div class="kd-txt" th:if="${novel.cId == 4}">玄幻小说</div>
-                        <div class="kd-txt" th:if="${novel.cId == 5}">科幻小说</div>
-                        <div class="kd-txt" th:if="${novel.cId == 6}">网游小说</div>
+                        <div class="kd-txt" th:if="${novel.cid == 1}">修真小说</div>
+                        <div class="kd-txt" th:if="${novel.cid == 2}">都市小说</div>
+                        <div class="kd-txt" th:if="${novel.cid == 3}">穿越小说</div>
+                        <div class="kd-txt" th:if="${novel.cid == 4}">玄幻小说</div>
+                        <div class="kd-txt" th:if="${novel.cid == 5}">科幻小说</div>
+                        <div class="kd-txt" th:if="${novel.cid == 6}">网游小说</div>
                         <div class="kd-line"></div>
                         <div class="kd-txt" th:text="${novel.author}">作者：</div>
                         <div class="kd-line"></div>
                         <div class="kd-txt" th:text="${novel.status}">连载中</div>
                         <div class="kd-line"></div>
-                        <div class="kd-txt" th:text="${novel.update}">2018-06-01</div>
+                        <div class="kd-txt" th:text="${novel.uptime}">2018-06-01</div>
                     </div>
                 </div>
                 <div class="kd-art-content" v-html="content"></div>

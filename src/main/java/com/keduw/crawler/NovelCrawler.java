@@ -55,14 +55,14 @@ public class NovelCrawler extends BreadthCrawler {
                     novel.setName(title);
                     novel.setAuthor(BaseUtil.tirmStr(author));
                     novel.setStatus(BaseUtil.tirmStr(status));
-                    novel.setUpdate(BaseUtil.tirmStr(lastTime));
+                    novel.setUptime(BaseUtil.tirmStr(lastTime));
                     novel.setLink(page.url());
                 }
                 //类别
                 Elements conTop = document.select("div[class=con_top]");
                 if(!conTop.isEmpty()){
                     String category = conTop.get(0).getElementsByTag("a").get(4).text();
-                    novel.setId(CateUtil.getId(category, 0));
+                    novel.setCid(CateUtil.getId(category, 0));
                 }
                 //简介
                 Elements intro = document.select("div[id=intro]");

@@ -18,16 +18,16 @@
         <span class="iconfont icon-close" @click="close()"></span> 广告位
     </div>
     <div class="nov_info" v-loading="loading">
-        <el-card shadow="hover" v-for="novel in novelList" :class="infoClass(novel.cId)" @click.native="info(novel.id)">
+        <el-card shadow="hover" v-for="novel in novelList" :class="infoClass(novel.cid)" @click.native="info(novel.id)">
             <div class="base-info">
-                <span class="classify coatard" v-if="novel.cId == 1">修真</span>
-                <span class="classify city" v-else-if="novel.cId == 2">都市</span>
-                <span class="classify across" v-else-if="novel.cId == 3">穿越</span>
-                <span class="classify fantasy" v-else-if="novel.cId == 4">玄幻</span>
-                <span class="classify science" v-else-if="novel.cId == 5">科幻</span>
+                <span class="classify coatard" v-if="novel.cid == 1">修真</span>
+                <span class="classify city" v-else-if="novel.cid == 2">都市</span>
+                <span class="classify across" v-else-if="novel.cid == 3">穿越</span>
+                <span class="classify fantasy" v-else-if="novel.cid == 4">玄幻</span>
+                <span class="classify science" v-else-if="novel.cid == 5">科幻</span>
                 <span class="classify game" v-else>网游</span>
                 <span class="name"><a href="#">{{novel.name}}</a></span>
-                <span class="updateTime">{{novel.update}}</span>
+                <span class="updateTime">{{novel.uptime}}</span>
             </div>
             <div class="brief-info">
                 <span>简介：</span>

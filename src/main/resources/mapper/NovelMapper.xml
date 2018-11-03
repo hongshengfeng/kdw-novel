@@ -3,11 +3,11 @@
 <mapper namespace="com.keduw.dao.NovelMapper">
     <resultMap id="BaseResultMap" type="com.keduw.model.Novel">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="cId" jdbcType="INTEGER" property="cId"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="author" jdbcType="VARCHAR" property="author"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
-        <result column="update" jdbcType="VARCHAR" property="update"/>
+        <result column="uptime" jdbcType="VARCHAR" property="uptime"/>
         <result column="link" jdbcType="VARCHAR" property="link"/>
         <result column="size" jdbcType="INTEGER" property="size"/>
     </resultMap>
@@ -15,12 +15,12 @@
         <result column="brief" jdbcType="LONGVARCHAR" property="brief"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, cId, name, author, status, update, link, size, brief
+        id, cid, name, author, status, uptime, link, size, brief
     </sql>
     <!--新增小说详细信息，返回新插入的主键 -->
-    <insert id="insertNovel" parameterType="com.keduw.model.Novel" useGeneratedKeys="true" keyProperty="novelId">
-        INSERT INTO novel(cId,name,author,brief,status,update,link,size)
-        VALUES(#{cId},#{name},#{author},#{brief},#{status},#{update},#{link},#{size})
+    <insert id="insertNovel" parameterType="com.keduw.model.Novel" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO novel(cid,name,author,brief,status,uptime,link,size)
+        VALUES(#{cid},#{name},#{author},#{brief},#{status},#{uptime},#{link},#{size})
     </insert>
     <!--通过小说名字查找小说-->
     <select id="selectNovelByName" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -30,29 +30,29 @@
     </select>
     <!--通过小说名字查找小说总数-->
     <select id="selectNovelCountByName" parameterType="java.lang.String" resultType="java.lang.Integer">
-        SELECT count(nId) FROM  novel WHERE name Like concat(concat('%',#{novelName}),'%')
+        SELECT count(id) FROM  novel WHERE name Like concat(concat('%',#{novelName}),'%')
     </select>
     <!--通过小说id查找小说-->
     <select id="selectNovelById" parameterType="java.lang.Integer" resultType="com.keduw.model.Novel">
         SELECT
         <include refid="Base_Column_List" />
-        FROM  novel WHERE nId = #{novelId}
+        FROM  novel WHERE id = #{novelId}
     </select>
     <!--查询所有小说的列表-->
     <select id="selectNovel" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
-        FROM novel WHERE nId in
-        (SELECT n.nId from (SELECT nId from novel limit #{curr},#{size}) as n)
-        ORDER BY nId DESC
+        FROM novel WHERE id in
+        (SELECT n.id from (SELECT id from novel limit #{curr},#{size}) as n)
+        ORDER BY id DESC
     </select>
     <!--根据类别查询小说列表-->
     <select id="selectNovelByCategory" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
-        FROM novel WHERE nId in
-        (SELECT n.nId from (SELECT nId from novel where cId=#{categoryId} limit #{curr},#{size}) as n)
-        ORDER BY nId DESC
+        FROM novel WHERE id in
+        (SELECT n.id from (SELECT id from novel where cid=#{categoryId} limit #{curr},#{size}) as n)
+        ORDER BY id DESC
     </select>
     <!-- 返回全部小说信息-->
     <select id="seletAllNovelInfo" resultMap="BaseResultMap">
@@ -64,7 +64,7 @@
     <select id="seletNewNovelInfo" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
-        FROM novel ORDER BY update DESC
+        FROM novel ORDER BY uptime DESC
     </select>
     <!-- 查询热门小说 -->
     <select id="seletHotNovelInfo" resultMap="BaseResultMap">
@@ -80,10 +80,10 @@
     </select>
     <!-- 查询小说总数 -->
     <select id="selectInfoCount" resultType="java.lang.Integer">
-        SELECT count(nId) FROM novel
+        SELECT count(id) FROM novel
     </select>
     <!-- 查询某个类别的小说总数 -->
     <select id="selectInfoCountByCategory" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        SELECT count(nId) FROM novel where cId = #{category}
+        SELECT count(id) FROM novel where cid = #{category}
     </select>
 </mapper>

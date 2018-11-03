@@ -21,7 +21,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class NovelSchedule {
 
     //每周六的0点启动小说爬虫，爬取是否有新小说
-    @Scheduled(cron = "0 42 14 * * ?")
+    @Scheduled(cron = "0 56 17 * * ?")
     public void novelCollect() throws Exception{
         if(isOpen){
             NovelCrawler crawl = new NovelCrawler("crawl",true);

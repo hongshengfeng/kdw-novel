@@ -4,7 +4,7 @@ package com.keduw.model;
 public class Novel {
     private Integer id;    //小说id
 
-    private Integer cId;   //类别id
+    private Integer cid;   //类别id
 
     private String name;   //小说名称
 
@@ -14,7 +14,7 @@ public class Novel {
 
     private String status; //状态，完结/连载中
 
-    private String update; //更新时间
+    private String uptime; //更新时间
 
     private String link;   //小说地址
 
@@ -28,12 +28,12 @@ public class Novel {
         this.id = id;
     }
 
-    public Integer getcId() {
-        return cId;
+    public Integer getCid() {
+        return cid;
     }
 
-    public void setcId(Integer cId) {
-        this.cId = cId;
+    public void setCid(Integer cid) {
+        this.cid = cid;
     }
 
     public String getName() {
@@ -68,12 +68,12 @@ public class Novel {
         this.status = status;
     }
 
-    public String getUpdate() {
-        return update;
+    public String getUptime() {
+        return uptime;
     }
 
-    public void setUpdate(String update) {
-        this.update = update;
+    public void setUptime(String uptime) {
+        this.uptime = uptime;
     }
 
     public String getLink() {
