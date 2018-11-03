@@ -27,7 +27,7 @@
     <!--更新章节名字以及内容-->
     <insert id="updateChapter" parameterType="com.keduw.model.Chapter">
         UPDATE chapter
-        SET name = #{info.name},content = #{info.content} WHERE id = #{info.id} AND nId = #{info.nId}
+        SET name = #{name},content = #{content} WHERE id = #{id} AND nId = #{nId}
     </insert>
     <!--根据小说id返回章节列表-->
     <select id="selectInfoByNovelId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
