@@ -14,11 +14,45 @@
 <body>
 <div th:replace="header::top"></div>
 <el-main id="app">
-    <div class="tip">
-
-    </div>
     <div class="info">
-
+        <template>
+            <el-tabs :tab-position="tabPosition">
+                <el-tab-pane label="关于可读">
+                    <div class="info">
+                        <div class="desc">
+                            <div class="iconfont icon-mianfeishichang"></div>
+                            <span class="title">简单专注，资源共享</span>
+                        </div>
+                        <div class="desc">
+                            <div class="iconfont icon-shangbangcishu"></div>
+                            <span class="title">类型较多，内容丰富</span>
+                        </div>
+                        <div class="desc">
+                            <div class="iconfont icon-selected"></div>
+                            <span class="title">全文搜索，个性匹配</span>
+                        </div>
+                        <div class="desc">
+                            <div class="iconfont icon-shalou"></div>
+                            <span class="title">记忆功能，主动记忆阅读记录</span>
+                        </div>
+                    </div>
+                    <div class="other">
+                        <div class="baseInfo">
+                            <ul>
+                                <li>资源分享</li>
+                                <li>页面简洁，内容丰富</li>
+                            </ul>
+                        </div>
+                        <div class="baseInfo">
+                            <ul>
+                                <li>网站内容均来源于网络，如有侵权，可联系我们删除</li>
+                                <li>联系方式：915869445@qq.com</li>
+                            </ul>
+                        </div>
+                    </div>
+                </el-tab-pane>
+            </el-tabs>
+        </template>
     </div>
 </el-main>
 <div th:replace="footer::bottom"></div>
@@ -28,7 +62,7 @@
     var app = new Vue({
         el: '#app',
         data: {
-
+            tabPosition: 'left'
         },
         methods: {
 

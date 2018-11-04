@@ -10,7 +10,7 @@ var header = new Vue({
         login: function () {
             console.log("login")
         },
-        record: function() {
+        search: function() {
             var wd = $.trim(this.keywords);
             if(wd != ""){
                 window.location.href = "/search?wd=" + wd;
@@ -20,6 +20,12 @@ var header = new Vue({
                     type: 'warning'
                 });
             }
+        },
+        record: function () {
+            this.$message({
+                message: "登录后系统会自动记录阅读记录",
+                type: 'warning'
+            });
         }
     }
 });
