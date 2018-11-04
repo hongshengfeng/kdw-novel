@@ -32,7 +32,7 @@
     <!--根据小说id返回章节列表-->
     <select id="selectInfoByNovelId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM chapter WHERE nId = #{novelId}
     </select>
     <!--获取章节总数-->
@@ -42,13 +42,13 @@
     <!--获取content为空的章节列表-->
     <select id="selectInfoByContent" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM chapter WHERE content is null
     </select>
     <!--获取章节内容-->
     <select id="selectContentById" resultType="java.lang.String">
         SELECT
-        <include refid="Blob_Column_List" />
+        <include refid="Blob_Column_List"/>
         FROM chapter WHERE nId = #{novelId} and id = #{chapterId}
     </select>
 </mapper>

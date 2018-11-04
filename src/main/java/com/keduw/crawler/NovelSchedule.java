@@ -1,17 +1,25 @@
 package com.keduw.crawler;
 
+import com.keduw.jedis.JedisClient;
 import com.keduw.model.Chapter;
+import com.keduw.model.Ipinfo;
 import com.keduw.model.Novel;
 import com.keduw.service.ChapterService;
 import com.keduw.service.NovelService;
+import com.keduw.service.SeoService;
 import com.keduw.util.ApplicationUtil;
+import com.keduw.util.DateFormat;
 import com.keduw.util.JsonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -19,6 +27,14 @@ import java.util.concurrent.locks.ReentrantLock;
 //小说爬虫
 @Component
 public class NovelSchedule {
+
+    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(NovelSchedule.class);
+    @Autowired
+    private JedisClient jedisClient;
+    @Autowired
+    private SeoService seoService;
+    @Value("user_ip")
+    private String user_ip;
 
     //每周六的0点启动小说爬虫，爬取是否有新小说
     @Scheduled(cron = "0 56 17 * * ?")
@@ -133,7 +149,26 @@ public class NovelSchedule {
         }
     }
 
-    private boolean isOpen = true; //启动开关，日常关闭
+    //每天凌晨统计访客人数
+    @Scheduled(cron = "0 33 15 * * ?")
+    public void ipInfoCollect() throws Exception{
+        Map<String, String> info = jedisClient.hgetAll(user_ip);
+        if(info != null){
+            Ipinfo ipinfo = new Ipinfo();
+            ipinfo.setTime(DateFormat.addAndSubtractDaysByGetTime(new Date(), -1));
+            ipinfo.setNum(info.size());
+            int result = seoService.insertInfo(ipinfo);
+            if(result > 0){
+                jedisClient.del(user_ip);
+            }else{
+                LOGGER.info("统计IP失败" + new Date() + "size:" + info.size());
+            }
+        }else{
+            LOGGER.info("统计IP数据为空" + new Date());
+        }
+    }
+
+    private boolean isOpen = false; //启动开关，日常关闭
     private volatile int collStart = 1;
     private int checkTimes = 0; //检查小说章节的总批次
     private int collTimes = 0; //爬取章节的总批次

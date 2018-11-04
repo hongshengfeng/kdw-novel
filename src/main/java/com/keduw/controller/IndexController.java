@@ -24,7 +24,7 @@ public class IndexController {
     private NovelService novelService;
     @Autowired
     private JedisClient jedisClient;
-    @Value("userIp")
+    @Value("user_ip")
     private String keys;
 
     @RequestMapping("/")

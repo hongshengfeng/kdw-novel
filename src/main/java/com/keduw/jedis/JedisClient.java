@@ -1,5 +1,7 @@
 package com.keduw.jedis;
 
+import java.util.Map;
+
 /**
  * redis客户端接口
  * @author hsfeng
@@ -31,6 +33,9 @@ public interface JedisClient {
 
     //根据key和field获取hash数据类型
     String hget(String key, String field);
+
+    //获取hash数据类型的所有fields和value
+    Map<String, String> hgetAll(String key);
 
     //删除hash数据类型
     Long hdel(String key, String... field);

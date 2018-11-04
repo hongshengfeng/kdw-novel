@@ -1,7 +1,0 @@
-.el-main .info{max-width: 1200px;margin: 0 auto;background: #fff;border-radius: 5px;min-height: 200px;padding: 10px 0;text-align: center;}
-.info .el-tabs{min-height: 380px;}
-.info .el-tabs__header{margin-top: 50px;}
-.el-tabs__content{min-height: 380px;}
-.el-tabs__content .el-tab-pane{min-height: 380px;position: relative;}
-.el-tabs__content .el-tab-pane .link{height: 380px;line-height: 380px;width: 500px;top: 50%;left: 50%;margin-top: -180px;margin-left: -300px;position: absolute;}
-.link .iconfont{margin-right: 10px;color: #F7941E;}

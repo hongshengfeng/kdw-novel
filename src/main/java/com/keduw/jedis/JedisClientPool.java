@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.util.Map;
+
 /**
  * redis客户端接口实现类
  * @author hsfeng
@@ -125,6 +127,19 @@ public class JedisClientPool implements JedisClient {
         try{
             jedis = jedisPool.getResource();
             return  jedis.hget(key, field);
+        }finally {
+            if(jedis != null){
+                jedis.close();
+            }
+        }
+    }
+
+    @Override
+    public Map<String, String> hgetAll(String key) {
+        Jedis jedis = null;
+        try{
+            jedis = jedisPool.getResource();
+            return  jedis.hgetAll(key);
         }finally {
             if(jedis != null){
                 jedis.close();

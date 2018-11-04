@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.keduw.mapper.UserAuthMapper">
-  <resultMap id="BaseResultMap" type="com.keduw.model.UserAuth">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="uId" jdbcType="INTEGER" property="uId" />
-    <result column="token" jdbcType="VARCHAR" property="token" />
-    <result column="type" jdbcType="BIT" property="type" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, uId, token, type
-  </sql>
+    <resultMap id="BaseResultMap" type="com.keduw.model.UserAuth">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="uId" jdbcType="INTEGER" property="uId"/>
+        <result column="token" jdbcType="VARCHAR" property="token"/>
+        <result column="type" jdbcType="BIT" property="type"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, uId, token, type
+    </sql>
 
 </mapper>
