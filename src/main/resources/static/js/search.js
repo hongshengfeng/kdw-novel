@@ -62,18 +62,18 @@ var app = new Vue({
                 async: true,
                 url: "/novel/search/" + this.wd + "/" + this.currPage,
                 success: function(data){
-                    if(data.list.length > 0){
+                    if(data != null && data.list.length > 0){
                         for(var i = 0; i < data.list.length; i++){
                             _self.novelList.push(data.list[i]);
                         }
                         _self.counts = data.totalPage;
-                        _self.loading = false;
                         if(_self.counts == 1){
                             _self.isEnd = true;
                         }
                     }else{
                         _self.isEnd = true;
                     }
+                    _self.loading = false;
                 },
                 error: function () {
                     _self.$message({
@@ -96,18 +96,15 @@ var app = new Vue({
                         success: function(data){
                             if(data != null && data.list.length > 0){
                                 _self.counts = data.totalPage;
-                                setTimeout(function(){
-                                    _self.isMore = false;
-                                },3000);
                                 for(var i = 0; i < data.list.length; i++){
                                     _self.novelList.push(data.list[i]);
                                 }
                             }else{
-                                setTimeout(function(){
-                                    _self.isMore = false;
-                                },3000);
                                 _self.isEnd = true;
                             }
+                            setTimeout(function(){
+                                _self.isMore = false;
+                            },3000);
                         },
                         error: function () {
                             _self.$message({

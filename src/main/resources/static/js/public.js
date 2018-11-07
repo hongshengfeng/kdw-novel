@@ -1,7 +1,7 @@
 var header = new Vue({
     el: '#header',
     data: {
-        keywords: ""
+        wd: ""
     },
     methods: {
         index: function () {
@@ -11,7 +11,7 @@ var header = new Vue({
             console.log("login")
         },
         search: function() {
-            var wd = $.trim(this.keywords);
+            var wd = $.trim(this.wd);
             if(wd != ""){
                 window.location.href = "/search?wd=" + wd;
             }else{

@@ -48,7 +48,7 @@
                         <div class="title">推广合作</div>
                         <div class="sub-title">网站内容均来源于网络，如有侵权，可联系我们删除</div>
                         <div class="baseInfo">
-                            <span>资源共享，页面简洁，内容丰富</span>
+                            <span>资源共享，页面简洁，内容丰富，支持广告投放</span>
                             <span>联系方式：915869445@qq.com</span>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                 url: "/seo/num",
                 success: function(data){
                     if(data != null){
-                        for(var i = 0; i < data.length; i++){
+                        for(var i = data.length - 1; i >= 0; i--){
                             _self.time.push(data[i].sTime);
                             _self.num.push(data[i].num);
                         }

@@ -13,7 +13,7 @@
     <select id="selectInfoByList" parameterType="java.util.Date" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM ipinfo where time &lt; #{date} ORDER BY id limit 0,7
+        FROM ipinfo where time &lt; #{date} ORDER BY id desc limit 0,7
     </select>
     <insert id="insertInfo" parameterType="com.keduw.model.Ipinfo" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO ipinfo(num, time) VALUES (#{num}, #{time})

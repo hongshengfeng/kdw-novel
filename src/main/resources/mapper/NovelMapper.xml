@@ -23,7 +23,7 @@
         VALUES(#{cid},#{name},#{author},#{brief},#{status},#{uptime},#{link},#{size})
     </insert>
     <!--通过小说名字查找小说-->
-    <select id="selectNovelByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectNovelByName" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM novel WHERE name Like concat(concat('%',#{novelName}),'%') limit #{curr},#{size}
