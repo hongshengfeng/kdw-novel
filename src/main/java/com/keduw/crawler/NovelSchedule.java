@@ -17,15 +17,15 @@ import java.util.concurrent.locks.ReentrantLock;
 @Component
 public class NovelSchedule {
 
-    //每周六的0点启动小说爬虫，爬取是否有新小说
-    @Scheduled(cron = "0 56 17 * * ?")
+    //每周六的0点启动小说爬虫，爬取小说
+    @Scheduled(cron = "0 43 23 * * ?")
     public void novelCollect() throws Exception{
-        if(isOpen){
+        if(true){
             NovelCrawler crawl = new NovelCrawler("crawl",true);
             NovelInfoThread saveInfo = new NovelInfoThread(crawl.novelQueue);
             Thread thread = new Thread(saveInfo);
             thread.start();
-            crawl.start(5);
+            crawl.start(1);
         }
     }
 
@@ -39,19 +39,20 @@ public class NovelSchedule {
             int checkTimes = counts / 100;
             checkTimes = counts % 100 == 0 ? checkTimes : checkTimes + 1;
             int collStart = 1;
+            BlockingQueue<Chapter> queue = new LinkedBlockingQueue<Chapter>(QUEUE_LENGTH);
             // 分批次检查小说的章节
-            for(int i = 0; i < checkTimes; i++) {
+            /*for(int i = 0; i < checkTimes; i++) {
                 while (collStart <= checkTimes) {
                     List<Novel> novelList = novelService.getNovelList(collStart, 50);
                     for(Novel novel : novelList){
                         if(novel.getStatus().equals("连载中")){
-                            CheckCrawler crawler = new CheckCrawler("crawl",true, novel);
+                            CheckCrawler crawler = new CheckCrawler("crawl",true, novel, queue);
                             crawler.start(1);
                         }
                     }
                     collStart ++;
                 }
-            }
+            }*/
         }
     }
 
@@ -88,5 +89,6 @@ public class NovelSchedule {
         }
     }
 
+    private final int QUEUE_LENGTH = 10000 * 10; // 队列大小
     private boolean isOpen = false; //启动开关，日常关闭
 }

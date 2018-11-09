@@ -1,4 +1,5 @@
 package com.keduw.crawler;
+
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
@@ -7,10 +8,10 @@ import com.keduw.model.Novel;
 import com.keduw.model.NovelColl;
 import com.keduw.util.BaseUtil;
 import com.keduw.util.CateUtil;
-import com.keduw.util.JsonUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -71,18 +72,17 @@ public class NovelCrawler extends BreadthCrawler {
                     novel.setBrief(brief);
                 }
                 //章节
-                Elements chapter = document.select("ul[class=_chapter] li a");
+                Elements element = document.select("ul[class=_chapter] li a");
                 List<Chapter> chapterList = new ArrayList<>();
-                for (Element element:chapter) {
+                for (Element elem : element) {
                     Chapter info =  new Chapter();
-                    String url =  element.attr("href");
-                    String content = element.text();
+                    String url =  elem.attr("href");
                     info.setId(novel.getId());
-                    info.setContent(content);
+                    info.setName(elem.text());
                     info.setLink(BaseUtil.urlTrim(url));
                     chapterList.add(info);
                 }
-                novel.setSize(chapter.size());
+                novel.setSize(chapterList.size());
                 //将爬取信息存储到队列中
                 NovelColl novelColl = new NovelColl();
                 novelColl.setNovel(novel);
