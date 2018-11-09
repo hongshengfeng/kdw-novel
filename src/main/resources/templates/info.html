@@ -48,7 +48,7 @@
             <div class="content-right">
                 <div class="current">章节列表</div>
                 <div class="list" id="list">
-                    <a href="javascript:void(0)" v-for="chapter in chapterList" @click="changeInfo(chapter.id)">{{chapter.name}}</a>
+                    <a href="javascript:void(0)" v-for="chapter in list" @click="changeInfo(chapter.id)">{{chapter.name}}</a>
                 </div>
                 <div class="counts">
                     <span class="cur">已阅读：<el-progress :percentage="20"></el-progress></span>

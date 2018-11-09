@@ -102,7 +102,7 @@
                         }
                         _self.broken.xAxis.data = _self.time;
                         _self.broken.series[0].data = _self.num;
-                        _self.brokenChart = echarts.init(document.getElementById('broken'));
+                        _self.brokenChart = echarts.init($("#broken"));
                         _self.brokenChart.setOption(_self.broken);
                     }
                 },

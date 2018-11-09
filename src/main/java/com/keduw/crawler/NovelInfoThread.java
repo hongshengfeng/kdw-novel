@@ -17,8 +17,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class NovelInfoThread implements Runnable{
 
-    private BlockingQueue<NovelColl> novelQueue = null;  //阻塞队列
-
+    BlockingQueue<NovelColl> novelQueue = null;  //阻塞队列
     NovelInfoThread(BlockingQueue<NovelColl> queue){
         this.novelQueue = queue;
     }
