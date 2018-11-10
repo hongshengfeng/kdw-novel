@@ -6,6 +6,8 @@ import com.keduw.jedis.JedisClient;
 import com.keduw.model.Chapter;
 import com.keduw.service.ChapterService;
 import com.keduw.util.JsonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -26,6 +28,7 @@ import java.util.List;
 @PropertySource("classpath:cache.properties")
 public class ChapterServiceImpl implements ChapterService {
 
+    private static Logger Log =  (Logger) LoggerFactory.getLogger(ChapterServiceImpl.class);
     @Autowired
     private ChapterMapper chapterMapper;
     @Autowired
@@ -36,14 +39,18 @@ public class ChapterServiceImpl implements ChapterService {
     //插入章节信息
     @Override
     public void insertChapter(List<Chapter> chapterList) {
-        if(chapterList == null && chapterList.size() == 0){
-            return;
+        try{
+            if(chapterList == null && chapterList.size() == 0){
+                return;
+            }
+            chapterMapper.insertChapter(chapterList);
+            //清除对应小说的章节缓存
+            int novelId = chapterList.get(0).getnId();
+            String field = "chapter" + novelId;
+            jedisClient.hdel(keys, field);
+        }catch (Exception e){
+            Log.error("insertChapterError", e.getMessage());
         }
-        chapterMapper.insertChapter(chapterList);
-        //清除对应小说的章节缓存
-        int novelId = chapterList.get(0).getnId();
-        String field = "chapter" + novelId;
-        jedisClient.hdel(keys, field);
     }
 
 
@@ -51,45 +58,53 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     @Transactional
     public void updateChapter(List<Chapter> chapterList) {
-        if(chapterList == null && chapterList.size() == 0){
-            return;
-        }
-        List<Chapter> newList = new ArrayList<>();  //存放新的章节
-        List<String> titleList = new ArrayList<>(); //已存在的章节名称集合
-        for(Chapter chapter : chapterList){
-            int novelId = chapter.getnId();
-            List<Chapter> currList = chapterMapper.selectInfoByNovelId(novelId);
-            for(Chapter currChapter : currList){
-                titleList.add(currChapter.getName());
+        try{
+            if(chapterList == null && chapterList.size() == 0){
+                return;
             }
-            //是否存在该章节
-            boolean flag = titleList.contains(chapter.getName());
-            if(!flag){
-                newList.add(chapter);
-                //清除对应小说的章节缓存
-                String field = "chapter" + novelId;
-                if(jedisClient.hget(keys, field) != null){
-                    jedisClient.hdel(keys, field);
+            List<Chapter> newList = new ArrayList<>();  //存放新的章节
+            List<String> titleList = new ArrayList<>(); //已存在的章节名称集合
+            for(Chapter chapter : chapterList){
+                int novelId = chapter.getnId();
+                List<Chapter> currList = chapterMapper.selectInfoByNovelId(novelId);
+                for(Chapter currChapter : currList){
+                    titleList.add(currChapter.getName());
+                }
+                //是否存在该章节
+                boolean flag = titleList.contains(chapter.getName());
+                if(!flag){
+                    newList.add(chapter);
+                    //清除对应小说的章节缓存
+                    String field = "chapter" + novelId;
+                    if(jedisClient.hget(keys, field) != null){
+                        jedisClient.hdel(keys, field);
+                    }
                 }
             }
+            chapterMapper.insertChapter(newList);
+        }catch (Exception e){
+            Log.error("updateChapterError", e.getMessage());
         }
-        chapterMapper.insertChapter(newList);
     }
 
     //更新章节内容
     @Override
     @Transactional
     public void updateChapterContent(List<Chapter> chapterList) {
-        if(chapterList == null && chapterList.size() == 0){
-            return;
-        }
-        for (Chapter chapter : chapterList){
-            chapterMapper.updateChapter(chapter);
-            int novelId = chapter.getnId();
-            String field = "chapter" + novelId;
-            if(jedisClient.hget(keys, field) != null){
-                jedisClient.hdel(keys, field);
+        try{
+            if(chapterList == null && chapterList.size() == 0){
+                return;
             }
+            for (Chapter chapter : chapterList){
+                chapterMapper.updateChapter(chapter);
+                int novelId = chapter.getnId();
+                String field = "chapter" + novelId;
+                if(jedisClient.hget(keys, field) != null){
+                    jedisClient.hdel(keys, field);
+                }
+            }
+        }catch (Exception e){
+            Log.error("updateChapterContentError", e.getMessage());
         }
     }
 
