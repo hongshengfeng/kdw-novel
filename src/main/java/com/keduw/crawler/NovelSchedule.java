@@ -21,9 +21,9 @@ public class NovelSchedule {
     private volatile BlockingQueue<NovelColl> novelQueue = new LinkedBlockingQueue<NovelColl>(10000 * 10);
 
     //每月10凌晨3点启动爬取小说
-    @Scheduled(cron = "0 25 15 * * ?")
+    @Scheduled(cron = "0 39 15 * * ?")
     public void novelCollect() throws Exception{
-        if(true){
+        if(isOpen){
             ReentrantLock lock = new ReentrantLock();
             NovelCrawler crawl = new NovelCrawler("crawl",true, novelQueue, lock);
             NovelInfoThread saveInfo = new NovelInfoThread(novelQueue);
@@ -62,37 +62,44 @@ public class NovelSchedule {
     }
 
     //每月1号凌晨3点爬取章节内容
-    @Scheduled(cron = "0 0 3 1 * ?")
+    @Scheduled(cron = "0 9 16 * * ?")
     public void infoCollect() throws Exception{
-        if(isOpen){
+        if(true){
             //获取总章节数
             ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
             int counts = chapterService.getInfoCounts();
             int collTimes = counts / 100;
             collTimes = counts % 100 == 0 ? collTimes : collTimes + 1;
             int collStart = 1;
-            BlockingQueue<Chapter> chapterQueue = new LinkedBlockingQueue<Chapter>(10000 * 10);
+            BlockingQueue<Chapter> chapterQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取有下一页的内容
+            BlockingQueue<Chapter> updateQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取更新到数据库的内容
             for(int i = 0; i < collTimes; i++){
                 while(collStart <= collTimes){
                     List<Chapter> chapterList = chapterService.getChapterList(collStart, 5);
                     // 阻塞队列用于存储一个章节内有多个页面的章节
                     for(Chapter chapter : chapterList){
-                        ChapterCrawler crawler = new ChapterCrawler("crawl", true, chapter, chapterQueue);
+                        ChapterCrawler crawler = new ChapterCrawler("crawl", true, chapter, chapterQueue, updateQueue);
                         crawler.start(1);
                     }
-                    // 爬取下一页
-                    while (chapterQueue.size() > 0){
-                        Chapter chapter = chapterQueue.poll(1000, TimeUnit.MILLISECONDS);
-                        ChapterCrawler crawler = new ChapterCrawler("crawl", true, chapter, chapterQueue);
-                        crawler.start(1);
-                    }
-                    // 更新章节内容，
-                    chapterService.updateChapterContent(chapterList);
                 }
                 collStart ++;
+            }
+
+            // 爬取下一页
+            while (chapterQueue.size() > 0){
+                Chapter chapter = chapterQueue.poll(1000, TimeUnit.MILLISECONDS);
+                ChapterCrawler crawler = new ChapterCrawler("crawl", true, chapter, chapterQueue, updateQueue);
+                crawler.start(1);
+            }
+
+            //更新内容
+            while(updateQueue.size() > 0){
+                Chapter chapter = updateQueue.poll(1000, TimeUnit.MILLISECONDS);
+                chapterService.updateChapterContent(chapter);
+                System.out.println("待消费" + updateQueue.size());
             }
         }
     }
 
-    private boolean isOpen = true; //启动开关，日常关闭
+    private boolean isOpen = false; //启动开关，日常关闭
 }

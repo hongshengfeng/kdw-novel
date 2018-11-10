@@ -4,6 +4,7 @@ import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
 import com.keduw.model.Chapter;
+import com.keduw.service.ChapterService;
 import com.keduw.util.JsonUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,8 +20,9 @@ public class ChapterCrawler extends BreadthCrawler {
     private Chapter chapter;
     private String REGEX = "https://www.biquge5.com/[0-9]+_[0-9]+/[0-9]+.+.html"; // 采集规则
     private BlockingQueue<Chapter> chapterQueue = null; // 有多页面则替换链接后存储到该队列
+    private BlockingQueue<Chapter> updateQueue = null;
 
-    public ChapterCrawler(String crawlPath, boolean autoParse, Chapter curr, BlockingQueue<Chapter> queue) {
+    public ChapterCrawler(String crawlPath, boolean autoParse, Chapter curr, BlockingQueue<Chapter> queue, BlockingQueue<Chapter> updateQueue) {
         super(crawlPath, autoParse);
         this.addSeed(curr.getLink());
         this.addRegex("-.*\\.(jpg|png|gif).*");
@@ -28,6 +30,7 @@ public class ChapterCrawler extends BreadthCrawler {
         this.setResumable(false); //停止后下次继续爬取
         this.chapter = curr;
         this.chapterQueue = queue;
+        this.updateQueue = updateQueue;
     }
 
     @Override
@@ -47,13 +50,19 @@ public class ChapterCrawler extends BreadthCrawler {
             Element element = nextPage.get(0).getElementsByTag("a").get(4);
             String nextContent = element.text();
             if(nextContent.equals("下一页")) {
-                // 有下一页则进行内容替换和存储到队列里
+                // 有下一页则进行内容替换和存储到待继续爬取的队列里
                 String nextUrl = element.attr("href");
                 String preUrl = chapter.getLink();
                 nextUrl = preUrl.substring(0, preUrl.lastIndexOf("/") + 1) + nextUrl;
                 chapter.setLink(nextUrl);
                 try {
                     chapterQueue.put(chapter);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                try {
+                    updateQueue.put(chapter);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

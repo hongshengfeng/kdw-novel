@@ -21,7 +21,7 @@ public interface ChapterService {
      void updateChapter(List<Chapter> chapterList);
 
      //更新章节内容
-     void updateChapterContent(List<Chapter> chapterList);
+     void updateChapterContent(Chapter chapter);
 
      //通过小说id返回章节列表
      List<Chapter> getChapterList(int NovelId);

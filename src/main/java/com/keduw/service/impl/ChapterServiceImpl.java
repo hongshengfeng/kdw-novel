@@ -90,18 +90,16 @@ public class ChapterServiceImpl implements ChapterService {
     //更新章节内容
     @Override
     @Transactional
-    public void updateChapterContent(List<Chapter> chapterList) {
+    public void updateChapterContent(Chapter chapter) {
         try{
-            if(chapterList == null && chapterList.size() == 0){
+            if(chapter == null){
                 return;
             }
-            for (Chapter chapter : chapterList){
-                chapterMapper.updateChapter(chapter);
-                int novelId = chapter.getnId();
-                String field = "chapter" + novelId;
-                if(jedisClient.hget(keys, field) != null){
-                    jedisClient.hdel(keys, field);
-                }
+            chapterMapper.updateChapter(chapter);
+            int novelId = chapter.getnId();
+            String field = "chapter" + novelId;
+            if(jedisClient.hget(keys, field) != null){
+                jedisClient.hdel(keys, field);
             }
         }catch (Exception e){
             Log.error("updateChapterContentError", e.getMessage());
