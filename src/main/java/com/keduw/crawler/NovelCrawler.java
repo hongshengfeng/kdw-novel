@@ -11,11 +11,13 @@ import com.keduw.util.CateUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 小说基础信息爬虫，更新小说章节信息，用阻塞队列存储爬取小说和对应章节信息
@@ -24,10 +26,11 @@ public class NovelCrawler extends BreadthCrawler {
 
     private String URL = "https://www.biquge5.com"; // 种子页面
     private String REGEX = "https://www.biquge5.com/[0-9]+_[0-9]+/?"; // 采集规则
-    private final int QUEUE_LENGTH = 10000 * 10; // 队列大小，10万本小说
-    BlockingQueue<NovelColl> novelQueue = null;  //阻塞队列
+    private BlockingQueue<NovelColl> novelQueue = null;  //阻塞队列
+    private Logger Log =  (Logger) LoggerFactory.getLogger(NovelCrawler.class);
+    private ReentrantLock lock = null;
 
-    public NovelCrawler(String crawlPath, boolean autoParse) {
+    public NovelCrawler(String crawlPath, boolean autoParse, BlockingQueue<NovelColl> queue, ReentrantLock lock) {
         super(crawlPath, autoParse);
         this.addSeed(URL);
         this.addRegex(REGEX);
@@ -37,13 +40,15 @@ public class NovelCrawler extends BreadthCrawler {
         this.setResumable(true); //停止后下次继续爬取
         getConf().setExecuteInterval(1000); //设置线程之间的等待时间
         getConf().setTopN(100000); //爬取URL上限
-        novelQueue = new LinkedBlockingQueue<NovelColl>(QUEUE_LENGTH);
+        this.novelQueue = queue;
+        this.lock = lock;
     }
 
     @Override
     public void visit(Page page, CrawlDatums crawlDatums) {
         if(page.matchUrl(REGEX)) {
-            try {
+            try{
+                lock.lock();
                 Document document = page.doc();
                 Elements baseInfo = document.select("div[id=info]");
                 Novel novel = new Novel();
@@ -63,12 +68,12 @@ public class NovelCrawler extends BreadthCrawler {
                 Elements conTop = document.select("div[class=con_top]");
                 if(!conTop.isEmpty()){
                     String category = conTop.get(0).getElementsByTag("a").get(4).text();
-                    novel.setCid(CateUtil.getId(category, 0));
+                    novel.setCid(CateUtil.getId(category, 1));
                 }
                 //简介
                 Elements intro = document.select("div[id=intro]");
                 if(!intro.isEmpty()){
-                    String brief = intro.get(0).getElementsByTag("p").get(0).text();
+                    String brief = intro.get(0).getElementsByTag("p").get(0).html();
                     novel.setBrief(brief);
                 }
                 //章节
@@ -88,8 +93,10 @@ public class NovelCrawler extends BreadthCrawler {
                 novelColl.setNovel(novel);
                 novelColl.setChapters(chapterList);
                 novelQueue.put(novelColl);
-            }catch (Exception e){
-                e.printStackTrace();
+            }catch (InterruptedException e){
+                Log.error("novelCrawlerError", e.getMessage());
+            }finally {
+                lock.unlock();
             }
         }
     }

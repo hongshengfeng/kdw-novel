@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class ChapterInfoThread implements Runnable{
 
-    BlockingQueue<Chapter> queue = null;  //阻塞队列
-    private static Logger Log =  (Logger) LoggerFactory.getLogger(ChapterInfoThread.class);
+    private BlockingQueue<Chapter> queue = null;  //阻塞队列
+    private Logger Log =  (Logger) LoggerFactory.getLogger(ChapterInfoThread.class);
     ChapterInfoThread(BlockingQueue<Chapter> queue){
         this.queue = queue;
     }

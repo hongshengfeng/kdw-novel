@@ -2,6 +2,7 @@ package com.keduw.crawler;
 
 import com.keduw.model.Chapter;
 import com.keduw.model.Novel;
+import com.keduw.model.NovelColl;
 import com.keduw.service.ChapterService;
 import com.keduw.service.NovelService;
 import com.keduw.util.ApplicationUtil;
@@ -17,20 +18,23 @@ import java.util.concurrent.locks.ReentrantLock;
 @Component
 public class NovelSchedule {
 
-    //每周六的0点启动小说爬虫，爬取小说
-    @Scheduled(cron = "0 43 23 * * ?")
+    private volatile BlockingQueue<NovelColl> novelQueue = new LinkedBlockingQueue<NovelColl>(10000 * 10);
+
+    //每月10凌晨3点启动爬取小说
+    @Scheduled(cron = "0 38 11 * * ?")
     public void novelCollect() throws Exception{
         if(true){
-            NovelCrawler crawl = new NovelCrawler("crawl",true);
-            NovelInfoThread saveInfo = new NovelInfoThread(crawl.novelQueue);
+            ReentrantLock lock = new ReentrantLock();
+            NovelCrawler crawl = new NovelCrawler("crawl",true, novelQueue, lock);
+            NovelInfoThread saveInfo = new NovelInfoThread(novelQueue);
             Thread thread = new Thread(saveInfo);
             thread.start();
-            crawl.start(1);
+            crawl.start(5);
         }
     }
 
-    //每天0点30分检查连载中小说的章节更新情况
-    @Scheduled(cron = "0 30 0 * * ?")
+    //每天3点检查连载中小说的章节更新情况
+    @Scheduled(cron = "0 0 3 * * ?")
     public void infoCheck() throws Exception{
         if(isOpen){
             //小说总数
@@ -39,7 +43,7 @@ public class NovelSchedule {
             int checkTimes = counts / 100;
             checkTimes = counts % 100 == 0 ? checkTimes : checkTimes + 1;
             int collStart = 1;
-            BlockingQueue<Chapter> queue = new LinkedBlockingQueue<Chapter>(QUEUE_LENGTH);
+            BlockingQueue<Chapter> queue = new LinkedBlockingQueue<Chapter>(10000 * 10);
             // 分批次检查小说的章节
             /*for(int i = 0; i < checkTimes; i++) {
                 while (collStart <= checkTimes) {
@@ -56,8 +60,8 @@ public class NovelSchedule {
         }
     }
 
-    //每天1点爬取章节内容
-    @Scheduled(cron = "0 30 10 24 * ?")
+    //每月1号凌晨3点爬取章节内容
+    @Scheduled(cron = "0 0 3 1 * ?")
     public void infoCollect() throws Exception{
         if(isOpen){
             //获取总章节数
@@ -89,6 +93,5 @@ public class NovelSchedule {
         }
     }
 
-    private final int QUEUE_LENGTH = 10000 * 10; // 队列大小
-    private boolean isOpen = false; //启动开关，日常关闭
+    private boolean isOpen = true; //启动开关，日常关闭
 }

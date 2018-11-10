@@ -27,13 +27,13 @@ public class CateUtil {
                 defaultNum = 3;
                 break;
             case "玄幻小说":
-                defaultNum = 1;
+                defaultNum = 4;
                 break;
             case "科幻小说":
-                defaultNum = 1;
+                defaultNum = 5;
                 break;
             case "网游小说":
-                defaultNum = 1;
+                defaultNum = 6;
                 break;
             default:
                 break;

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class ChapterServiceImpl implements ChapterService {
 
     //更新章节列表
     @Override
+    @Transactional
     public void updateChapter(List<Chapter> chapterList) {
         if(chapterList == null && chapterList.size() == 0){
             return;
@@ -76,6 +78,7 @@ public class ChapterServiceImpl implements ChapterService {
 
     //更新章节内容
     @Override
+    @Transactional
     public void updateChapterContent(List<Chapter> chapterList) {
         if(chapterList == null && chapterList.size() == 0){
             return;

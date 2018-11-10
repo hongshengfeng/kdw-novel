@@ -24,7 +24,7 @@ public class CheckCrawler extends BreadthCrawler {
     private Novel novel;
     private String REGEX = "https://www.biquge5.com/[0-9]+_[0-9]+/[0-9]+.html"; // 采集规则
     private static Logger Log =  (Logger) LoggerFactory.getLogger(CheckCrawler.class);
-    BlockingQueue<Chapter> queue = null;
+    private BlockingQueue<Chapter> queue = null;
 
     public CheckCrawler(String crawlPath, boolean autoParse, Novel curr, BlockingQueue<Chapter> queue) {
         super(crawlPath, autoParse);

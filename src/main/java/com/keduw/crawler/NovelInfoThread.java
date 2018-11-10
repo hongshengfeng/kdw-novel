@@ -19,8 +19,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class NovelInfoThread implements Runnable{
 
-    private static Logger Log =  (Logger) LoggerFactory.getLogger(ChapterInfoThread.class);
-    BlockingQueue<NovelColl> queue = null;  //阻塞队列
+    private Logger Log =  (Logger) LoggerFactory.getLogger(ChapterInfoThread.class);
+    private BlockingQueue<NovelColl> queue = null;  //阻塞队列
     NovelInfoThread(BlockingQueue<NovelColl> queue){
         this.queue = queue;
     }
@@ -59,8 +59,8 @@ public class NovelInfoThread implements Runnable{
                         chapter.setnId(novelId);
                     }
                     chapterService.updateChapter(chapterList);
-                }else {
-                    continue;
+                }else{
+                    Log.info("current is all update", novel.getId());
                 }
                 System.out.println("队列剩余消费个数：" + queue.size());
             }else{
