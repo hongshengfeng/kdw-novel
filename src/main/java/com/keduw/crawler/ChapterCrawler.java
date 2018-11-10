@@ -26,7 +26,7 @@ public class ChapterCrawler extends BreadthCrawler {
         super(crawlPath, autoParse);
         this.addSeed(curr.getLink());
         this.addRegex("-.*\\.(jpg|png|gif).*");
-        this.setThreads(1);
+        this.setThreads(10);
         this.setResumable(false); //停止后下次继续爬取
         this.chapter = curr;
         this.chapterQueue = queue;
