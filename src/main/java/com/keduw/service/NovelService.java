@@ -33,4 +33,7 @@ public interface NovelService {
 
     //获取某个类别的小说总数
     int getNovelCountByCategory(int category);
+
+    //获取小说章节总数
+    int getNovelSize(int id);
 }

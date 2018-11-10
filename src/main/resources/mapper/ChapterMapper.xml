@@ -17,10 +17,10 @@
         content
     </sql>
     <!--新增章节信息-->
-    <insert id="insertChapter" parameterType="java.util.List">
+    <insert id="insertChapter">
         INSERT INTO chapter(nId, name, content, link)
         VALUES
-        <foreach collection="list" item="item" index="index" separator=",">
+        <foreach collection="list" item="item" separator=",">
             (#{item.nId}, #{item.name}, #{item.content}, #{item.link})
         </foreach>
     </insert>

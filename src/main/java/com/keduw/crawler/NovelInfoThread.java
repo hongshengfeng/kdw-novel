@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class NovelInfoThread implements Runnable{
 
-    private Logger Log =  (Logger) LoggerFactory.getLogger(ChapterInfoThread.class);
+    private Logger Log =  (Logger) LoggerFactory.getLogger(NovelInfoThread.class);
     private BlockingQueue<NovelColl> queue = null;  //阻塞队列
     NovelInfoThread(BlockingQueue<NovelColl> queue){
         this.queue = queue;

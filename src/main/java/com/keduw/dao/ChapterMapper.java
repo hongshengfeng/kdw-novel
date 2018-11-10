@@ -17,7 +17,7 @@ import java.util.List;
 @Mapper
 public interface ChapterMapper {
     //插入章节
-    void insertChapter(List<Chapter> chapterList);
+    void insertChapter(List<Chapter> chapter);
 
     //更新章节信息
     void updateChapter(Chapter info);

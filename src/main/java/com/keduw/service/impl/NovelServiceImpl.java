@@ -183,4 +183,9 @@ public class NovelServiceImpl implements NovelService {
         return novelMapper.selectInfoCountByCategory(category);
     }
 
+    @Override
+    public int getNovelSize(int id) {
+        return novelMapper.selectSizeById(id);
+    }
+
 }

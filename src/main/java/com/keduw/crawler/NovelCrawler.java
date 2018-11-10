@@ -8,6 +8,7 @@ import com.keduw.model.Novel;
 import com.keduw.model.NovelColl;
 import com.keduw.util.BaseUtil;
 import com.keduw.util.CateUtil;
+import com.keduw.util.Encoder;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -74,7 +75,7 @@ public class NovelCrawler extends BreadthCrawler {
                 Elements intro = document.select("div[id=intro]");
                 if(!intro.isEmpty()){
                     String brief = intro.get(0).getElementsByTag("p").get(0).html();
-                    novel.setBrief(brief);
+                    novel.setBrief(Encoder.encodeHtml(brief));
                 }
                 //章节
                 Elements element = document.select("ul[class=_chapter] li a");

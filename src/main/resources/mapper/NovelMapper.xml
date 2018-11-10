@@ -84,6 +84,9 @@
     </select>
     <!-- 查询某个类别的小说总数 -->
     <select id="selectInfoCountByCategory" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        SELECT count(id) FROM novel where cid = #{category}
+        SELECT count(id) FROM novel WHERE cid = #{category}
+    </select>
+    <select id="selectSizeByNovelId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT size FROM novel WHERE id = #{id}
     </select>
 </mapper>

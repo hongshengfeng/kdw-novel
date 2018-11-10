@@ -49,4 +49,7 @@ public interface NovelMapper {
 
      //查询某个类别的小说总数
      int selectInfoCountByCategory(int category);
+
+     //查询小说章节总数
+     int selectSizeById(int id);
 }

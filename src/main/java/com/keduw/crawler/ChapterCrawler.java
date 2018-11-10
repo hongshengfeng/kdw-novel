@@ -42,7 +42,7 @@ public class ChapterCrawler extends BreadthCrawler {
                 content = preContent + content;
             }
             chapter.setContent(content);
-            //存在下一页则表示该章节内容还没完，生成一个爬虫爬取下一页的内容
+            //存在下一页则表示该章节内容还没完，放到队列里继续爬
             Elements nextPage = document.select("div[class=bottem1]");
             Element element = nextPage.get(0).getElementsByTag("a").get(4);
             String nextContent = element.text();

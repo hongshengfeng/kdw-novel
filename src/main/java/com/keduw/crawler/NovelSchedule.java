@@ -21,7 +21,7 @@ public class NovelSchedule {
     private volatile BlockingQueue<NovelColl> novelQueue = new LinkedBlockingQueue<NovelColl>(10000 * 10);
 
     //每月10凌晨3点启动爬取小说
-    @Scheduled(cron = "0 38 11 * * ?")
+    @Scheduled(cron = "0 25 15 * * ?")
     public void novelCollect() throws Exception{
         if(true){
             ReentrantLock lock = new ReentrantLock();
@@ -43,11 +43,11 @@ public class NovelSchedule {
             int checkTimes = counts / 100;
             checkTimes = counts % 100 == 0 ? checkTimes : checkTimes + 1;
             int collStart = 1;
-            BlockingQueue<Chapter> queue = new LinkedBlockingQueue<Chapter>(10000 * 10);
+            BlockingQueue<List<Chapter>> queue = new LinkedBlockingQueue<List<Chapter>>(10000 * 10);
             // 分批次检查小说的章节
-            /*for(int i = 0; i < checkTimes; i++) {
+            for(int i = 0; i < checkTimes; i++) {
                 while (collStart <= checkTimes) {
-                    List<Novel> novelList = novelService.getNovelList(collStart, 50);
+                    List<Novel> novelList = novelService.getNovelList(collStart, 100);
                     for(Novel novel : novelList){
                         if(novel.getStatus().equals("连载中")){
                             CheckCrawler crawler = new CheckCrawler("crawl",true, novel, queue);
@@ -56,7 +56,8 @@ public class NovelSchedule {
                     }
                     collStart ++;
                 }
-            }*/
+            }
+
         }
     }
 
@@ -70,11 +71,11 @@ public class NovelSchedule {
             int collTimes = counts / 100;
             collTimes = counts % 100 == 0 ? collTimes : collTimes + 1;
             int collStart = 1;
+            BlockingQueue<Chapter> chapterQueue = new LinkedBlockingQueue<Chapter>(10000 * 10);
             for(int i = 0; i < collTimes; i++){
                 while(collStart <= collTimes){
                     List<Chapter> chapterList = chapterService.getChapterList(collStart, 5);
                     // 阻塞队列用于存储一个章节内有多个页面的章节
-                    BlockingQueue<Chapter> chapterQueue = new LinkedBlockingQueue<Chapter>(10000 * 10);
                     for(Chapter chapter : chapterList){
                         ChapterCrawler crawler = new ChapterCrawler("crawl", true, chapter, chapterQueue);
                         crawler.start(1);
@@ -85,7 +86,7 @@ public class NovelSchedule {
                         ChapterCrawler crawler = new ChapterCrawler("crawl", true, chapter, chapterQueue);
                         crawler.start(1);
                     }
-                    // 更新章节内容
+                    // 更新章节内容，
                     chapterService.updateChapterContent(chapterList);
                 }
                 collStart ++;
