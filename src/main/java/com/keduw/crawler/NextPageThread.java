@@ -29,13 +29,13 @@ public class NextPageThread implements Runnable{
                     crawler.start(1);
                     System.out.println("待爬取下一页的数据：" + chapterQueue.size());
                 } else {
-                    Thread.sleep(30000);
+                    Thread.sleep(60000);
                     timer++;
                 }
             }catch (Exception e) {
                 Log.error("novelThreadError", e.getMessage());
             }
-            //timer大于3(60秒钟)，则表示队列已经被消费完，退出该循环
+            //timer大于3(180秒钟)，则表示队列已经被消费完，退出该循环
             if (timer >= 3) {
                 break;
             }
