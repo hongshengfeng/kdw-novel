@@ -62,7 +62,7 @@ public class NovelSchedule {
     }
 
     //每月1号凌晨3点爬取章节内容
-    @Scheduled(cron = "0 11 16 * * ?")
+    @Scheduled(cron = "0 57 23 * * ?")
     public void infoCollect() throws Exception{
         if(true){
             //获取总章节数
@@ -70,33 +70,23 @@ public class NovelSchedule {
             int counts = chapterService.getInfoCounts();
             int collTimes = counts / 100;
             collTimes = counts % 100 == 0 ? collTimes : collTimes + 1;
-            int collStart = 1;
             BlockingQueue<Chapter> chapterQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取有下一页的内容
             BlockingQueue<Chapter> updateQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取更新到数据库的内容
             for(int i = 0; i < collTimes; i++){
-                while(collStart <= collTimes){
-                    List<Chapter> chapterList = chapterService.getChapterList(collStart, 5);
-                    // 阻塞队列用于存储一个章节内有多个页面的章节
-                    for(Chapter chapter : chapterList){
-                        ChapterCrawler crawler = new ChapterCrawler("crawl", true, chapter, chapterQueue, updateQueue);
-                        crawler.start(1);
-                    }
+                List<Chapter> chapterList = chapterService.getChapterList(i * 30, 30);
+                // 阻塞队列用于存储一个章节内有多个页面的章节
+                for(Chapter chapter : chapterList){
+                    ChapterCrawler crawler = new ChapterCrawler("crawl", true, chapter, chapterQueue, updateQueue);
+                    crawler.start(1);
                 }
-                collStart ++;
-            }
-
-            // 爬取下一页
-            while (chapterQueue.size() > 0){
-                Chapter chapter = chapterQueue.poll(1000, TimeUnit.MILLISECONDS);
-                ChapterCrawler crawler = new ChapterCrawler("crawl", true, chapter, chapterQueue, updateQueue);
-                crawler.start(1);
-            }
-
-            //更新内容
-            while(updateQueue.size() > 0){
-                Chapter chapter = updateQueue.poll(1000, TimeUnit.MILLISECONDS);
-                chapterService.updateChapterContent(chapter);
-                System.out.println("待消费" + updateQueue.size());
+                if(i == 0){
+                    NextPageThread nextPage = new NextPageThread(chapterQueue, updateQueue);
+                    NovelContentThread novelContent = new NovelContentThread(updateQueue);
+                    Thread pageThread = new Thread(nextPage);
+                    Thread contentThread = new Thread(novelContent);
+                    pageThread.start();
+                    contentThread.start();
+                }
             }
         }
     }
