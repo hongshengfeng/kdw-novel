@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 //爬取下一页的线程
 public class NextPageThread implements Runnable{
 
-    private Logger Log =  (Logger) LoggerFactory.getLogger(NovelInfoThread.class);
+    private Logger Log =  (Logger) LoggerFactory.getLogger(NextPageThread.class);
     private BlockingQueue<Chapter> chapterQueue = null;  //待爬取下一页的队列
     private BlockingQueue<Chapter> updateQueue = null;  //已爬取待插入库里的数据
     NextPageThread(BlockingQueue<Chapter> chapterQueue, BlockingQueue<Chapter> updateQueue){

@@ -62,9 +62,9 @@ public class NovelSchedule {
     }
 
     //每月1号凌晨3点爬取章节内容
-    @Scheduled(cron = "0 57 23 * * ?")
+    @Scheduled(cron = "0 30 0 * * ?")
     public void infoCollect() throws Exception{
-        if(true){
+        if(isOpen){
             //获取总章节数
             ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
             int counts = chapterService.getInfoCounts();
@@ -86,6 +86,7 @@ public class NovelSchedule {
                     Thread contentThread = new Thread(novelContent);
                     pageThread.start();
                     contentThread.start();
+                    System.out.println("消费线程已启动");
                 }
             }
         }
