@@ -1,6 +1,7 @@
 package com.keduw.crawler;
 
 import com.keduw.model.Chapter;
+import com.keduw.util.CrawelUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,17 +24,16 @@ public class NextPageThread implements Runnable{
         while (true) {
             int timer = 0;
             try {
-                if (updateQueue != null && updateQueue.size() > 0) {
+                if (chapterQueue != null && chapterQueue.size() > 0) {
                     Chapter chapter = chapterQueue.poll(1000, TimeUnit.MILLISECONDS);
-                    ChapterCrawler crawler = new ChapterCrawler("crawl", true, chapter, chapterQueue, updateQueue);
-                    crawler.start(1);
-                    System.out.println("待爬取下一页的数据：" + chapterQueue.size());
+                    CrawelUtil.getDomInfo(chapter, chapterQueue, updateQueue);
+                    System.out.println("待爬取：" + chapterQueue.size());
                 } else {
                     Thread.sleep(60000);
                     timer++;
                 }
             }catch (Exception e) {
-                Log.error("novelThreadError", e.getMessage());
+                Log.error("novelThreadError", e);
             }
             //timer大于3(180秒钟)，则表示队列已经被消费完，退出该循环
             if (timer >= 3) {

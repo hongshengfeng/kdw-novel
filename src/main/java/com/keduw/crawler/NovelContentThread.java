@@ -21,27 +21,24 @@ public class NovelContentThread implements Runnable{
     public void run() {
         while (true){
             int timer = 0;
-            if(updateQueue != null && updateQueue.size() > 0){
-                ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
-                try{
+            try {
+                if (updateQueue != null && updateQueue.size() > 0) {
+                    ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
                     Chapter chapter = updateQueue.poll(1000, TimeUnit.MILLISECONDS);
                     chapterService.updateChapterContent(chapter);
-                }catch (InterruptedException e){
-                    Log.error("update novel content error", e.getMessage());
-                }
-                System.out.println("队列剩余消费个数" + updateQueue.size());
-            }else{
-                try{
+                    System.out.println("待消费：" + updateQueue.size());
+                } else {
                     Thread.sleep(60000);
-                }catch (InterruptedException e){
-                    Log.error("novelThreadError", e.getMessage());
+                    timer++;
                 }
-                timer ++ ;
-            }
-            //timer大于3(180秒钟)，则表示队列已经被消费完，退出该循环
-            if(timer >= 3){
-                break;
+                //timer大于3(180秒钟)，则表示队列已经被消费完，退出该循环
+                if(timer >= 3){
+                    break;
+                }
+            }catch (Exception e){
+                Log.error("novelContentError", e.getMessage());
             }
         }
+        System.out.println("end");
     }
 }

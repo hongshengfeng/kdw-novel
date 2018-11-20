@@ -6,12 +6,13 @@ import com.keduw.model.NovelColl;
 import com.keduw.service.ChapterService;
 import com.keduw.service.NovelService;
 import com.keduw.util.ApplicationUtil;
+import com.keduw.util.CrawelUtil;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.*;
-import java.util.concurrent.locks.Lock;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
 //小说爬虫
@@ -62,9 +63,9 @@ public class NovelSchedule {
     }
 
     //每月1号凌晨3点爬取章节内容
-    @Scheduled(cron = "0 30 0 * * ?")
+    @Scheduled(cron = "0 2 2 * * ?")
     public void infoCollect() throws Exception{
-        if(isOpen){
+        if(true){
             //获取总章节数
             ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
             int counts = chapterService.getInfoCounts();
@@ -72,12 +73,12 @@ public class NovelSchedule {
             collTimes = counts % 100 == 0 ? collTimes : collTimes + 1;
             BlockingQueue<Chapter> chapterQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取有下一页的内容
             BlockingQueue<Chapter> updateQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取更新到数据库的内容
+
             for(int i = 0; i < collTimes; i++){
                 List<Chapter> chapterList = chapterService.getChapterList(i * 30, 30);
                 // 阻塞队列用于存储一个章节内有多个页面的章节
                 for(Chapter chapter : chapterList){
-                    ChapterCrawler crawler = new ChapterCrawler("crawl", true, chapter, chapterQueue, updateQueue);
-                    crawler.start(1);
+                    CrawelUtil.getDomInfo(chapter, chapterQueue, updateQueue);
                 }
                 if(i == 0){
                     NextPageThread nextPage = new NextPageThread(chapterQueue, updateQueue);
@@ -86,7 +87,6 @@ public class NovelSchedule {
                     Thread contentThread = new Thread(novelContent);
                     pageThread.start();
                     contentThread.start();
-                    System.out.println("消费线程已启动");
                 }
             }
         }
