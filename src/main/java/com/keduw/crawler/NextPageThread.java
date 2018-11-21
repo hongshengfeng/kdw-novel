@@ -25,6 +25,7 @@ public class NextPageThread implements Runnable{
             int timer = 0;
             try {
                 if (chapterQueue != null && chapterQueue.size() > 0) {
+                    timer = 0;
                     Chapter chapter = chapterQueue.poll(1000, TimeUnit.MILLISECONDS);
                     CrawelUtil.getDomInfo(chapter, chapterQueue, updateQueue);
                     System.out.println("待爬取：" + chapterQueue.size());

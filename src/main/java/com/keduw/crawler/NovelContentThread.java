@@ -23,6 +23,7 @@ public class NovelContentThread implements Runnable{
             int timer = 0;
             try {
                 if (updateQueue != null && updateQueue.size() > 0) {
+                    timer = 0;
                     ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
                     Chapter chapter = updateQueue.poll(1000, TimeUnit.MILLISECONDS);
                     chapterService.updateChapterContent(chapter);

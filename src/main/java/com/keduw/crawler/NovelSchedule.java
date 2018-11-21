@@ -63,9 +63,9 @@ public class NovelSchedule {
     }
 
     //每月1号凌晨3点爬取章节内容
-    @Scheduled(cron = "0 2 2 * * ?")
+    @Scheduled(cron = "0 55 8 * * ?")
     public void infoCollect() throws Exception{
-        if(true){
+        if(isOpen){
             //获取总章节数
             ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
             int counts = chapterService.getInfoCounts();
