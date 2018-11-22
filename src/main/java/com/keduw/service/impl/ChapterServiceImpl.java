@@ -134,6 +134,7 @@ public class ChapterServiceImpl implements ChapterService {
     //查询章节内容为空的数据
     @Override
     public List<Chapter> getChapterList(int start, int size) {
+        start = start * size;
         PageHelper.startPage(start, size);
         List<Chapter> list = chapterMapper.selectInfoByContent();
         return list;

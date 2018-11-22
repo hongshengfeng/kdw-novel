@@ -13,22 +13,19 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-/**
- * 将爬取的小说内容保存到本地,
- * 轮询检测队列中的小说内容
- */
-public class NovelInfoThread implements Runnable{
+//爬取的小说基本信息保存到本地,
+public class BaseInfoThread implements Runnable{
 
-    private Logger Log =  (Logger) LoggerFactory.getLogger(NovelInfoThread.class);
+    private Logger Log =  (Logger) LoggerFactory.getLogger(BaseInfoThread.class);
     private BlockingQueue<NovelColl> queue = null;  //阻塞队列
-    NovelInfoThread(BlockingQueue<NovelColl> queue){
+    BaseInfoThread(BlockingQueue<NovelColl> queue){
         this.queue = queue;
     }
 
     @Override
     public void run() {
-        while (true){
-            int timer = 0;
+        int timer = 0;
+        while (timer < 3){
             if(queue != null && queue.size() > 0){
                 NovelColl novelColl = null;
                 try{
@@ -59,21 +56,15 @@ public class NovelInfoThread implements Runnable{
                         chapter.setnId(novelId);
                     }
                     chapterService.updateChapter(chapterList);
-                }else{
-                    Log.info("current is all update", novel.getId());
                 }
                 System.out.println("队列剩余消费个数：" + queue.size());
             }else{
                 try{
-                    Thread.sleep(3000);
+                    Thread.sleep(60000);
                 }catch (InterruptedException e){
                     Log.error("novelThreadError", e.getMessage());
                 }
                 timer ++ ;
-            }
-            //timer大于3(9秒钟)，则表示队列已经被消费完，退出该循环
-            if(timer >= 3){
-                break;
             }
         }
     }

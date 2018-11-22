@@ -6,13 +6,11 @@ import com.keduw.model.NovelColl;
 import com.keduw.service.ChapterService;
 import com.keduw.service.NovelService;
 import com.keduw.util.ApplicationUtil;
-import com.keduw.util.CrawelUtil;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 //小说爬虫
@@ -27,7 +25,7 @@ public class NovelSchedule {
         if(isOpen){
             ReentrantLock lock = new ReentrantLock();
             NovelCrawler crawl = new NovelCrawler("crawl",true, novelQueue, lock);
-            NovelInfoThread saveInfo = new NovelInfoThread(novelQueue);
+            BaseInfoThread saveInfo = new BaseInfoThread(novelQueue);
             Thread thread = new Thread(saveInfo);
             thread.start();
             crawl.start(5);
@@ -63,34 +61,48 @@ public class NovelSchedule {
     }
 
     //每月1号凌晨3点爬取章节内容
-    @Scheduled(cron = "0 55 8 * * ?")
+    @Scheduled(cron = "0 16 23 * * ?")
     public void infoCollect() throws Exception{
         if(isOpen){
             //获取总章节数
             ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
             int counts = chapterService.getInfoCounts();
-            int collTimes = counts / 100;
-            collTimes = counts % 100 == 0 ? collTimes : collTimes + 1;
-            BlockingQueue<Chapter> chapterQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取有下一页的内容
-            BlockingQueue<Chapter> updateQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取更新到数据库的内容
+            int times = counts / size;
+            times = counts % size == 0 ? times : times + 1;
+            //初始化第一批数据
+            List<Chapter> chapterList = chapterService.getChapterList(init , size);
+            for(Chapter chapter : chapterList){
+                chapterQueue.add(chapter);
+            }
+            //启动爬取线程
+            ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 200, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(5));
+            for(int i = 0; i < 5; i++){
+                NovelCrawelThread thread = new NovelCrawelThread(chapterQueue, updateQueue);
+                executor.execute(thread);
+            }
+            //启动爬取下一页和数据保存线程
+            for(int i = 0; i < 5; i++){
+                NextContentThread nextPage = new NextContentThread(chapterQueue, updateQueue);
+                executor.execute(nextPage);
+            }
+            System.out.println("爬虫线程启动总数：" + executor.getPoolSize());
+            FullContentThread novelContent = new FullContentThread(updateQueue);
+            Thread contentThread = new Thread(novelContent);
+            contentThread.start();
 
-            for(int i = 0; i < collTimes; i++){
-                List<Chapter> chapterList = chapterService.getChapterList(i * 30, 30);
-                // 阻塞队列用于存储一个章节内有多个页面的章节
+            for(int i = 1; i < times; i++){
+                chapterList = chapterService.getChapterList(i , size);
                 for(Chapter chapter : chapterList){
-                    CrawelUtil.getDomInfo(chapter, chapterQueue, updateQueue);
-                }
-                if(i == 0){
-                    NextPageThread nextPage = new NextPageThread(chapterQueue, updateQueue);
-                    NovelContentThread novelContent = new NovelContentThread(updateQueue);
-                    Thread pageThread = new Thread(nextPage);
-                    Thread contentThread = new Thread(novelContent);
-                    pageThread.start();
-                    contentThread.start();
+                    chapterQueue.add(chapter);
                 }
             }
+            executor.shutdown();
         }
     }
 
     private boolean isOpen = false; //启动开关，日常关闭
+    private int init = 0;
+    private int size = 30;
+    private volatile BlockingQueue<Chapter> chapterQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取待爬取内容的章节
+    private volatile BlockingQueue<Chapter> updateQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取待更新到数据库的章节
 }

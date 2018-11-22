@@ -9,32 +9,28 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-//章节内容
-public class NovelContentThread implements Runnable{
+//完整章节内容，更新到数据库的线程
+public class FullContentThread implements Runnable{
 
-    private Logger Log =  (Logger) LoggerFactory.getLogger(NovelContentThread.class);
+    private Logger Log =  (Logger) LoggerFactory.getLogger(FullContentThread.class);
     private BlockingQueue<Chapter> updateQueue = null;  //阻塞队列
-    NovelContentThread(BlockingQueue<Chapter> updateQueue){
+    FullContentThread(BlockingQueue<Chapter> updateQueue){
         this.updateQueue = updateQueue;
     }
     @Override
     public void run() {
-        while (true){
-            int timer = 0;
+        int timer = 0;
+        while (timer < 3){
             try {
                 if (updateQueue != null && updateQueue.size() > 0) {
                     timer = 0;
                     ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
                     Chapter chapter = updateQueue.poll(1000, TimeUnit.MILLISECONDS);
                     chapterService.updateChapterContent(chapter);
-                    System.out.println("待消费：" + updateQueue.size());
+                    System.out.println("待更新：" + updateQueue.size());
                 } else {
-                    Thread.sleep(60000);
+                    Thread.sleep(30000);
                     timer++;
-                }
-                //timer大于3(180秒钟)，则表示队列已经被消费完，退出该循环
-                if(timer >= 3){
-                    break;
                 }
             }catch (Exception e){
                 Log.error("novelContentError", e.getMessage());

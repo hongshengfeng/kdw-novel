@@ -1,4 +1,4 @@
-package com.keduw.crawler;
+package com.keduw.schedule;
 
 import com.keduw.jedis.JedisClient;
 import com.keduw.model.Ipinfo;

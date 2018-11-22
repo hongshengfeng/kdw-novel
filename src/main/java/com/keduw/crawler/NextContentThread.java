@@ -8,21 +8,21 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-//爬取下一页的线程
-public class NextPageThread implements Runnable{
+//爬取下一页内容的线程
+public class NextContentThread implements Runnable{
 
-    private Logger Log =  (Logger) LoggerFactory.getLogger(NextPageThread.class);
+    private Logger Log =  (Logger) LoggerFactory.getLogger(NextContentThread.class);
     private BlockingQueue<Chapter> chapterQueue = null;  //待爬取下一页的队列
     private BlockingQueue<Chapter> updateQueue = null;  //已爬取待插入库里的数据
-    NextPageThread(BlockingQueue<Chapter> chapterQueue, BlockingQueue<Chapter> updateQueue){
+    NextContentThread(BlockingQueue<Chapter> chapterQueue, BlockingQueue<Chapter> updateQueue){
         this.chapterQueue = chapterQueue;
         this.updateQueue = updateQueue;
     }
 
     @Override
     public void run() {
-        while (true) {
-            int timer = 0;
+        int timer = 0;
+        while (timer < 3) {
             try {
                 if (chapterQueue != null && chapterQueue.size() > 0) {
                     timer = 0;
@@ -30,15 +30,11 @@ public class NextPageThread implements Runnable{
                     CrawelUtil.getDomInfo(chapter, chapterQueue, updateQueue);
                     System.out.println("待爬取：" + chapterQueue.size());
                 } else {
-                    Thread.sleep(60000);
+                    Thread.sleep(30000);
                     timer++;
                 }
             }catch (Exception e) {
                 Log.error("novelThreadError", e);
-            }
-            //timer大于3(180秒钟)，则表示队列已经被消费完，退出该循环
-            if (timer >= 3) {
-                break;
             }
         }
     }

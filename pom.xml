@@ -95,6 +95,11 @@
 			<artifactId>WebCollector</artifactId>
 			<version>2.71</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.6</version>
+		</dependency>
 		<!-- 邮件-->
 		<dependency>
 			<groupId>javax.mail</groupId>
