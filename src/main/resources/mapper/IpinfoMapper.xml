@@ -18,7 +18,7 @@
     <insert id="insertInfo" parameterType="com.keduw.model.Ipinfo" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO ipinfo(num, time) VALUES (#{num}, #{time})
     </insert>
-    <select id="selectInfoByTime" parameterType="java.util.Date" resultType="BaseResultMap">
+    <select id="selectInfoByTime" parameterType="java.util.Date" resultType="com.keduw.model.Ipinfo">
         SELECT
         <include refid="Base_Column_List"/>
         FROM ipinfo WHERE time = #{date}
