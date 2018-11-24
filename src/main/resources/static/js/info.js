@@ -6,8 +6,8 @@ var info = new Vue({
         currPage: 1,
         list: null,
         content: null,
-        rigAdv: true,
-        tabAdv: true,
+        rigAdv: false,
+        tabAdv: false,
     },
     mounted() {
         var _self = this;

@@ -27,6 +27,7 @@ public class BaseInfoThread implements Runnable{
         int timer = 0;
         while (timer < 3){
             if(queue != null && queue.size() > 0){
+                timer = 0;
                 NovelColl novelColl = null;
                 try{
                     novelColl = queue.poll(100, TimeUnit.MILLISECONDS);

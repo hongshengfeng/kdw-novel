@@ -30,6 +30,9 @@ public class SeoServiceImpl implements SeoService{
     //记录每天ip访问数据
     @Override
     public int insertInfo(Ipinfo ipinfo) {
-        return ipinfoMapper.insertInfo(ipinfo);
+        Date curr = ipinfo.getTime();
+        Ipinfo info = ipinfoMapper.selectInfoByTime(curr);
+        int rt = info == null ? ipinfoMapper.insertInfo(ipinfo) : 0;
+        return rt;
     }
 }

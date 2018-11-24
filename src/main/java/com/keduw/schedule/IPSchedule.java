@@ -26,7 +26,7 @@ public class IPSchedule {
     private JedisClient jedisClient;
 
     //每天凌晨统计访客人数
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
     public void ipInfoCollect() throws Exception{
         Map<String, String> info = jedisClient.hgetAll(user_ip);
         if(info != null){
@@ -37,7 +37,7 @@ public class IPSchedule {
             if(result > 0){
                 jedisClient.del(user_ip);
             }else{
-                Log.info("统计IP失败" + new Date() + "size:" + info.size());
+                Log.info("数据已存在" + new Date());
             }
         }else{
             Log.info("统计IP数据为空" + new Date());

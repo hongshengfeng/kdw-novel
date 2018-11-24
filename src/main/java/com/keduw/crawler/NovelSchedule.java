@@ -20,7 +20,7 @@ public class NovelSchedule {
     private volatile BlockingQueue<NovelColl> novelQueue = new LinkedBlockingQueue<NovelColl>(10000 * 10);
 
     //每月10凌晨3点启动爬取小说
-    @Scheduled(cron = "0 39 15 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void novelCollect() throws Exception{
         if(isOpen){
             ReentrantLock lock = new ReentrantLock();
@@ -33,7 +33,7 @@ public class NovelSchedule {
     }
 
     //每天3点检查连载中小说的章节更新情况
-    @Scheduled(cron = "0 0 3 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void infoCheck() throws Exception{
         if(isOpen){
             //小说总数
@@ -61,7 +61,7 @@ public class NovelSchedule {
     }
 
     //每月1号凌晨3点爬取章节内容
-    @Scheduled(cron = "0 16 23 * * ?")
+    @Scheduled(cron = "0 26 9 * * ?")
     public void infoCollect() throws Exception{
         if(isOpen){
             //获取总章节数
@@ -75,13 +75,13 @@ public class NovelSchedule {
                 chapterQueue.add(chapter);
             }
             //启动爬取线程
-            ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 200, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(5));
-            for(int i = 0; i < 5; i++){
+            ThreadPoolExecutor executor = new ThreadPoolExecutor(20, 25, 200, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(5));
+            for(int i = 0; i < 10; i++){
                 NovelCrawelThread thread = new NovelCrawelThread(chapterQueue, updateQueue);
                 executor.execute(thread);
             }
             //启动爬取下一页和数据保存线程
-            for(int i = 0; i < 5; i++){
+            for(int i = 0; i < 10; i++){
                 NextContentThread nextPage = new NextContentThread(chapterQueue, updateQueue);
                 executor.execute(nextPage);
             }
@@ -95,6 +95,7 @@ public class NovelSchedule {
                 for(Chapter chapter : chapterList){
                     chapterQueue.add(chapter);
                 }
+                Thread.sleep(30000);
             }
             executor.shutdown();
         }
@@ -102,7 +103,7 @@ public class NovelSchedule {
 
     private boolean isOpen = false; //启动开关，日常关闭
     private int init = 0;
-    private int size = 30;
+    private int size = 100;
     private volatile BlockingQueue<Chapter> chapterQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取待爬取内容的章节
     private volatile BlockingQueue<Chapter> updateQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取待更新到数据库的章节
 }

@@ -57,8 +57,12 @@ public class CrawelUtil {
                 updateQueue.put(chapter);
             }
         }finally {
-            response.close();
-            httpclient.close();
+            if(response != null){
+                response.close();
+            }
+            if(httpclient != null){
+                httpclient.close();
+            }
         }
 
         StringBuffer str = new StringBuffer();

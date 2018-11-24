@@ -4,7 +4,7 @@ var app = new Vue({
         active: '0',
         hotInfo: ['1'],
         newInfo: ['1'],
-        advShow: true,
+        advShow: false,
         loading: false,
         isReco: true,
         catagorys: null,

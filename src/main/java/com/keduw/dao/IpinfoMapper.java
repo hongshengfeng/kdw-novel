@@ -12,4 +12,6 @@ public interface IpinfoMapper {
     List<Ipinfo> selectInfoByList(Date date);
 
     int insertInfo(Ipinfo ipinfo);
+
+    Ipinfo selectInfoByTime(Date curr);
 }

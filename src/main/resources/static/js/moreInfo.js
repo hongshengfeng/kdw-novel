@@ -22,7 +22,7 @@ var app = new Vue({
         var _self = this;
         if(!_self.getCookie("more-topAdv")){
             setTimeout(function () {
-                _self.advShow = true;
+                _self.advShow = false;
             }, 1000);
         }
         this.categoryInfo();
