@@ -90,6 +90,7 @@
         },
         mounted() {
             var _self = this;
+            var broken = document.getElementById("broken");
             $.ajax({
                 type: "post",
                 async: true,
@@ -102,7 +103,7 @@
                         }
                         _self.broken.xAxis.data = _self.time;
                         _self.broken.series[0].data = _self.num;
-                        _self.brokenChart = echarts.init(document.getElementsById("broken"));
+                        _self.brokenChart = echarts.init(broken);
                         _self.brokenChart.setOption(_self.broken);
                     }
                 },
