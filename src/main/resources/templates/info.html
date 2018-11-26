@@ -45,6 +45,7 @@
                     </div>
                 </div>
             </div>
+            <div class="tip">·如果您喜欢这篇小说，可点右侧广告，您的支持是我们的动力·</div>
             <div class="content-right">
                 <div class="current">章节列表</div>
                 <div class="list" id="list">
@@ -55,18 +56,17 @@
                     <span class="all">总章节：{{size}}</span>
                 </div>
                 <div class="notice">·文章内容来源于网络，如有侵权，请联系我们·</div>
+                <transition name="el-zoom-in-top">
+                    <div class="info-adv" v-if="rigAdv">
+                        <script>
+                            var cpro_id = "u3582437";
+                        </script>
+                        <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
+                        <span class="iconfont icon-close" @click="rigClose()"></span>
+                    </div>
+                </transition>
             </div>
-            <transition name="el-zoom-in-top">
-                <div class="info-adv" v-if="rigAdv">
-                    <span class="iconfont icon-close" @click="rigClose()"></span> 广告位
-                </div>
-            </transition>
         </div>
-        <transition name="el-zoom-in-center">
-            <div class="tab-adv" v-if="tabAdv">
-                <span class="iconfont icon-close" @click="tabClose()"></span> 广告位
-            </div>
-        </transition>
     </el-main>
     <div th:replace="footer::bottom"></div>
 </body>

@@ -74,9 +74,14 @@
                 </el-collapse>
                 <transition name="el-zoom-in-top">
                     <div class="adv" v-if="advShow">
-                        <span class="iconfont icon-close" @click="close()"></span> 广告位
+                        <script>
+                            var cpro_id = "u3582434";
+                        </script>
+                        <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
+                        <span class="iconfont icon-close" @click="close()" title="关闭广告"></span>
                     </div>
                 </transition>
+                <div class="tip">·如果您喜欢我们网站，可帮忙点击广告，您的支持是我们的动力·</div>
             </div>
         </div>
     </el-main>

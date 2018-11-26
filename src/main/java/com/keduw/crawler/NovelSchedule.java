@@ -61,7 +61,7 @@ public class NovelSchedule {
     }
 
     //每月1号凌晨3点爬取章节内容
-    @Scheduled(cron = "0 26 9 * * ?")
+    @Scheduled(cron = "0 5 18 * * ?")
     public void infoCollect() throws Exception{
         if(isOpen){
             //获取总章节数
@@ -95,7 +95,7 @@ public class NovelSchedule {
                 for(Chapter chapter : chapterList){
                     chapterQueue.add(chapter);
                 }
-                Thread.sleep(30000);
+                Thread.sleep(15000);
             }
             executor.shutdown();
         }

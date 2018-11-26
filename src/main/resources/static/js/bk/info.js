@@ -1,24 +1,23 @@
 var info = new Vue({
     el: '#app',
     data: {
-        chapterSize: novel.chapterSize,
-        novelId: novel.novelId,
-        currChapter: 1,
-        chapterList: null,
-        chapterContent: null,
-        rigAdv: true,
-        tabAdv: true,
+        size: novel.size,
+        id: novel.id,
+        currPage: 1,
+        list: null,
+        content: null,
+        rigAdv: true
     },
     mounted() {
         var _self = this;
-        var chapterId = this.currChapter;
-        var novelId = this.novelId;
+        var chapterId = this.currPage;
+        var novelId = this.id;
         $.ajax({
             type: "post",
             async: true,
             url: "/chapter/list/" + novelId,
             success: function(data){
-                _self.chapterList = data;
+                _self.list = data;
             },
             error: function () {
                 _self.$message({
@@ -32,15 +31,15 @@ var info = new Vue({
     },
     methods: {
         pre() {
-            var page = this.currChapter;
-            this.currChapter = page > 1 ? page - 1 : 1;
-            this.changeInfo(this.currChapter);
+            var page = this.currPage;
+            this.currPage = page > 1 ? page - 1 : 1;
+            this.changeInfo(this.currPage);
             $(window).scrollTop(0);
         },
         next() {
-            var page = this.currChapter;
-            this.currChapter = page <= this.chapterSize ? page + 1 : page;
-            this.changeInfo(this.currChapter);
+            var page = this.currPage;
+            this.currPage = page <= this.size ? page + 1 : page;
+            this.changeInfo(this.currPage);
             $(window).scrollTop(0);
         },
         share() {
@@ -51,19 +50,17 @@ var info = new Vue({
         },
         rigClose(){
             this.rigAdv = false;
-        },
-        tabClose(){
-            this.tabAdv = false;
+            $(".noveInfo").css("min-height", "750px");
         },
         changeInfo(chapterId){
             var _self = this;
-            var novelId = this.novelId;
+            var novelId = this.id;
             $.ajax({
                 type: "post",
                 async: true,
                 url: "/chapter/content/" + novelId + "/" + chapterId,
                 success: function(data){
-                    _self.chapterContent = data;
+                    _self.content = data;
                 },
                 error: function () {
                     _self.$message({

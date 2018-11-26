@@ -24,7 +24,7 @@ public class NovelController {
 
     @Autowired
     private NovelService novelService;
-    @Value("15")
+    @Value("18")
     private int PAGE_SIZE;
 
     //根据类别查询小说列表
