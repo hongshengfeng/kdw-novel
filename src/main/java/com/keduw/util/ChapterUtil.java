@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Version: 1.0
  */
 public class ChapterUtil {
-    public static final int TIME = 60*60*24*30;
+    public static  final int TIME = 60*60*24*30;
     public static String CHAPTERID = "chapterId";
 
     /*保存浏览记录*/
@@ -41,15 +41,5 @@ public class ChapterUtil {
 
 
     }
-    public static String  readChapterId(HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie:cookies) {
-            if(cookie.getName().equals(CHAPTERID)){
-                return cookie.getValue();
 
-            }
-        }
-
-        return "无浏览纪录";
-    }
 }
