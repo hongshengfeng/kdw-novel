@@ -1,4 +1,4 @@
-package com.keduw.Logger;
+package com.keduw.logger;
 
 import com.keduw.model.Result;
 import org.aspectj.lang.JoinPoint;

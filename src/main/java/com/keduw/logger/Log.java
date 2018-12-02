@@ -1,4 +1,4 @@
-package com.keduw.Logger;
+package com.keduw.logger;
 
 import java.lang.annotation.*;
 
