@@ -77,7 +77,9 @@ public class NovelCrawelThread implements Runnable{
                         } else {
                             updateQueue.put(chapter);
                         }
-                    } finally {
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }finally {
                         if(response != null){
                             response.close();
                         }

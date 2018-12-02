@@ -6,12 +6,13 @@
         <result column="nId" jdbcType="INTEGER" property="nId"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="link" jdbcType="VARCHAR" property="link"/>
+        <result column="isFull" jdbcType="TINYINT" property="isFull" />
     </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.keduw.model.Chapter">
         <result column="content" jdbcType="LONGVARCHAR" property="content"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, nId, name, link
+        id, nId, name, link, isFull
     </sql>
     <sql id="Blob_Column_List">
         content
@@ -27,7 +28,7 @@
     <!--更新章节名字以及内容-->
     <insert id="updateChapter" parameterType="com.keduw.model.Chapter">
         UPDATE chapter
-        SET name = #{name},content = #{content} WHERE id = #{id} AND nId = #{nId}
+        SET name = #{name},content = #{content}, isFull = 1 WHERE id = #{id} AND nId = #{nId}
     </insert>
     <!--根据小说id返回章节列表-->
     <select id="selectInfoByNovelId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -43,7 +44,7 @@
     <select id="selectInfoByContent" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM chapter WHERE content is null
+        FROM chapter WHERE isFull = 0
     </select>
     <!--获取章节内容-->
     <select id="selectContentById" resultType="java.lang.String">

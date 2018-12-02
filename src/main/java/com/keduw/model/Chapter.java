@@ -12,6 +12,8 @@ public class Chapter {
 
     private String link; //章节链接
 
+    private Byte isFull; //是否数据完整
+
     public Integer getId() {
         return id;
     }
@@ -50,5 +52,13 @@ public class Chapter {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public Byte getIsFull() {
+        return isFull;
+    }
+
+    public void setIsFull(Byte isFull) {
+        this.isFull = isFull;
     }
 }
