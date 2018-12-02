@@ -29,7 +29,7 @@ public class FullContentThread implements Runnable{
                     chapterService.updateChapterContent(chapter);
                     System.out.println("待更新：" + updateQueue.size());
                 } else {
-                    Thread.sleep(60000);
+                    Thread.sleep(300000);
                     timer++;
                 }
             }catch (Exception e){
