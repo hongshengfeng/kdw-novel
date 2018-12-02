@@ -38,7 +38,7 @@ public class NovelCrawelThread implements Runnable{
         try{
             int time = 0;
             while (time < 3){
-                if(chapterQueue != null && chapterQueue.size() >= 0) {
+                if(chapterQueue != null && chapterQueue.size() > 0) {
                     time = 0;
                     Chapter chapter = chapterQueue.poll(1000, TimeUnit.MILLISECONDS);
                     CloseableHttpClient httpclient = HttpClients.createDefault();
