@@ -1,6 +1,8 @@
 package com.keduw.util;
 
 import com.keduw.model.Chapter;
+import org.apache.http.HttpHost;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -22,7 +24,10 @@ public class CrawelUtil {
         CloseableHttpResponse response = null;
         try{
             HttpGet httpget = new HttpGet(chapter.getLink());
-            httpget.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0");
+            HttpHost proxy = new HttpHost("113.200.56.13",8010);
+            RequestConfig requestConfig = RequestConfig.custom().setProxy(proxy).setConnectTimeout(10000).setSocketTimeout(10000).setConnectionRequestTimeout(3000).build();
+            httpget.setConfig(requestConfig);
+            httpget.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
             response = httpclient.execute(httpget); //执行
             int code = response.getStatusLine().getStatusCode(); //获取响应状态码
             String html = "";
