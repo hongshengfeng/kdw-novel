@@ -61,7 +61,7 @@ public class NovelSchedule {
     }
 
     //每月1号凌晨3点爬取章节内容
-    @Scheduled(cron = "0 25 20 * * ?")
+    @Scheduled(cron = "0 58 20 * * ?")
     public void infoCollect() throws Exception{
         if(isOpen){
             //获取总章节数
