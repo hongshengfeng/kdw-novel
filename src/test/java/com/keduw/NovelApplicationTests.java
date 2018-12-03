@@ -1,5 +1,7 @@
 package com.keduw;
 
+import com.keduw.model.User;
+import com.keduw.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +11,16 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.mail.internet.MimeMessage;
+import java.util.Date;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class NovelApplicationTests {
 	@Autowired
 	JavaMailSender mailSender;
+	@Autowired
+	public UserService userService;
+
 
 	@Test
 	public void contextLoads() {
@@ -35,5 +41,17 @@ public class NovelApplicationTests {
 			ex.printStackTrace();
 
 		}
+	}
+	@Test
+	public void testAdduser(){
+
+		User user = new User();
+		user.setName("1123");
+		user.setPwd("1123");
+		user.setSacct("234");
+		Date date = new Date();
+		user.setRegistTime(date);
+	    userService.addUser(user);
+
 	}
 }

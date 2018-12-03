@@ -1,6 +1,8 @@
 package com.keduw.controller;
 
 import com.keduw.jedis.JedisClient;
+import com.keduw.model.User;
+import com.keduw.service.UserService;
 import com.keduw.util.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * @ProjectName: novelSpider
@@ -29,6 +32,8 @@ public class EmailController {
     JavaMailSender javaMailSender;
     @Autowired
     JedisClient jedisClient;
+    @Autowired
+    UserService userService;
     
     @RequestMapping("/sendEmail")
     public String sendEmail(String mail , HttpServletRequest request){
@@ -43,11 +48,23 @@ public class EmailController {
     }
 
     @RequestMapping("/register")
-    public String register(String mail , String code){
+    public String register(String mail ,String pwd,String name,String code){
 
         String Vcode  = jedisClient.get(mail);
         if(Vcode != null && Vcode.equals(code)){
+            User user = new User();
+            Date date = new Date();
+            user.setSacct(mail);
+            user.setName(name);
+            user.setPwd(pwd);
+            user.setRegistTime(date);
+
             //开始注册账号
+            int flag = userService.addUser(user);
+            if(flag <= 0){
+                return  "error";
+            }
+
         }
 
         return "succeed";
