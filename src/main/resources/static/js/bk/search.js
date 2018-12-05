@@ -1,7 +1,6 @@
 var app = new Vue({
     el: '#search',
     data: {
-        advShow: false,
         loading: false,
         novelList: [],
         currPage: 1,
@@ -11,12 +10,6 @@ var app = new Vue({
         wd : wd
     },
     mounted() {
-        var _self = this;
-        if(!_self.getCookie("sTopAdv")){
-            setTimeout(function () {
-                _self.advShow = true;
-            }, 1000);
-        }
         header.keywords = this.wd
         this.handle();
         this.moreInfo();
@@ -119,10 +112,6 @@ var app = new Vue({
         },
         info: function(id) {
             window.location.href="/info/" + id;
-        },
-        close: function() {
-            this.advShow ? this.advShow = false : this.advShow = true;
-            this.setCookie("sTopAdv", false, 1);
         },
         setCookie: function (key, value, life) {
             var date = new Date();

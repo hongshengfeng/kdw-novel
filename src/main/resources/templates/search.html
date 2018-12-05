@@ -14,9 +14,6 @@
 <body>
 <div th:replace="header::top"></div>
 <el-main id="search">
-    <div class="topAdv" v-if="advShow">
-        <span class="iconfont icon-close" @click="close()"></span> 广告位
-    </div>
     <div class="nov_info" v-loading="loading">
         <el-card shadow="hover" v-for="novel in novelList" :class="infoClass(novel.cid)" @click.native="info(novel.id)">
             <div class="base-info">
