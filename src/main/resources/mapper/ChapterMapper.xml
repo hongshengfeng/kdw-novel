@@ -44,7 +44,7 @@
     <select id="selectInfoByContent" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM chapter WHERE isFull = 0
+        FROM chapter WHERE isFull = 0 order by id
     </select>
     <!--获取章节内容-->
     <select id="selectContentById" resultType="java.lang.String">

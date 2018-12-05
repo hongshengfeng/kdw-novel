@@ -45,9 +45,9 @@ public class NovelCrawelThread implements Runnable{
                     CloseableHttpResponse response = null;
                     try {
                         HttpGet httpget = new HttpGet(chapter.getLink());
-                        HttpHost proxy = new HttpHost("47.101.190.246",8080);
-                        RequestConfig requestConfig = RequestConfig.custom().setProxy(proxy).setConnectTimeout(10000).setSocketTimeout(10000).setConnectionRequestTimeout(3000).build();
-                        httpget.setConfig(requestConfig);
+                        //HttpHost proxy = new HttpHost("221.2.175.238",8060);
+                        //RequestConfig requestConfig = RequestConfig.custom().setProxy(proxy).setConnectTimeout(10000).setSocketTimeout(10000).setConnectionRequestTimeout(3000).build();
+                        //httpget.setConfig(requestConfig);
                         httpget.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
                         response = httpclient.execute(httpget); //执行
                         int code = response.getStatusLine().getStatusCode(); //获取响应状态码
@@ -100,7 +100,7 @@ public class NovelCrawelThread implements Runnable{
                     str.append(updateQueue.size());
                     System.out.println(str.toString());
                 }else{
-                    Thread.sleep(120000);
+                    Thread.sleep(60000);
                     time ++;
                 }
             }

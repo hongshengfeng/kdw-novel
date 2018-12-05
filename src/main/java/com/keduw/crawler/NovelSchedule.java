@@ -61,7 +61,7 @@ public class NovelSchedule {
     }
 
     //每月1号凌晨3点爬取章节内容
-    @Scheduled(cron = "0 42 21 * * ?")
+    @Scheduled(cron = "0 44 0 * * ?")
     public void infoCollect() throws Exception{
         if(isOpen){
             //获取总章节数
@@ -86,7 +86,6 @@ public class NovelSchedule {
                 executor.execute(nextPage);
             }
             System.out.println("爬虫线程启动总数：" + executor.getPoolSize());
-            executor.shutdown();
 
             FullContentThread novelContent = new FullContentThread(updateQueue);
             Thread contentThread = new Thread(novelContent);
@@ -98,12 +97,13 @@ public class NovelSchedule {
                     chapterQueue.add(chapter);
                 }
             }
+            executor.shutdown();
         }
     }
 
     private boolean isOpen = false; //启动开关，日常关闭
     private int init = 0;
-    private int size = 100;
+    private int size = 500;
     private volatile BlockingQueue<Chapter> chapterQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取待爬取内容的章节
     private volatile BlockingQueue<Chapter> updateQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取待更新到数据库的章节
 }
