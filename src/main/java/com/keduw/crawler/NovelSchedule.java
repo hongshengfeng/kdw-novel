@@ -61,7 +61,7 @@ public class NovelSchedule {
     }
 
     //每月1号凌晨3点爬取章节内容
-    @Scheduled(cron = "0 44 0 * * ?")
+    @Scheduled(cron = "0 47 0 * * ?")
     public void infoCollect() throws Exception{
         if(isOpen){
             //获取总章节数
@@ -75,21 +75,18 @@ public class NovelSchedule {
                 chapterQueue.add(chapter);
             }
             //启动爬取线程
-            ThreadPoolExecutor executor = new ThreadPoolExecutor(20, 25, 200, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(5));
-            for(int i = 0; i < 15; i++){
+            ThreadPoolExecutor executor = new ThreadPoolExecutor(25, 30, 200, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(5));
+            for(int i = 0; i < 10; i++){
                 NovelCrawelThread thread = new NovelCrawelThread(chapterQueue, updateQueue);
                 executor.execute(thread);
             }
             //启动爬取下一页和数据保存线程
-            for(int i = 0; i < 5; i++){
+            for(int i = 0; i < 10; i++){
                 NextContentThread nextPage = new NextContentThread(chapterQueue, updateQueue);
                 executor.execute(nextPage);
             }
-            System.out.println("爬虫线程启动总数：" + executor.getPoolSize());
-
             FullContentThread novelContent = new FullContentThread(updateQueue);
-            Thread contentThread = new Thread(novelContent);
-            contentThread.start();
+            executor.execute(novelContent);
 
             for(int i = 1; i < times; i++){
                 chapterList = chapterService.getChapterList(i , size);
