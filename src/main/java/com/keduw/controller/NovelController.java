@@ -70,7 +70,19 @@ public class NovelController {
         if(categoryId > 0){
             list = novelService.getNovelList(curr, PAGE_SIZE, categoryId);
         }else{
-            list = novelService.getNovelList(curr, PAGE_SIZE);
+            List<Category> infoList = categoryService.getInfoList();
+            List<Novel> allList = new ArrayList<Novel>();
+            for(Category info : infoList){
+                int id = info.getId();
+                allList.addAll(novelService.getNovelList(curr, PAGE_SIZE, id));
+            }
+            if(allList.size() > 0){
+                //洗牌，打乱原来的顺序
+                Collections.shuffle(allList);
+                Random random = new Random();
+                int index = random.nextInt(allList.size() - PAGE_SIZE);
+                list = allList.subList(index, index + PAGE_SIZE);
+            }
         }
         return list;
     }
