@@ -1,6 +1,8 @@
 package com.keduw.controller;
 
+import com.keduw.model.Category;
 import com.keduw.model.Novel;
+import com.keduw.service.CategoryService;
 import com.keduw.service.NovelService;
 import com.keduw.util.BaseUtil;
 import com.keduw.util.Page;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 小说信息控制器
@@ -24,21 +28,35 @@ public class NovelController {
 
     @Autowired
     private NovelService novelService;
+    @Autowired
+    private CategoryService categoryService;
     @Value("18")
     private int PAGE_SIZE;
 
     //根据类别查询小说列表
     @RequestMapping("/info/{cate}")
     public List<Novel> info(@PathVariable("cate") String cate){
-        int category = Parser.parserInt(cate, 0);
+        int cId = Parser.parserInt(cate, 0);
         // 获取小说总数
-        int counts = category == 0 ? novelService.getNovelCount() : novelService.getNovelCountByCategory(category);
+        int counts = cId == 0 ? novelService.getNovelCount() : novelService.getNovelCountByCategory(cId);
         int curr = BaseUtil.betweenRandom(counts - PAGE_SIZE);
         List<Novel> list = new ArrayList<Novel>();
-        if(category > 0) {
-            list = novelService.getNovelList(curr, PAGE_SIZE, category);
+        if(cId > 0) {
+            list = novelService.getNovelList(curr, PAGE_SIZE, cId);
         }else{
-            list = novelService.getNovelList(curr, PAGE_SIZE);
+            List<Category> infoList = categoryService.getInfoList();
+            List<Novel> allList = new ArrayList<Novel>();
+            for(Category info : infoList){
+                int id = info.getId();
+                allList.addAll(novelService.getNovelList(curr, PAGE_SIZE, id));
+            }
+            if(allList.size() > 0){
+                //洗牌，打乱原来的顺序
+                Collections.shuffle(allList);
+                Random random = new Random();
+                int index = random.nextInt(allList.size() - PAGE_SIZE);
+                list = allList.subList(index, index + PAGE_SIZE);
+            }
         }
         return list;
     }

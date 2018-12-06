@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @ProjectName: novelSpider
@@ -122,12 +123,14 @@ public class NovelServiceImpl implements NovelService {
     @Override
     public List<Novel> getNewInfo() {
         List<Novel> list = new ArrayList<>();
-        String field = "newInfo";
+        Random random = new Random();
+        int index = random.nextInt(10);
+        String field = "newInfo" + index;
         String info = jedisClient.hget(novelList, field);
         if(info != null && !info.isEmpty()){
             list = JsonUtils.jsonToList(info, Novel.class);
         }else{
-            PageHelper.startPage(1, 6);
+            PageHelper.startPage(index, 6);
             list = novelMapper.seletNewNovelInfo();
             if(list != null && list.size() > 0){
                 jedisClient.hset(novelList, field, JsonUtils.objectToJson(list));
@@ -140,12 +143,14 @@ public class NovelServiceImpl implements NovelService {
     @Override
     public List<Novel> getHotInfo() {
         List<Novel> list = new ArrayList<>();
-        String field = "hotInfo";
+        Random random = new Random();
+        int index = random.nextInt(10);
+        String field = "hotInfo" + index;
         String info = jedisClient.hget(novelList, field);
         if(info != null && !info.isEmpty()){
             list = JsonUtils.jsonToList(info, Novel.class);
         }else{
-            PageHelper.startPage(1, 6);
+            PageHelper.startPage(index, 6);
             list = novelMapper.seletHotNovelInfo();
             if(list != null && list.size() > 0){
                 jedisClient.hset(novelList, field, JsonUtils.objectToJson(list));
