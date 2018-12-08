@@ -19,18 +19,18 @@ public class FullContentThread implements Runnable{
     }
     @Override
     public void run() {
-        int timer = 0;
-        while (timer < 3){
+        int time = 0;
+        while (time < 3){
             try {
                 if (updateQueue != null && updateQueue.size() > 0) {
-                    timer = 0;
+                    time = 0;
                     ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
                     Chapter chapter = updateQueue.poll(1000, TimeUnit.MILLISECONDS);
                     chapterService.updateChapterContent(chapter);
                     System.out.println("待更新：" + updateQueue.size());
                 } else {
-                    Thread.sleep(60000);
-                    timer++;
+                    Thread.sleep(300000 * time);
+                    time++;
                 }
             }catch (Exception e){
                 Log.error("novelContentError", e.getMessage());

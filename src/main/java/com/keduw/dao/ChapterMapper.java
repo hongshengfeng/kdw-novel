@@ -23,13 +23,13 @@ public interface ChapterMapper {
     void updateChapter(Chapter info);
 
     //根据novelId返回章节信息
-    List<Chapter> selectInfoByNovelId(Integer novelId);
+    List<Chapter> selectInfoByNovelId(int novelId);
 
     //获取章节总数
     int selectCounts();
 
     //获取content为空的章节列表
-    List<Chapter> selectInfoByContent();
+    List<Chapter> selectInfoByContent(@Param("start")int start, @Param("size")int size);
 
-    String selectContentById(@Param("novelId")Integer novelId, @Param("chapterId")Integer chapterId);
+    String selectContentById(@Param("novelId")int novelId, @Param("chapterId")int chapterId);
 }
