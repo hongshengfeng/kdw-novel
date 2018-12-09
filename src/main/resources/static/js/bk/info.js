@@ -3,6 +3,8 @@ var info = new Vue({
     data: {
         size: novel.size,
         id: novel.id,
+        first: 0,
+        last: 0,
         currPage: 1,
         list: null,
         content: '',
@@ -10,7 +12,6 @@ var info = new Vue({
     },
     mounted() {
         var _self = this;
-        var chapterId = this.currPage;
         var novelId = this.id;
         $.ajax({
             type: "post",
@@ -18,6 +19,9 @@ var info = new Vue({
             url: "/chapter/list/" + novelId,
             success: function(data){
                 _self.list = data;
+                _self.currPage = data[0].id;
+                _self.first = data[0].id;
+                _self.last = data[data.length - 1].id;
             },
             error: function () {
                 _self.$message({
@@ -26,19 +30,19 @@ var info = new Vue({
                 });
             }
         });
-        this.changeInfo(chapterId);
+        this.changeInfo(this.currPage);
         $("body").css("display", "block");
     },
     methods: {
         pre() {
             var page = this.currPage;
-            this.currPage = page > 1 ? page - 1 : 1;
+            this.currPage = page > this.first ? page - 1 : this.first;
             this.changeInfo(this.currPage);
             $(window).scrollTop(0);
         },
         next() {
             var page = this.currPage;
-            this.currPage = page <= this.size ? page + 1 : page;
+            this.currPage = page < this.last ? page + 1 : this.last;
             this.changeInfo(this.currPage);
             $(window).scrollTop(0);
         },
@@ -55,6 +59,7 @@ var info = new Vue({
         changeInfo(chapterId){
             var _self = this;
             var novelId = this.id;
+            this.currPage = chapterId;
             $.ajax({
                 type: "post",
                 async: false,
