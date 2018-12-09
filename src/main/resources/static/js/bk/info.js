@@ -5,7 +5,7 @@ var info = new Vue({
         id: novel.id,
         currPage: 1,
         list: null,
-        content: null,
+        content: '',
         rigAdv: true
     },
     mounted() {
@@ -14,7 +14,7 @@ var info = new Vue({
         var novelId = this.id;
         $.ajax({
             type: "post",
-            async: true,
+            async: false,
             url: "/chapter/list/" + novelId,
             success: function(data){
                 _self.list = data;
@@ -57,7 +57,7 @@ var info = new Vue({
             var novelId = this.id;
             $.ajax({
                 type: "post",
-                async: true,
+                async: false,
                 url: "/chapter/content/" + novelId + "/" + chapterId,
                 success: function(data){
                     _self.content = data;

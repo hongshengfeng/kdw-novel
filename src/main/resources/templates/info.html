@@ -36,12 +36,12 @@
                 <div class="kd-art-content" v-html="content"></div>
                 <div class="options">
                     <div class="share">
-                        <span class="iconfont icon-weixin" @click="share()"></span>
-                        <span class="iconfont icon-weibo" @click="share()"></span>
+                        <span class="iconfont icon-weixin" @click="share"></span>
+                        <span class="iconfont icon-weibo" @click="share"></span>
                     </div>
                     <div class="section">
-                        <div class="pre" @click="pre()">上一章</div>
-                        <div class="next" @click="next()">下一章</div>
+                        <div class="pre" @click="pre">上一章</div>
+                        <div class="next" @click="next">下一章</div>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                             var cpro_id = "u3582437";
                         </script>
                         <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js"></script>
-                        <span class="iconfont icon-close" @click="rigClose()"></span>
+                        <span class="iconfont icon-close" @click="rigClose"></span>
                     </div>
                 </transition>
             </div>

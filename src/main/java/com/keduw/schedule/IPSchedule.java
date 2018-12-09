@@ -33,19 +33,14 @@ public class IPSchedule {
     public void ipInfoCollect() throws Exception{
         Map<String, String> info = jedisClient.hgetAll(user_ip);
         if(info != null){
-            jedisClient.hset(user_ip, isRead, "true");
-            boolean isReadResult = Parser.parserBoolean(jedisClient.hget(user_ip, isRead), true);
-            if(!isReadResult){
-                Ipinfo ipinfo = new Ipinfo();
-                ipinfo.setTime(DateFormat.addAndSubtractDaysByGetTime(new Date(), -1));
-                ipinfo.setNum(info.size());
-                int result = seoService.insertInfo(ipinfo);
-                if(result > 0){
-                    jedisClient.del(user_ip);
-                    jedisClient.hset(user_ip, isRead, "false");
-                }else{
-                    Log.info("数据已存在" + new Date());
-                }
+            Ipinfo ipinfo = new Ipinfo();
+            ipinfo.setTime(DateFormat.addAndSubtractDaysByGetTime(new Date(), -1));
+            ipinfo.setNum(info.size());
+            int result = seoService.insertInfo(ipinfo);
+            if(result > 0){
+                jedisClient.del(user_ip);
+            }else{
+                Log.info("数据已存在" + new Date());
             }
         }
     }
