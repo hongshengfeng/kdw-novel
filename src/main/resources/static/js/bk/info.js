@@ -8,11 +8,15 @@ var info = new Vue({
         currPage: 1,
         list: null,
         content: '',
-        rigAdv: true
+        rigAdv: true,
+        nloading: false,
+        cloading: false
     },
     mounted() {
         var _self = this;
         var novelId = this.id;
+        _self.nloading = true;
+        _self.cloading = true;
         $.ajax({
             type: "post",
             async: true,
@@ -22,6 +26,7 @@ var info = new Vue({
                 _self.currPage = data[0].id;
                 _self.first = data[0].id;
                 _self.last = data[data.length - 1].id;
+                _self.cloading = false;
                 //获取内容
                 _self.changeInfo(_self.currPage);
             },
@@ -67,6 +72,7 @@ var info = new Vue({
                 url: "/chapter/content/" + novelId + "/" + chapterId,
                 success: function(data){
                     _self.content = data;
+                    _self.nloading = false;
                 },
                 error: function () {
                     _self.$message({

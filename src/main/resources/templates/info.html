@@ -33,7 +33,7 @@
                         <div class="kd-txt" th:text="${novel.uptime}">2018-06-01</div>
                     </div>
                 </div>
-                <div class="kd-art-content" v-html="content"></div>
+                <div class="kd-art-content" v-loading="nloading" v-html="content"></div>
                 <div class="options">
                     <div class="share">
                         <span class="iconfont icon-weixin" @click="share"></span>
@@ -48,7 +48,7 @@
             <div class="tip">·如果您喜欢这篇小说，可点右侧广告，您的支持是我们的动力·</div>
             <div class="content-right">
                 <div class="current">章节列表</div>
-                <div class="list" id="list">
+                <div class="list" id="list" v-loading="cloading">
                     <a href="javascript:void(0)" v-for="chapter in list" @click="changeInfo(chapter.id)">{{chapter.name}}</a>
                 </div>
                 <div class="counts">
