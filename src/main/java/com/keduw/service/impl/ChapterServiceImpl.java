@@ -47,8 +47,8 @@ public class ChapterServiceImpl implements ChapterService {
             chapterMapper.insertChapter(chapterList);
             //清除对应小说的章节缓存
             int novelId = chapterList.get(0).getnId();
-            String field = "chapter" + novelId;
-            jedisClient.hdel(keys, field);
+            String field = keys + novelId;
+            jedisClient.del(field);
         }catch (Exception e){
             Log.error("insertChapterError", e.getMessage());
         }
@@ -76,9 +76,9 @@ public class ChapterServiceImpl implements ChapterService {
                 if(!flag){
                     newList.add(chapter);
                     //清除对应小说的章节缓存
-                    String field = "chapter" + novelId;
-                    if(jedisClient.hget(keys, field) != null){
-                        jedisClient.hdel(keys, field);
+                    String field = keys + novelId;
+                    if(jedisClient.get(field) != null){
+                        jedisClient.del(field);
                     }
                 }
             }
@@ -98,9 +98,9 @@ public class ChapterServiceImpl implements ChapterService {
             }
             chapterMapper.updateChapter(chapter);
             int novelId = chapter.getnId();
-            String field = "chapter" + novelId;
-            if(jedisClient.hget(keys, field) != null){
-                jedisClient.hdel(keys, field);
+            String field = keys + novelId;
+            if(jedisClient.get(field) != null){
+                jedisClient.del(field);
             }
         }catch (Exception e){
             Log.error("updateChapterContentError", e.getMessage());
@@ -112,15 +112,15 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     public List<Chapter> getChapterList(int NovelId) {
         List<Chapter> list = new ArrayList<Chapter>();
-        String field = "chapter" + NovelId;
-        String info = jedisClient.hget(keys, field);
+        String field = keys + NovelId;
+        String info = jedisClient.get(field);
         if(info != null && !info.isEmpty()){
             list = JsonUtils.jsonToList(info, Chapter.class);
         }else{
             list = chapterMapper.selectInfoByNovelId(NovelId);
             //添加数据到redis中
             if(list != null && list.size() > 0){
-                jedisClient.hset(keys, field, JsonUtils.objectToJson(list));
+                jedisClient.set(field, JsonUtils.objectToJson(list));
             }
         }
         return list;
