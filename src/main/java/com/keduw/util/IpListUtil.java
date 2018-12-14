@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Version: 1.0
  */
 public class IpListUtil {
+
     /**
      * 从Request对象中获得客户端IP，处理了HTTP代理服务器和Nginx的反向代理截取了ip
      * @param request

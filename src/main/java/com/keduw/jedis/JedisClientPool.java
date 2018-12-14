@@ -172,4 +172,30 @@ public class JedisClientPool implements JedisClient {
             }
         }
     }
+
+    @Override
+    public Long setnx(String key, String value) {
+        Jedis jedis = null;
+        try{
+            jedis = jedisPool.getResource();
+            return jedis.setnx(key, value);
+        }finally {
+            if(jedis != null){
+                jedis.close();
+            }
+        }
+    }
+
+    @Override
+    public String getSet(String key, String value) {
+        Jedis jedis = null;
+        try{
+            jedis = jedisPool.getResource();
+            return jedis.getSet(key, value);
+        }finally {
+            if(jedis != null){
+                jedis.close();
+            }
+        }
+    }
 }

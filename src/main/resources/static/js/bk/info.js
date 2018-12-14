@@ -15,13 +15,15 @@ var info = new Vue({
         var novelId = this.id;
         $.ajax({
             type: "post",
-            async: false,
+            async: true,
             url: "/chapter/list/" + novelId,
             success: function(data){
                 _self.list = data;
                 _self.currPage = data[0].id;
                 _self.first = data[0].id;
                 _self.last = data[data.length - 1].id;
+                //获取内容
+                _self.changeInfo(_self.currPage);
             },
             error: function () {
                 _self.$message({
@@ -30,7 +32,6 @@ var info = new Vue({
                 });
             }
         });
-        this.changeInfo(this.currPage);
         $("body").css("display", "block");
     },
     methods: {
@@ -62,7 +63,7 @@ var info = new Vue({
             this.currPage = chapterId;
             $.ajax({
                 type: "post",
-                async: false,
+                async: true,
                 url: "/chapter/content/" + novelId + "/" + chapterId,
                 success: function(data){
                     _self.content = data;

@@ -42,4 +42,10 @@ public interface JedisClient {
 
     //添加set数据类型
     Long sadd(String key, String... field);
+
+    //添加数据，存在返回0，不存在添加返回1
+    Long setnx(String key, String value);
+
+    //更新数据，返回旧的数据
+    String getSet(String key, String value);
 }
