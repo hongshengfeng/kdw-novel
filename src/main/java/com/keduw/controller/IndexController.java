@@ -3,6 +3,7 @@ package com.keduw.controller;
 import com.keduw.jedis.JedisClient;
 import com.keduw.model.Novel;
 import com.keduw.service.NovelService;
+import com.keduw.util.BaseUtil;
 import com.keduw.util.IpListUtil;
 import com.keduw.util.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,18 +36,10 @@ public class IndexController {
         if(jedisClient.hget(keys, fields) == null){
             jedisClient.hset(keys, fields, ip);
         }
-        return "index";
-    }
-
-    @RequestMapping("/m")
-    public String mobiIndex(HttpServletRequest request){
-        //获取访问手机端网站的ip
-        String ip = IpListUtil.getLocalIp(request);
-        String fields = "mobi_" + ip;
-        if(jedisClient.hget(keys, fields) == null){
-            jedisClient.hset(keys, fields, ip);
+        if(BaseUtil.isMoblie(request)){
+            return "/mobi/index";
         }
-        return "/mobi/index";
+        return "index";
     }
 
     @RequestMapping("/info/{novelId}")

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<title>可读小说</title>
+	<link rel="stylesheet" type="text/css" href="/css/mobi/index.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/iconfont.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/mobi/public.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/mobi/chapter.css"/>
+	<script type="text/javascript" src="/js/vue.min.js"></script>
+	<script type="text/javascript" src="/js/mobi/index.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div id="novel">
+		<mt-header :title="title">
+			<router-link slot="left">
+				<mt-button icon="back" @click="toBack"></mt-button>
+			</router-link>
+			<mt-button icon="more" slot="right"></mt-button>
+		</mt-header>
+		<div class="kd_content">
+			<div class="kd_info">
+				<span class="kd_tag">玄幻</span>
+				<span class="kd_title">标题过长会隐藏后面的内容啊哈哈哈哈</span>
+			</div>
+			<div class="kd_author_info">
+				<span class="kd_author">· 丑牛1985</span>
+				<span class="kd_status">· 连载中</span>
+				<span class="kd_time">· 2017年05月29日</span>
+			</div>
+			<div class="kd_desc">
+				<div class="title">小说简介<span class="iconfont icon-more" @click="allDesc"></span></div>
+				<div class="info">
+					阿加雷斯的蛛网——一个让人闻之色变的称号。曾经悬停在无数人的头上，操纵他们的心灵与恐惧，牢牢控制着黑暗世界的一片版图。 但在大变革之后，这个魔鬼被关进了牢笼里面，再也编织不出致命的蛛网，然而，在无尽的进化位面开启之后，这个牢笼被轰然打开，而这一次，他的名字会响彻在更为广袤的世界当中，成为无数人记忆里那个永恒的梦魇。 以上，属于文艺写法，简单的来说，这就是一个便当大魔王在无限的世界里到处派发便当的故事。 《惊天大盗》《死亡密屋》《超能失控》《末日危城》《太空监狱》《冲浪星球》《莱文的世界》....． 原创的世界，精彩的剧情，完全不一样的无限流架构，加上超赞的设定，看在作者君这么有创意的份上，欢迎各种票票收藏支持....
+				</div>
+			</div>
+			<div class="kd_list">
+				<div class="title">章节信息</div>
+				<div class="list">
+					<span>1213123132131231213</span>
+					<span>1213123</span>
+					<span>1213123132131231213</span>
+					<span>12131231</span>
+					<span>12131231321312</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+					<span>1213123132131231213</span>
+				</div>
+				<div class="all">
+					<span class="btn">展开全部</span>
+				</div>
+			</div>
+		</div>
+		<footer class="footer">Copyright &copy; 2017-2018 可读网 粤ICP备17005112号</footer>
+	</div>
+</body>
+<script type="text/javascript" src="/js/mobi/chapter.js"></script>
+</html>

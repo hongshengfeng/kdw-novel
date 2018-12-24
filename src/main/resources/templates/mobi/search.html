@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<title>可续小说</title>
+	<link rel="stylesheet" type="text/css" href="/css/mobi/index.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/mobi/public.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/mobi/search.css"/>
+	<script type="text/javascript" src="/js/vue.min.js"></script>
+	<script type="text/javascript" src="/js/mobi/index.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div id="novel">
+		<mt-search v-model="keywords" placeholder="玄幻、修真、武侠梦" autofocus="true"></mt-search>
+		<div class="tag">
+			<div class="title">热门搜索
+			</div>
+			<div class="info">
+				<span class="kd_tag">123</span>
+				<span class="kd_tag">456</span>
+				<span class="kd_tag">低调的旋律</span>
+				<span class="kd_tag">哈哈哈</span>
+				<span class="kd_tag">测试一下看看效果</span>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/js/mobi/search.js"></script>
+</html>

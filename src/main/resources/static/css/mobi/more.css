@@ -1,0 +1,28 @@
+.content .mint-tab-container{margin-top: 3px;}
+.content .more{margin: 20px 0;}
+.content .more .mint-button--small{width: 40%;border-radius: 20px;margin: 0 auto;display: block;border: 1px solid #F7941E;color: #F7941E;}
+.content .more .mint-button--small:hover{background-color: #F7941E;color: #fff;}
+.content .mint-navbar{position: fixed;width: 100%;z-index: 1;}
+.content .mint-tab-container{margin-top: 46px;}
+
+.content .list{padding: 10px 0 0 0;}
+.content .list .info{padding-left: 10px;padding-right: 10px;}
+.content .list .title{color: #333;}
+.content .list .kind{display: inline-block;width: 40px;height: 20px;line-height: 20px;text-align: center;border-radius: 20px;font-size: 12px;color: #fff}
+.content .list .brief{font-size: 12px;color: #333;margin-top: 5px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+.content .list .time{font-size: 12px;float: right;color: #909399;}
+
+.content .list .coatard{border-left:2px solid #f7941e;}
+.content .list .city{border-left:2px solid #2894cc;}
+.content .list .across{border-left:2px solid #f24551;}
+.content .list .fantasy{border-left:2px solid #f8b668;}
+.content .list .science{border-left:2px solid #45a7f2;}
+.content .list .game{border-left:2px solid #28cc56;}
+.content .coatard .kind{background:#f7941e;}
+.content .city .kind{background:#2894cc;}
+.content .across .kind{background:#f24551;}
+.content .fantasy .kind{background:#45a7f2;}
+.content .science .kind{background:#f8b668;}
+.content .game .kind{background:#28cc56;}
+
+.content .loading{height: 73px;line-height: 73px;text-align: center;}

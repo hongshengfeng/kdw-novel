@@ -20,6 +20,7 @@ import java.util.UUID;
 public class IPSchedule {
 
     private static Logger Log = (Logger) LoggerFactory.getLogger(IPSchedule.class);
+    private static final Integer Lock_Timeout = 5; //锁超时
     @Value("user_ip")
     private String user_ip;
     @Value("ip_lock")

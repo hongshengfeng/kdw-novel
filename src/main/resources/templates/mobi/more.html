@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="keywords" content="可读小说，免费小说，玄幻，修真，都市，科幻，穿越，网游" />
+    <meta name="description" content="可读小说，一个追求简洁，内容丰富，种类繁多的小说网站。"/>
+	<title>可读小说</title>
+	<link rel="stylesheet" type="text/css" href="/css/mobi/index.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/mobi/public.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/mobi/more.css"/>
+	<script type="text/javascript" src="/js/vue.min.js"></script>
+	<script type="text/javascript" src="/js/mobi/index.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div id="novel" style="display: none;">
+		<mt-header title="小说库" fixed>
+			<router-link slot="left">
+				<mt-button icon="back" @click="index"></mt-button>
+			</router-link>
+		</mt-header>
+		<div class="content">
+			<mt-navbar v-model="selected">
+				<mt-tab-item id="0">推荐</mt-tab-item>
+				<mt-tab-item id="1">修真</mt-tab-item>
+				<mt-tab-item id="2">都市</mt-tab-item>
+				<mt-tab-item id="3">穿越</mt-tab-item>
+				<mt-tab-item id="4">玄幻</mt-tab-item>
+				<mt-tab-item id="5">科幻</mt-tab-item>
+				<mt-tab-item id="6">网游</mt-tab-item>
+			</mt-navbar>
+			<mt-tab-container v-model="selected">
+				<mt-tab-container-item id="0">
+					<div class="list">
+						<div class="info coatard">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+					<div class="list">
+						<div class="info city">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+					<div class="list">
+						<div class="info coatard">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+					<div class="list">
+						<div class="info across">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+					<div class="list">
+						<div class="info across">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+					<div class="list">
+						<div class="info across">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+					<div class="list">
+						<div class="info across">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+					<div class="list">
+						<div class="info across">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+					<div class="list">
+						<div class="info across">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+					<div class="list">
+						<div class="info across">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+					<div class="list">
+						<div class="info across">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+					<div class="list">
+						<div class="info across">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+					<div class="list">
+						<div class="info across">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+					<div class="list">
+						<div class="info across">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+					<div class="list">
+						<div class="info across">
+							<div class="title">
+								<span class="kind">修真</span>
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+				</mt-tab-container-item>
+				<mt-tab-container-item id="1">
+					<div class="list">
+						<div class="info coatard">
+							<div class="title">
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+				</mt-tab-container-item>
+				<mt-tab-container-item id="2">
+					<div class="list">
+						<div class="info city">
+							<div class="title">
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+				</mt-tab-container-item>
+				<mt-tab-container-item id="3">
+					<div class="list">
+						<div class="info across">
+							<div class="title">
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+				</mt-tab-container-item>
+				<mt-tab-container-item id="4">
+					<div class="list">
+						<div class="info science">
+							<div class="title">
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+				</mt-tab-container-item>
+				<mt-tab-container-item id="5">
+					<div class="list">
+						<div class="info game">
+							<div class="title">
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+				</mt-tab-container-item>
+				<mt-tab-container-item id="6">
+					<div class="list">
+						<div class="info fantasy">
+							<div class="title">
+								<span>我欲封天</span>
+								<span class="time">2018年11月23日</span>
+							</div>
+							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						</div>
+					</div>
+				</mt-tab-container-item>
+			</mt-tab-container>
+			<div class="loading" v-if="loading">
+				<mt-spinner type="triple-bounce" color="#F7941E" :size="45"></mt-spinner>
+			</div>
+			<div class="more" v-if="!loading">
+				<mt-button type="default" size="small" @click="more">查看更多</mt-button>
+			</div>
+		</div>
+		<footer class="footer">Copyright &copy; 2017-2018 可读网 粤ICP备17005112号</footer>
+	</div>
+</body>
+<script type="text/javascript" src="/js/mobi/more.js"></script>
+</html>

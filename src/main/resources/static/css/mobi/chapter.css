@@ -1,0 +1,17 @@
+.kd_content{padding: 10px 0;}
+.kd_content .kd_info{height: 24px;position: relative;padding: 0 10px;}
+.kd_content .kd_tag{display: inline-block;height: 24px;line-height: 24px;padding: 0 7px;color: rgba(0,0,0,.54);margin-right: 4px;background: #f2f2f2;font-size: 13px;position: absolute;left: 10px;}
+.kd_content .kd_title{display: inline-block;height: 24px;line-height: 24px;width: 80%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;position: absolute;left: 58px;}
+.kd_content .kd_author_info{margin: 10px 0;font-size: 12px;color: #999;padding: 0 10px;}
+.kd_content .kd_author_info .kd_author,
+.kd_content .kd_author_info .kd_status{display: inline-block;margin-right: 10px;}
+.kd_content .kd_desc, .kd_content .kd_list{background: #fff;font-size: 14px;color: #333;}
+.kd_content .title{height: 35px;line-height: 35px;padding: 0 10px;border-left: 2px solid #F7941E;}
+.kd_content .kd_desc .icon-more{float: right;font-size: 18px;}
+.kd_content .kd_desc .info{padding: 5px 10px;font-size: 13px;overflow: hidden;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;line-height: 1.5;}
+
+.kd_content .kd_list .list{margin: 5px 0; padding: 0 10px;height: 300px;overflow: hidden;}
+.kd_content .kd_list .list span{display: block;padding: 15px 0;font-size: 13px;transition: all .3s;border-bottom: 1px solid #c8c7cc;}
+.kd_content .kd_list .all{height: 140px;line-height: 220px;text-align: center;background: linear-gradient(-180deg,rgba(255,255,255,0) 0%,#fff 70%);position: absolute;width: 100%;margin-top: -90px;}
+.kd_content .kd_list .all .btn{font-size: 13px;padding: 5px 20px; border-radius: 20px;border:1px solid #F7941E;color: #F7941E;}
+.footer{margin-top: 50px;}
