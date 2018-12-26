@@ -53,7 +53,8 @@
 							<span>{{item.name}}</span>
 							<span class="time">{{item.uptime}}</span>
 						</div>
-						<div class="brief">简介：{{item.brief}}</div>
+						<div class="brief" v-if="item.brief != ''">简介：{{item.brief}}</div>
+						<div class="brief" v-else>还没获取到该小说的简介。</div>
 					</div>
 				</div>
 			</mt-tab-container-item>
