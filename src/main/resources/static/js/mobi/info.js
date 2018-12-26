@@ -1,32 +1,49 @@
 var novel = new Vue({
 	el: '#novel',
 	data:{
-		title: '标题过长会隐藏后面的内容啊哈哈哈哈',
-		loading: false,
-		isEnd: false,
-		infoList: [],
-		page: 0,
-	},
-	mounted(){
-		this.info();
-		console.log(this.infoList);
+        id: novel.id,
+        size: novel.size,
+        page: novel.firstCId,
+        title: '可读小说',
+        loading: false,
+        isEnd: false,
+		index: 1,
+        infoList: []
 	},
 	methods: {
 		toBack(){
 			window.history.back(-1);
 		},
 		loadMore() {
-			this.loading = true;
-			setTimeout(() => {
-				this.info();
+			if(this.index >= this.size || this.page == 0){
+				this.isEnd = true;
 				this.loading = false;
-			}, 2500);
+                return;
+			}
+            this.info();
 		},
 		info(){
-			var chapter = {};
-			chapter.title = "哈哈哈哈哈哈哈哈";
-			chapter.content = "哈哈哈哈哈啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈啊哈哈哈哈哈哈哈哈哈哈哈";
-			this.infoList.push(chapter);
+            var $self = this;
+            var novelId = this.id;
+            var chapterId = this.page;
+            this.loading = true;
+            $.ajax({
+                type: "post",
+                async: true,
+                url: "/chapter/info/" + novelId + "/" + chapterId,
+                success: function(data){
+                    var chapter = {};
+                    chapter.title = data.name;
+                    chapter.content = data.content;
+                    setTimeout(() => {
+                        $self.infoList.push(chapter);
+                        $self.title = data.name;
+                        $self.loading = false;
+                        $self.page ++;
+                        $self.index ++;
+                    }, 1000);
+                }
+            });
 		}
 	}
 });

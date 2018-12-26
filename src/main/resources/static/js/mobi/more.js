@@ -16,8 +16,8 @@ var novel = new Vue({
 		$('#novel').css('display', 'block');
 	},
 	methods: {
-		index(){
-			window.location.href="./index.html";
+        toBack(){
+            window.history.back(-1);
 		},
 		more(){
 			this.loading = true;

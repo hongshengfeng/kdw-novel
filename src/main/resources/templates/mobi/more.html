@@ -17,7 +17,7 @@
 	<div id="novel" style="display: none;">
 		<mt-header title="小说库" fixed>
 			<router-link slot="left">
-				<mt-button icon="back" @click="index"></mt-button>
+				<mt-button icon="back" @click="toBack"></mt-button>
 			</router-link>
 		</mt-header>
 		<div class="content">
@@ -254,7 +254,7 @@
 				<mt-spinner type="triple-bounce" color="#F7941E" :size="45"></mt-spinner>
 			</div>
 			<div class="more" v-if="!loading">
-				<mt-button type="default" size="small" @click="more">查看更多</mt-button>
+				<mt-button type="default" size="small" @click="more">加载更多</mt-button>
 			</div>
 		</div>
 		<footer class="footer">Copyright &copy; 2017-2018 可读网 粤ICP备17005112号</footer>

@@ -8,11 +8,13 @@
 	<link rel="stylesheet" type="text/css" href="/css/mobi/public.css"/>
 	<script type="text/javascript" src="/js/vue.min.js"></script>
 	<script type="text/javascript" src="/js/mobi/index.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 	<style type="text/css">
-		.kd_content{padding: 10px;height: 100%;margin-top: 40px;}
-		.kd_content .title{font-size: 18px;height: 35px;border-bottom: 1px solid #c8c7cc;}
-		.kd_content .info{font-size: 15px;margin-top: 15px;margin-bottom: 20px;}
-		.tip{height: 40px;line-height: 30px;font-size: 12px;text-align: center;color: #999;}
+		html, body{background-color: #fffdf8;}
+		.kd_content{padding: 10px;height: 100%;margin-top: 40px;background-color: #fffdf8;color: #666;}
+		.kd_content .title{font-size: 18px;height: 35px;border-bottom: 1px solid #c8c7cc;color: #41a863;}
+		.kd_content .info{font-size: 14px;margin-top: 15px;line-height: 1.5;}
+		.tip{height: 40px;line-height: 30px;font-size: 12px;text-align: center;color: #999;color: #41a863;}
 	</style>
 </head>
 <body>
@@ -26,12 +28,19 @@
 		<div class="kd_content" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
 			<div v-for="info in infoList">
 				<div class="title">{{info.title}}</div>
-				<div class="info">{{info.content}}</div>
+				<div class="info" v-html="info.content"></div>
 			</div>
 		</div>
-		<div v-if="loading" class="tip">下一章节加载中...</div>
+		<div v-if="loading" class="tip">章节加载中...</div>
 		<div v-if="isEnd" class="tip">-已经到底了-</div>
 	</div>
 </body>
+<script type="text/javascript">
+    var novel = {
+        id : [[${novel.id}]],
+        size : [[${novel.size}]],
+        firstCId:[[${firstCId}]]
+    }
+</script>
 <script type="text/javascript" src="/js/mobi/info.js"></script>
 </html>

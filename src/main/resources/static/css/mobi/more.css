@@ -3,7 +3,7 @@
 .content .more .mint-button--small{width: 40%;border-radius: 20px;margin: 0 auto;display: block;border: 1px solid #F7941E;color: #F7941E;}
 .content .more .mint-button--small:hover{background-color: #F7941E;color: #fff;}
 .content .mint-navbar{position: fixed;width: 100%;z-index: 1;margin-top:-6px;}
-.content .mint-tab-container{margin-top: 46px;}
+.content .mint-tab-container{margin-top: 46px;padding-top: 46px;}
 
 .content .list{padding: 10px 0 0 0;}
 .content .list .info{padding-left: 10px;padding-right: 10px;}
