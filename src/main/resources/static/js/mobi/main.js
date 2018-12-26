@@ -10,22 +10,24 @@ var novel = new Vue({
 		scieInfo: null, //科幻
 		gameInfo: null, //网游
 		show: true,
-
+		loading: false
 	},
 	mounted(){
 		$('#novel').css('display', 'block');
+		this.handle(0);
 	},
 	watch:{
 		selected(val) {
-			console.log(val);
+			var index = parseInt(val);
+			this.handle(index);
 		}
 	},
 	methods: {
         index(){
-            window.location.href="./index.html";
+            window.location.href="/";
         },
         search(){
-            window.location.href="./search.html";
+            window.location.href="/m/search";
         },
 		infoClass(cateId){
             var kind = "";
@@ -53,9 +55,11 @@ var novel = new Vue({
         },
         handle(key){
             var _self = this;
+            this.loading = true
             $.ajax({
                 type: "post",
                 async: true,
+				dataType: "json",
                 url: "/novel/info/" + key,
                 success: function(data){
                 	switch(key){
@@ -81,14 +85,15 @@ var novel = new Vue({
 	            		_self.recoInfo = data;
 	            		break;
                 	}
+                    _self.loading = false;
                 }
             });
         },
         more(){
-            window.location.href="./more.html";
+            window.location.href="/m/more";
         },
-        info(){
-            window.location.href="./chapter.html"; 
+        info(id){
+            window.location.href="/m/info/" + id;
         }
 	}
 });

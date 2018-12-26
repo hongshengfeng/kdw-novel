@@ -6,6 +6,7 @@ import com.keduw.service.NovelService;
 import com.keduw.util.BaseUtil;
 import com.keduw.util.IpListUtil;
 import com.keduw.util.Parser;
+import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -54,7 +55,7 @@ public class IndexController {
     }
 
     @RequestMapping("/category")
-    public String categoryInfo(){
+    public String categoryInfo(HttpServletRequest request){
         return "moreInfo";
     }
 
@@ -64,4 +65,5 @@ public class IndexController {
         model.addAttribute("wd", wd);
         return "search";
     }
+
 }

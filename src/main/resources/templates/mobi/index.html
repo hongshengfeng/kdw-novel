@@ -36,117 +36,95 @@
 			<mt-tab-item id="5">科幻</mt-tab-item>
 			<mt-tab-item id="6">网游</mt-tab-item>
 		</mt-navbar>
-		<mt-tab-container v-model="selected">
+		<div class="loading" v-if="loading">
+			<mt-spinner :type="2" :size="35" color="#F7941E"></mt-spinner>
+		</div>
+		<mt-tab-container v-model="selected" v-if="!loading">
 			<mt-tab-container-item id="0">
-				<div class="list" @click="info">
-					<div class="info coatard">
+				<div class="list" v-for="item in recoInfo" @click="info(item.id)">
+					<div class="info" :class="infoClass(item.cid)">
 						<div class="title">
-							<span class="kind">修真</span>
-							<span>我欲封天</span>
-							<span class="time">2018年11月23日</span>
+							<span class="kind" v-if="item.cid == 1">修真</span>
+							<span class="kind" v-else-if="item.cid == 2">都市</span>
+							<span class="kind" v-else-if="item.cid == 3">穿越</span>
+							<span class="kind" v-else-if="item.cid == 4">玄幻</span>
+							<span class="kind" v-else-if="item.cid == 5">科幻</span>
+							<span class="kind" v-else>修真</span>
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
 						</div>
-						<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-					</div>
-				</div>
-				<div class="list">
-					<div class="info city">
-						<div class="title">
-							<span class="kind">修真</span>
-							<span>我欲封天</span>
-							<span class="time">2018年11月23日</span>
-						</div>
-						<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-					</div>
-				</div>
-				<div class="list">
-					<div class="info coatard">
-						<div class="title">
-							<span class="kind">修真</span>
-							<span>我欲封天</span>
-							<span class="time">2018年11月23日</span>
-						</div>
-						<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-					</div>
-				</div>
-				<div class="list">
-					<div class="info across">
-						<div class="title">
-							<span class="kind">修真</span>
-							<span>我欲封天</span>
-							<span class="time">2018年11月23日</span>
-						</div>
-						<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						<div class="brief">简介：{{item.brief}}</div>
 					</div>
 				</div>
 			</mt-tab-container-item>
 			<mt-tab-container-item id="1">
-				<div class="list">
+				<div class="list" v-for="item in coatInfo" @click="info(item.id)">
 					<div class="info coatard">
 						<div class="title">
-							<span>我欲封天</span>
-							<span class="time">2018年11月23日</span>
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
 						</div>
-						<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						<div class="brief">简介：{{item.brief}}</div>
 					</div>
 				</div>
 			</mt-tab-container-item>
 			<mt-tab-container-item id="2">
-				<div class="list">
+				<div class="list" v-for="item in cityInfo" @click="info(item.id)">
 					<div class="info city">
 						<div class="title">
-							<span>我欲封天</span>
-							<span class="time">2018年11月23日</span>
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
 						</div>
-						<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						<div class="brief">简介：{{item.brief}}</div>
 					</div>
 				</div>
 			</mt-tab-container-item>
 			<mt-tab-container-item id="3">
-				<div class="list">
+				<div class="list" v-for="item in acroInfo" @click="info(item.id)">
 					<div class="info across">
 						<div class="title">
-							<span>我欲封天</span>
-							<span class="time">2018年11月23日</span>
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
 						</div>
-						<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						<div class="brief">简介：{{item.brief}}</div>
 					</div>
 				</div>
 			</mt-tab-container-item>
 			<mt-tab-container-item id="4">
-				<div class="list">
-					<div class="info science">
+				<div class="list" v-for="item in fantInfo" @click="info(item.id)">
+					<div class="info fantasy">
 						<div class="title">
-							<span>我欲封天</span>
-							<span class="time">2018年11月23日</span>
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
 						</div>
-						<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						<div class="brief">简介：{{item.brief}}</div>
 					</div>
 				</div>
 			</mt-tab-container-item>
 			<mt-tab-container-item id="5">
-				<div class="list">
-					<div class="info game">
+				<div class="list" v-for="item in scieInfo" @click="info(item.id)">
+					<div class="info science">
 						<div class="title">
-							<span>我欲封天</span>
-							<span class="time">2018年11月23日</span>
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
 						</div>
-						<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						<div class="brief">简介：{{item.brief}}</div>
 					</div>
 				</div>
 			</mt-tab-container-item>
 			<mt-tab-container-item id="6">
-				<div class="list">
-					<div class="info fantasy">
+				<div class="list" v-for="item in gameInfo" @click="info(item.id)">
+					<div class="info game">
 						<div class="title">
-							<span>我欲封天</span>
-							<span class="time">2018年11月23日</span>
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
 						</div>
-						<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+						<div class="brief">简介：{{item.brief}}</div>
 					</div>
 				</div>
 			</mt-tab-container-item>
 		</mt-tab-container>
-		<div class="more">
+		<div class="more" v-if="!loading">
 			<mt-button type="default" size="small" @click="more">查看更多</mt-button>
 		</div>
 	</div>
