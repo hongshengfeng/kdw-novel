@@ -20,6 +20,9 @@ ul,ol{
 	border-bottom: solid #e5e5e5 1px;
 	box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
+.mint-header-title{
+	font-size: 15px;
+}
 .mint-navbar .mint-tab-item.is-selected{
 	border-bottom: 3px solid #F7941E;
 	color: #F7941E;
@@ -29,7 +32,6 @@ ul,ol{
 	height: 25px;
 	background: url('../../image/m_logo.png') no-repeat 0px 0px;
 	background-size: 100%;
-	opacity: 0.9;
 	border-radius: 20px;
 	border: 1px solid #F7941E;
 }

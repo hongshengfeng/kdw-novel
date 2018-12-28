@@ -10,8 +10,10 @@
 .kd_content .kd_desc .icon-more{float: right;font-size: 18px;}
 .kd_content .kd_desc .info{padding: 5px 10px;font-size: 13px;overflow: hidden;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;line-height: 1.5;}
 
-.kd_content .kd_list .list{margin: 5px 0; padding: 0 10px;height: 300px;overflow: hidden;}
+.kd_content .kd_list .list{margin: 5px 0; padding: 0 10px;height: 250px;overflow: hidden;}
 .kd_content .kd_list .list span{display: block;padding: 15px 0;font-size: 13px;transition: all .3s;border-bottom: 1px solid #c8c7cc;}
 .kd_content .kd_list .all{height: 140px;line-height: 220px;text-align: center;background: linear-gradient(-180deg,rgba(255,255,255,0) 0%,#fff 70%);position: absolute;width: 100%;margin-top: -90px;}
 .kd_content .kd_list .all .btn{font-size: 13px;padding: 5px 20px; border-radius: 20px;border:1px solid #F7941E;color: #F7941E;}
-.footer{margin-top: 50px;}
+.kd_list .list .tip{height: 40px; line-height: 40px;font-size: 12px; text-align: center;color: #969896;}
+.loading{margin-top: 30px;}
+

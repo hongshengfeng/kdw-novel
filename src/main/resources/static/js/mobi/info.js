@@ -1,4 +1,4 @@
-var novel = new Vue({
+var novelInfo = new Vue({
 	el: '#novel',
 	data:{
         id: novel.id,

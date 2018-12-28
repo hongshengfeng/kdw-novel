@@ -54,7 +54,7 @@ var novel = new Vue({
             return kind;
         },
         handle(key){
-            var _self = this;
+            var $self = this;
             this.loading = true
             $.ajax({
                 type: "post",
@@ -64,28 +64,28 @@ var novel = new Vue({
                 success: function(data){
                 	switch(key){
                 	case 1:
-                		_self.coatInfo = data;
+                        $self.coatInfo = data;
                 		break;
             		case 2:
-	            		_self.cityInfo = data;
+                        $self.cityInfo = data;
 	            		break;
             		case 3:
-	            		_self.acroInfo = data;
+                        $self.acroInfo = data;
 	            		break;
             		case 4:
-	            		_self.fantInfo = data;
+                        $self.fantInfo = data;
 	            		break;
             		case 5:
-	            		_self.scieInfo = data;
+                        $self.scieInfo = data;
 	            		break;
             		case 6:
-	            		_self.gameInfo = data;
+                        $self.gameInfo = data;
 	            		break;
 	            	default:
-	            		_self.recoInfo = data;
+                        $self.recoInfo = data;
 	            		break;
                 	}
-                    _self.loading = false;
+                    $self.loading = false;
                 }
             });
         },
@@ -93,7 +93,7 @@ var novel = new Vue({
             window.location.href="/m/more";
         },
         info(id){
-            window.location.href="/m/info/" + id;
+            window.location.href="/m/chapter/" + id;
         }
 	}
 });

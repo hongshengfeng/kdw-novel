@@ -35,7 +35,7 @@ public class NovelController {
 
     //根据类别查询小说列表
     @RequestMapping("/info/{cate}")
-    public List<Novel> info(@PathVariable("cate") String cate){
+    public List<Novel> info(@PathVariable("cate")String cate){
         int cId = Parser.parserInt(cate, 0);
         // 获取小说总数
         int counts = cId == 0 ? novelService.getNovelCount() : novelService.getNovelCountByCategory(cId);

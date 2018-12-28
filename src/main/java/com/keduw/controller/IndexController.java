@@ -47,10 +47,10 @@ public class IndexController {
     public String detailInfo(@PathVariable("novelId") String novelId, Model model){
         Novel novel = new Novel();
         int id = Parser.parserInt(novelId, 0);
-        if(id > 0L){
+        if(id > 0){
             novel = novelService.getNovelById(id);
-            model.addAttribute("novel", novel);
         }
+        model.addAttribute("novel", novel);
         return "info";
     }
 
