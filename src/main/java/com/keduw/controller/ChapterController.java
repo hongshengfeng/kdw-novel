@@ -74,11 +74,13 @@ public class ChapterController {
     }
 
     //获取章节标题和内容
-    @Transactional
     @RequestMapping("/info/{novel}/{chapter}")
     public Chapter getBaseInfo(HttpServletRequest request, @PathVariable("novel") String novel, @PathVariable("chapter") String chapter){
-        int novelId = Parser.parserInt(novel, 1);
-        int chapterId = Parser.parserInt(chapter, 1);
+        int novelId = Parser.parserInt(novel, 0);
+        int chapterId = Parser.parserInt(chapter, 0);
+        if(novelId == 0 || chapterId == 0){
+            return null;
+        }
         User user = (User)request.getSession().getAttribute(session);
         if(user != null){
             int userId = user.getId();
@@ -95,18 +97,26 @@ public class ChapterController {
                 jedisClient.hset(record, builder.toString(), String.valueOf(chapterId));
             }
         }
-        String content = chapterService.getChapterContent(novelId, chapterId);
         List<Chapter> infoList = chapterService.getChapterList(novelId);
         String name = "";
-        for(Chapter info : infoList){
-            if(info.getId() == chapterId){
-                name = info.getName();
-                break;
+        if(chapterId <= infoList.get(0).getId()){
+            name = infoList.get(0).getName();
+            chapterId = infoList.get(0).getId();
+        }else if(chapterId >= infoList.get(infoList.size() - 1).getId()){
+            name = infoList.get(infoList.size() - 1).getName();
+            chapterId = infoList.get(infoList.size() - 1).getId();
+        }else{
+            for(Chapter info : infoList){
+                if(info.getId() == chapterId){
+                    name = info.getName();
+                    break;
+                }
             }
         }
+        String content = chapterService.getChapterContent(novelId, chapterId);
         Chapter info = new Chapter();
-        info.setContent(Encoder.decodeHtml(content));
-        info.setName(Encoder.decodeHtml(name));
+        info.setContent(content);
+        info.setName(name);
         return info;
     }
 }

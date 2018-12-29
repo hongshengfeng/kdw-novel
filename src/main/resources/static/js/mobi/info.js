@@ -1,49 +1,46 @@
 var novelInfo = new Vue({
 	el: '#novel',
 	data:{
-        id: novel.id,
-        size: novel.size,
-        page: novel.firstCId,
-        title: '可读小说',
-        loading: false,
-        isEnd: false,
-		index: 1,
-        infoList: []
+        id: info.nId,
+        cId: info.cId,
+        start: info.start,
+        end: info.end,
+        name: "",
+        content: ""
 	},
+    mounted(){
+	    this.info(this.cId);
+    },
 	methods: {
 		toBack(){
 			window.history.back(-1);
 		},
-		loadMore() {
-			if(this.index >= this.size || this.page == 0){
-				this.isEnd = true;
-				this.loading = false;
-                return;
-			}
-            this.info();
-		},
-		info(){
+		info(cId){
             var $self = this;
-            var novelId = this.id;
-            var chapterId = this.page;
-            this.loading = true;
+            var nId = $self.id;
             $.ajax({
                 type: "post",
                 async: true,
-                url: "/chapter/info/" + novelId + "/" + chapterId,
+                jsonType: 'json',
+                url: "/chapter/info/" + nId + "/" + cId,
                 success: function(data){
-                    var chapter = {};
-                    chapter.title = data.name;
-                    chapter.content = data.content;
-                    setTimeout(() => {
-                        $self.infoList.push(chapter);
-                        $self.title = data.name;
-                        $self.loading = false;
-                        $self.page ++;
-                        $self.index ++;
-                    }, 1000);
+                    $self.name = data.name;
+                    $self.content = data.content;
+                    $self.cId = cId;
                 }
             });
-		}
+		},
+        next(){
+            var nextId = this.cId + 1;
+            if(nextId >= this.last && nextId < this.end){
+                this.info(nextId);
+            }
+        },
+        pre(){
+            var preId = this.cId - 1;
+            if(preId > this.last &&  preId <= this.end){
+                this.info(preId);
+            }
+        }
 	}
 });

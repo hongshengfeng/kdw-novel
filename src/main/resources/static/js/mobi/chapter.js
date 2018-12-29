@@ -14,7 +14,6 @@ var novelInfo = new Vue({
 	},
 	mounted(){
 		this.chapter();
-		this.baceInfo();
 	},
 	methods: {
 		chapter(){
@@ -35,10 +34,11 @@ var novelInfo = new Vue({
 		},
         allChapter(){
 			$('.list').css('height', 'auto');
+            $('.footer').css('margin-top', '0px');
             this.showAll = false;
         },
-		chInfo(id){
-			window.location.href= "/info/"
+		chInfo(cId){
+			window.location.href= "/m/info/" + id + "/" + cId;
 		},
 		allDesc(){
 			$('.icon-more').css("transform","rotate(90deg)")

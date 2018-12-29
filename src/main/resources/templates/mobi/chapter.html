@@ -46,7 +46,7 @@
 				</div>
 				<div class="list">
 					<span v-for="(item, index) in list" @click="chInfo(item.id)">{{item.name}}</span>
-					<div class="tip">· 好像到底了，持续更新中 ·</div>
+					<div class="tip" v-if="!loading">· 好像到底了，持续更新中 ·</div>
 				</div>
 				<div class="all" v-if="showAll">
 					<span class="btn" @click="allChapter">展开全部</span>
