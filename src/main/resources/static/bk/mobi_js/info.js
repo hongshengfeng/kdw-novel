@@ -3,21 +3,30 @@ var novelInfo = new Vue({
 	data:{
         id: info.nId,
         cId: info.cId,
-        start: info.start,
-        end: info.end,
         name: "",
-        content: ""
+        content: "",
+        loading: false,
+        showTip: true
 	},
     mounted(){
 	    this.info(this.cId);
     },
-	methods: {
+    computed:{
+        showPre(){
+            return this.cId > info.start;
+        },
+        showNext(){
+            return this.cId < info.end;
+        }
+    },
+	methods:{
 		toBack(){
 			window.history.back(-1);
 		},
 		info(cId){
             var $self = this;
             var nId = $self.id;
+            this.loading = true;
             $.ajax({
                 type: "post",
                 async: true,
@@ -27,20 +36,25 @@ var novelInfo = new Vue({
                     $self.name = data.name;
                     $self.content = data.content;
                     $self.cId = cId;
+                    $self.loading = false;
                 }
             });
+            $(window).scrollTop(0);
 		},
         next(){
             var nextId = this.cId + 1;
-            if(nextId >= this.last && nextId < this.end){
+            if(nextId > info.start && nextId <= info.end){
                 this.info(nextId);
             }
         },
         pre(){
             var preId = this.cId - 1;
-            if(preId > this.last &&  preId <= this.end){
+            if(preId >= info.start &&  preId < info.end){
                 this.info(preId);
             }
+        },
+        closeTip(){
+            this.showTip = !this.showTip;
         }
 	}
 });

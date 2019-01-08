@@ -55,7 +55,7 @@ var novel = new Vue({
         },
         handle(key){
             var $self = this;
-            this.loading = true
+            this.loading = true;
             $.ajax({
                 type: "post",
                 async: true,

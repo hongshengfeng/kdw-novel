@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/mobi/index.min.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/mobi/public.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/mobi/more.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/iconfont.css"/>
 	<script type="text/javascript" src="/js/vue.min.js"></script>
 	<script type="text/javascript" src="/js/mobi/index.min.js"></script>
 	<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
@@ -32,220 +33,86 @@
 			</mt-navbar>
 			<mt-tab-container v-model="selected">
 				<mt-tab-container-item id="0">
-					<div class="list">
-						<div class="info coatard">
+					<div class="list" v-for="item in recoInfo" @click="info(item.id)">
+						<div class="info" :class="infoClass(item.cid)">
 							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
+								<span class="kind" v-if="item.cid == 1">修真</span>
+								<span class="kind" v-else-if="item.cid == 2">都市</span>
+								<span class="kind" v-else-if="item.cid == 3">穿越</span>
+								<span class="kind" v-else-if="item.cid == 4">玄幻</span>
+								<span class="kind" v-else-if="item.cid == 5">科幻</span>
+								<span class="kind" v-else>修真</span>
+								<span>{{item.name}}</span>
+								<span class="time">{{item.uptime}}</span>
 							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="info city">
-							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
-							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="info coatard">
-							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
-							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="info across">
-							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
-							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="info across">
-							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
-							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="info across">
-							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
-							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="info across">
-							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
-							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="info across">
-							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
-							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="info across">
-							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
-							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="info across">
-							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
-							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="info across">
-							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
-							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="info across">
-							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
-							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="info across">
-							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
-							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="info across">
-							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
-							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="info across">
-							<div class="title">
-								<span class="kind">修真</span>
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
-							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+							<div class="brief" v-if="item.brief != ''">简介：{{item.brief}}</div>
+							<div class="brief" v-else>还没获取到该小说的简介。</div>
 						</div>
 					</div>
 				</mt-tab-container-item>
 				<mt-tab-container-item id="1">
-					<div class="list">
+					<div class="list" v-for="item in coatInfo" @click="info(item.id)">
 						<div class="info coatard">
 							<div class="title">
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
+								<span>{{item.name}}</span>
+								<span class="time">{{item.uptime}}</span>
 							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+							<div class="brief">简介：{{item.brief}}</div>
 						</div>
 					</div>
 				</mt-tab-container-item>
 				<mt-tab-container-item id="2">
-					<div class="list">
+					<div class="list" v-for="item in cityInfo" @click="info(item.id)">
 						<div class="info city">
 							<div class="title">
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
+								<span>{{item.name}}</span>
+								<span class="time">{{item.uptime}}</span>
 							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+							<div class="brief">简介：{{item.brief}}</div>
 						</div>
 					</div>
 				</mt-tab-container-item>
 				<mt-tab-container-item id="3">
-					<div class="list">
+					<div class="list" v-for="item in acroInfo" @click="info(item.id)">
 						<div class="info across">
 							<div class="title">
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
+								<span>{{item.name}}</span>
+								<span class="time">{{item.uptime}}</span>
 							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+							<div class="brief">简介：{{item.brief}}</div>
 						</div>
 					</div>
 				</mt-tab-container-item>
 				<mt-tab-container-item id="4">
-					<div class="list">
-						<div class="info science">
+					<div class="list" v-for="item in fantInfo" @click="info(item.id)">
+						<div class="info fantasy">
 							<div class="title">
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
+								<span>{{item.name}}</span>
+								<span class="time">{{item.uptime}}</span>
 							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+							<div class="brief">简介：{{item.brief}}</div>
 						</div>
 					</div>
 				</mt-tab-container-item>
 				<mt-tab-container-item id="5">
-					<div class="list">
-						<div class="info game">
+					<div class="list" v-for="item in scieInfo" @click="info(item.id)">
+						<div class="info science">
 							<div class="title">
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
+								<span>{{item.name}}</span>
+								<span class="time">{{item.uptime}}</span>
 							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+							<div class="brief">简介：{{item.brief}}</div>
 						</div>
 					</div>
 				</mt-tab-container-item>
 				<mt-tab-container-item id="6">
-					<div class="list">
-						<div class="info fantasy">
+					<div class="list" v-for="item in gameInfo" @click="info(item.id)">
+						<div class="info game">
 							<div class="title">
-								<span>我欲封天</span>
-								<span class="time">2018年11月23日</span>
+								<span>{{item.name}}</span>
+								<span class="time">{{item.uptime}}</span>
 							</div>
-							<div class="brief">简介：史系学生刘元穿越到秦末，谁知竟被刘邦欺负。好吧，管你什么未来的大汉皇帝</div>
+							<div class="brief">简介：{{item.brief}}</div>
 						</div>
 					</div>
 				</mt-tab-container-item>
@@ -257,8 +124,23 @@
 				<mt-button type="default" size="small" @click="more">加载更多</mt-button>
 			</div>
 		</div>
+		<div class="tip" v-if="showTip">
+			<span>如果您喜欢我们网站，可帮忙点广告支持下</span>
+			<span class="iconfont icon-close" @click="closeTip"></span>
+		</div>
 		<footer class="footer">Copyright &copy; 2017-2018 可读网 粤ICP备17005112号</footer>
 	</div>
 </body>
-<script type="text/javascript" src="/js/mobi/more.js"></script>
+<script type="text/javascript" src="/js/mobi/more.min.js"></script>
+<script type="text/javascript">
+    (function() {
+        var s = "_" + Math.random().toString(36).slice(2);
+        document.write('<div style="" id="' + s + '"></div>');
+        (window.slotbydup = window.slotbydup || []).push({
+            id: "u3616794",
+            container:  s
+        });
+    })();
+</script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" ></script>
 </html>

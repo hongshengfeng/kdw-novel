@@ -6,33 +6,37 @@
 	<title>可读小说</title>
 	<link rel="stylesheet" type="text/css" href="/css/mobi/index.min.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/mobi/public.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/iconfont.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/mobi/info.css"/>
 	<script type="text/javascript" src="/js/vue.min.js"></script>
 	<script type="text/javascript" src="/js/mobi/index.min.js"></script>
 	<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
-	<style type="text/css">
-		html, body{background-color: #fffdf8;}
-		.kd_content{padding: 10px;height: 100%;margin-top: 40px;background-color: #fffdf8;color: #666;}
-		.kd_content .title{font-size: 18px;height: 35px;border-bottom: 1px solid #c8c7cc;color: #41a863;}
-		.kd_content .info{font-size: 14px;margin-top: 15px;line-height: 1.5;}
-	</style>
 </head>
 <body>
-	<div id="novel">
-		<mt-header th:title="${title}" fixed>
-			<router-link slot="left">
-				<mt-button icon="back" @click="toBack"></mt-button>
-			</router-link>
-			<mt-button icon="more" slot="right"></mt-button>
-		</mt-header>
-		<div class="kd_content">
-			<div class="title" v-html="name"></div>
-			<div class="info" v-html="content"></div>
-			<div>
-				<span class="pre" @click="pre">上一章</span>
-				<span class="next" @click="next">下一章</span>
-			</div>
+<div id="novel">
+	<mt-header th:title="${title}" fixed>
+		<router-link slot="left">
+			<mt-button icon="back" @click="toBack"></mt-button>
+		</router-link>
+		<mt-button icon="more" slot="right"></mt-button>
+	</mt-header>
+	<div class="kd_content" v-if="!loading">
+		<div class="title" v-html="name"></div>
+		<div class="info" v-html="content"></div>
+		<div class="page">
+			<span class="pre" @click="pre" v-if="showPre">上一章</span>
+			<span class="next" @click="next" v-if="showNext">下一章</span>
 		</div>
 	</div>
+	<div class="loading" v-if="loading">
+		<mt-spinner :type="2" :size="35" color="#F7941E"></mt-spinner>
+	</div>
+	<div class="tip" v-if="showTip">
+		<span>如果您喜欢我们网站，可帮忙点广告支持下</span>
+		<span class="iconfont icon-close" @click="closeTip"></span>
+	</div>
+	<footer class="footer">Copyright &copy; 2017-2018 可读网 粤ICP备17005112号</footer>
+</div>
 </body>
 <script type="text/javascript">
     var info = {
@@ -41,7 +45,17 @@
 		start: [[${start}]],
 		end: [[${end}]]
     }
-    console.log(info);
 </script>
-<script type="text/javascript" src="/js/mobi/info.js"></script>
+<script type="text/javascript" src="/js/mobi/info.min.js"></script>
+<script type="text/javascript">
+    (function() {
+        var s = "_" + Math.random().toString(36).slice(2);
+        document.write('<div style="" id="' + s + '"></div>');
+        (window.slotbydup = window.slotbydup || []).push({
+            id: "u3616794",
+            container:  s
+        });
+    })();
+</script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" ></script>
 </html>
