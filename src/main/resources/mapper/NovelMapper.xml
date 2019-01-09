@@ -28,6 +28,12 @@
         <include refid="Base_Column_List"/>
         FROM novel WHERE name Like concat(concat('%',#{novelName}),'%') limit #{curr},#{size}
     </select>
+    <!--通过小说名字查找小说，不分页-->
+    <select id="selectInfoListByName" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM novel WHERE name Like concat(concat('%',#{novelName}),'%')
+    </select>
     <!--通过小说名字查找小说总数-->
     <select id="selectNovelCountByName" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT count(id) FROM  novel WHERE name Like concat(concat('%',#{novelName}),'%')

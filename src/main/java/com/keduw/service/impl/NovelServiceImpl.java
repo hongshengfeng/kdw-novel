@@ -102,6 +102,13 @@ public class NovelServiceImpl implements NovelService {
         return result;
     }
 
+    //关键字查询小说，不分页
+    @Override
+    public List<Novel> getNovelByName(String wd) {
+        List<Novel> list = novelMapper.selectInfoListByName(wd);
+        return list;
+    }
+
     //通过novelId查找小说
     @Override
     public Novel getNovelById(int novelId) {

@@ -13,17 +13,37 @@
 </head>
 <body>
 	<div id="novel">
-		<mt-search v-model="keywords" placeholder="玄幻、修真、武侠梦" autofocus="true"></mt-search>
-		<div class="tag">
-			<div class="title">热门搜索
-			</div>
+		<mt-search v-model="keywords" placeholder="玄幻、修真、武侠梦" autofocus="true" @keyup.enter.native="search"></mt-search>
+		<div class="tag" v-if="!isSearch">
+			<div class="title">热门搜索</div>
 			<div class="info">
-				<span class="kd_tag">123</span>
-				<span class="kd_tag">456</span>
-				<span class="kd_tag">低调的旋律</span>
-				<span class="kd_tag">哈哈哈</span>
-				<span class="kd_tag">测试一下看看效果</span>
+				<span class="kd_tag" @click="infoDetail('玄幻')">玄幻</span>
+				<span class="kd_tag" @click="infoDetail('修真')">修真</span>
+				<span class="kd_tag" @click="infoDetail('超品相师')">超品相师</span>
+				<span class="kd_tag" @click="infoDetail('网游之极品高手')">网游之极品高手</span>
+				<span class="kd_tag" @click="infoDetail('都市超级牧师')">都市超级牧师</span>
 			</div>
+		</div>
+		<div class="content" v-if="isSearch && isResult">
+			<div v-if="infoList.length > 0">
+				<div class="list" v-for="item in infoList" @click="info(item.id)">
+					<div class="info" :class="infoClass(item.cid)">
+						<div class="title">
+							<span class="kind" v-if="item.cid == 1">修真</span>
+							<span class="kind" v-else-if="item.cid == 2">都市</span>
+							<span class="kind" v-else-if="item.cid == 3">穿越</span>
+							<span class="kind" v-else-if="item.cid == 4">玄幻</span>
+							<span class="kind" v-else-if="item.cid == 5">科幻</span>
+							<span class="kind" v-else>修真</span>
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
+						</div>
+						<div class="brief" v-if="item.brief != ''">简介：{{item.brief}}</div>
+						<div class="brief" v-else>还没获取到该小说的简介。</div>
+					</div>
+				</div>
+			</div>
+			<div class="tip" v-else>没有找到信息，换个关键词试试</div>
 		</div>
 	</div>
 </body>

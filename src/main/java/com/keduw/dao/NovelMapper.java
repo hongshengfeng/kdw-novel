@@ -20,6 +20,9 @@ public interface NovelMapper {
      //通过小说名字查找小说，可模糊查询
      List<Novel> selectNovelByName(@Param("novelName")String novelName, @Param("curr")int curr, @Param("size")int size);
 
+     //通过小说名字查找小说，不分页
+     List<Novel> selectInfoListByName(String novelName);
+
      //模糊查询小说总数
      int selectNovelCountByName(String novelName);
 
