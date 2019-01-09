@@ -27,16 +27,16 @@ var novel = new Vue({
         toBack(){
             window.history.back(-1);
 		},
-        handle(key){
+        handle(kind){
             var $self = this;
             this.loading = true;
             $.ajax({
                 type: "post",
                 async: true,
                 dataType: "json",
-                url: "/novel/info/" + key,
+                url: "/novel/info/" + kind,
                 success: function(data){
-                    switch(key){
+                    switch(kind){
                         case 1:
                             $self.coatInfo = $self.coatInfo.concat(data);
                             break;
@@ -65,7 +65,9 @@ var novel = new Vue({
         },
 		more(){
 			this.loading = true;
-			this.handle(this.selected);
+			var kind = parseInt(this.selected);
+			console.log(kind);
+			this.handle(kind);
         },
         info(id){
             window.location.href="/m/chapter/" + id;
