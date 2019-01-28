@@ -100,7 +100,7 @@ public class NovelCrawelThread implements Runnable{
                     str.append(updateQueue.size());
                     System.out.println(str.toString());
                 }else{
-                    Thread.sleep(5000 * time);
+                    Thread.sleep(20000 * time);
                     time ++;
                 }
             }

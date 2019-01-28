@@ -61,17 +61,14 @@ public class NovelSchedule {
     }
 
     //每月1号凌晨3点爬取章节内容
-    @Scheduled(cron = "0 2 0 * * ?")
+    @Scheduled(cron = "0 45 16 * * ?")
     public void infoCollect() throws Exception{
         if(isOpen){
             //获取总章节数
+            System.out.println("开始查询...");
             ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
-            int counts = chapterService.getInfoCounts();
-            int times = counts / size;
-            times = counts % size == 0 ? times : times + 1;
-            System.out.println("总次数:" + times);
             //初始化第一批数据
-            List<Chapter> chapterList = chapterService.getChapterList(init , size);
+            List<Chapter> chapterList = chapterService.getChapterList(0 , size);
             for(Chapter chapter : chapterList){
                 chapterQueue.add(chapter);
             }
@@ -89,20 +86,19 @@ public class NovelSchedule {
             FullContentThread novelContent = new FullContentThread(updateQueue);
             executor.execute(novelContent);
 
-            for(int i = 1; i < times; i++){
+            for(int i = 1; i < 2000; i++){
                 chapterList = chapterService.getChapterList(i , size);
                 for(Chapter chapter : chapterList){
                     chapterQueue.add(chapter);
-                    Thread.sleep(100);
                 }
             }
             executor.shutdown();
         }
     }
 
-    private boolean isOpen = false; //启动开关，日常关闭
+    private boolean isOpen = true; //启动开关，日常关闭
     private int init = 0;
-    private int size = 500;
+    private int size = 100;
     private volatile BlockingQueue<Chapter> chapterQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取待爬取内容的章节
     private volatile BlockingQueue<Chapter> updateQueue = new LinkedBlockingQueue<Chapter>(10000 * 10); //存取待更新到数据库的章节
 }

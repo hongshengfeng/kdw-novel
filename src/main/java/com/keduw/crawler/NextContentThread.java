@@ -30,7 +30,7 @@ public class NextContentThread implements Runnable{
                     CrawelUtil.getDomInfo(chapter, chapterQueue, updateQueue);
                     System.out.println("待爬取：" + chapterQueue.size());
                 } else {
-                    Thread.sleep(10000 * time);
+                    Thread.sleep(20000 * time);
                     time++;
                 }
             }catch (Exception e) {
