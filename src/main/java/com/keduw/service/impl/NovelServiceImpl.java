@@ -2,7 +2,7 @@ package com.keduw.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.keduw.dao.NovelMapper;
-import com.keduw.jedis.JedisClient;
+import com.keduw.util.JedisClient;
 import com.keduw.model.Novel;
 import com.keduw.service.NovelService;
 import com.keduw.util.JsonUtils;

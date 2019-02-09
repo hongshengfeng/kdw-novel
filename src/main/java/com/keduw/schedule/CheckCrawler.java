@@ -1,14 +1,12 @@
-package com.keduw.crawler;
+package com.keduw.schedule;
 
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
 import com.keduw.model.Chapter;
 import com.keduw.model.Novel;
-import com.keduw.service.ChapterService;
 import com.keduw.service.NovelService;
 import com.keduw.util.ApplicationUtil;
-import com.keduw.util.BaseUtil;
 import com.keduw.util.Encoder;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

@@ -1,5 +1,6 @@
-package com.keduw.jedis;
+package com.keduw.util;
 
+import com.keduw.util.JedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;

@@ -1,10 +1,9 @@
 package com.keduw.schedule;
 
-import com.keduw.jedis.JedisClient;
+import com.keduw.util.JedisClient;
 import com.keduw.model.Ipinfo;
 import com.keduw.service.SeoService;
 import com.keduw.util.DateFormat;
-import com.keduw.util.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

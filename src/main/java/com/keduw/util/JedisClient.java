@@ -1,4 +1,4 @@
-package com.keduw.jedis;
+package com.keduw.util;
 
 import java.util.Map;
 

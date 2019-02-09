@@ -1,6 +1,6 @@
 package com.keduw.controller;
 
-import com.keduw.jedis.JedisClient;
+import com.keduw.util.JedisClient;
 import com.keduw.model.User;
 import com.keduw.service.UserService;
 import com.keduw.util.EmailUtil;

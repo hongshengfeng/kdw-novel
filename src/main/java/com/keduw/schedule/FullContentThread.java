@@ -1,4 +1,4 @@
-package com.keduw.crawler;
+package com.keduw.schedule;
 
 import com.keduw.model.Chapter;
 import com.keduw.service.ChapterService;

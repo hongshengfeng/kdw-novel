@@ -1,8 +1,7 @@
 package com.keduw.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import com.keduw.dao.ChapterMapper;
-import com.keduw.jedis.JedisClient;
+import com.keduw.util.JedisClient;
 import com.keduw.model.Chapter;
 import com.keduw.service.ChapterService;
 import com.keduw.util.JsonUtils;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**

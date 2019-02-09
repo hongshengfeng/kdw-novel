@@ -1,7 +1,7 @@
 package com.keduw.service.impl;
 
 import com.keduw.dao.CategoryMapper;
-import com.keduw.jedis.JedisClient;
+import com.keduw.util.JedisClient;
 import com.keduw.model.Category;
 import com.keduw.service.CategoryService;
 import com.keduw.util.JsonUtils;

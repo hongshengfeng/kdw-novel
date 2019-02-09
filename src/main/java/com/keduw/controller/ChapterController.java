@@ -1,11 +1,10 @@
 package com.keduw.controller;
 
-import com.keduw.jedis.JedisClient;
+import com.keduw.util.JedisClient;
 import com.keduw.model.Chapter;
 import com.keduw.model.User;
 import com.keduw.service.ChapterService;
 import com.keduw.service.RecordService;
-import com.keduw.util.Encoder;
 import com.keduw.util.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

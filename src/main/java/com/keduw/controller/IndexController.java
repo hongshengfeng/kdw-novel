@@ -1,12 +1,11 @@
 package com.keduw.controller;
 
-import com.keduw.jedis.JedisClient;
+import com.keduw.util.JedisClient;
 import com.keduw.model.Novel;
 import com.keduw.service.NovelService;
 import com.keduw.util.BaseUtil;
 import com.keduw.util.IpListUtil;
 import com.keduw.util.Parser;
-import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
