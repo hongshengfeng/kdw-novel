@@ -43,12 +43,12 @@
     <!--查询内容为空的章节列表-->
     <select id="selectInfoByContent" resultMap="BaseResultMap">
         SELECT a.id, a.nId, a.name, a.link, a.isFull FROM chapter a
-        INNER JOIN (SELECT id from chapter WHERE isFull = 0 limit #{start},#{size}) b ON a.id = b.id
+        INNER JOIN (SELECT id FROM chapter WHERE isFull = 0 LIMIT #{start},#{size}) b ON a.id = b.id
     </select>
     <!--获取章节内容-->
     <select id="selectContentById" resultType="java.lang.String">
         SELECT
         <include refid="Blob_Column_List"/>
-        FROM chapter WHERE nId = #{novelId} and id = #{chapterId}
+        FROM chapter WHERE nId = #{novelId} AND id = #{chapterId}
     </select>
 </mapper>

@@ -22,7 +22,6 @@ public class NovelCrawelThread implements Runnable{
 
     private BlockingQueue<Chapter> chapterQueue = null;
     private BlockingQueue<Chapter> updateQueue = null;
-    private ReentrantLock lock = new ReentrantLock();
     private Logger Log =  (Logger) LoggerFactory.getLogger(NovelCrawelThread.class);
 
     NovelCrawelThread(BlockingQueue<Chapter> chapterQueue, BlockingQueue<Chapter> updateQueue){
@@ -32,12 +31,9 @@ public class NovelCrawelThread implements Runnable{
 
     @Override
     public void run() {
-        lock.lock();
-        try{
-            int time = 0;
-            while (time < 3){
+        while (true){
+            try{
                 if(chapterQueue != null && chapterQueue.size() > 0) {
-                    time = 0;
                     Chapter chapter = chapterQueue.poll(1000, TimeUnit.MILLISECONDS);
                     CloseableHttpClient httpclient = HttpClients.createDefault();
                     CloseableHttpResponse response = null;
@@ -97,15 +93,13 @@ public class NovelCrawelThread implements Runnable{
                     str.append("updateQueue:");
                     str.append(updateQueue.size());
                     System.out.println(str.toString());
-                }else{
-                    Thread.sleep(20000 * time);
-                    time ++;
+                }else {
+                    Thread.sleep(10*60*1000);
                 }
+            }catch (Exception e){
+                Log.error("crawelThreadError", e);
+                break;
             }
-        }catch (Exception e){
-            Log.error("crawelThreadError", e);
-        }finally {
-            lock.unlock();
         }
     }
 }

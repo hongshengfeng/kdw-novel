@@ -21,20 +21,18 @@ public class NextContentThread implements Runnable{
 
     @Override
     public void run() {
-        int time = 0;
-        while (time < 3) {
+        while (true) {
             try {
                 if (chapterQueue != null && chapterQueue.size() > 0) {
-                    time = 0;
                     Chapter chapter = chapterQueue.poll(1000, TimeUnit.MILLISECONDS);
                     CrawelUtil.getDomInfo(chapter, chapterQueue, updateQueue);
                     System.out.println("待爬取：" + chapterQueue.size());
-                } else {
-                    Thread.sleep(20000 * time);
-                    time++;
+                }else {
+                    Thread.sleep(10*60*1000);
                 }
-            }catch (Exception e) {
+            } catch (Exception e) {
                 Log.error("novelThreadError", e);
+                break;
             }
         }
     }
