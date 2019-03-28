@@ -5,10 +5,13 @@ var header = new Vue({
     },
     methods: {
         index: function () {
-            window.location.href="/";
+            window.location.href = "/";
         },
         login: function () {
-            console.log("login")
+            this.$message({
+                message: "测试",
+                type: 'warning'
+            });
         },
         search: function() {
             var wd = $.trim(this.wd);
