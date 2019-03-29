@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keduw.dao.ChapterMapper">
+    <resultMap id="BaseResultMap" type="com.keduw.model.Chapter">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="nId" jdbcType="INTEGER" property="nId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="link" jdbcType="VARCHAR" property="link"/>
+        <result column="isFull" jdbcType="TINYINT" property="isFull" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.keduw.model.Chapter">
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, nId, name, link, isFull
+    </sql>
+    <sql id="Blob_Column_List">
+        content
+    </sql>
+    <!--新增章节信息-->
+    <insert id="insertChapter">
+        INSERT INTO chapter(nId, name, content, link)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.nId}, #{item.name}, #{item.content}, #{item.link})
+        </foreach>
+    </insert>
+    <!--更新章节名字以及内容-->
+    <insert id="updateChapter" parameterType="com.keduw.model.Chapter">
+        UPDATE chapter
+        SET name = #{name},content = #{content}, isFull = 1 WHERE id = #{id} AND nId = #{nId}
+    </insert>
+    <!--根据小说id返回章节列表-->
+    <select id="selectInfoByNovelId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM chapter WHERE nId = #{novelId}
+    </select>
+    <!--获取章节总数-->
+    <select id="selectCounts" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM chapter
+    </select>
+    <!--查询内容为空的章节列表-->
+    <select id="selectInfoByContent" resultMap="BaseResultMap">
+        SELECT a.id, a.nId, a.name, a.link, a.isFull FROM chapter a
+        INNER JOIN (SELECT id FROM chapter WHERE isFull = 0 LIMIT #{start},#{size}) b ON a.id = b.id
+    </select>
+</mapper>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="keywords" content="可读小说，免费小说，玄幻，修真，都市，科幻，穿越，网游" />
+    <meta name="description" content="可读小说，一个追求简洁，内容丰富，种类繁多的小说网站。"/>
+	<title>可读小说</title>
+	<link rel="stylesheet" type="text/css" href="/css/mobi/index.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/iconfont.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/mobi/public.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/mobi/main.css"/>
+	<script type="text/javascript" src="/js/vue.min.js"></script>
+	<script type="text/javascript" src="/js/mobi/index.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<div id="novel" style="display: none;">
+	<mt-header title="可读小说" fixed>
+		<mt-button slot="left" class="logo" @click="index"></mt-button>
+		<mt-button icon="more" slot="right" @click="more"></mt-button>
+	</mt-header>
+	<div class="content">
+		<div class="search" @click="search">
+			<span class="info">
+				<span class="title">玄幻、修真、武侠梦，搜索不一样的小说</span>
+			</span>
+			<i class="iconfont icon-sousuo"></i>
+		</div>
+		<mt-navbar v-model="selected">
+			<mt-tab-item id="0">推荐</mt-tab-item>
+			<mt-tab-item id="1">修真</mt-tab-item>
+			<mt-tab-item id="2">都市</mt-tab-item>
+			<mt-tab-item id="3">穿越</mt-tab-item>
+			<mt-tab-item id="4">玄幻</mt-tab-item>
+			<mt-tab-item id="5">科幻</mt-tab-item>
+			<mt-tab-item id="6">网游</mt-tab-item>
+		</mt-navbar>
+		<div class="loading" v-if="loading">
+			<mt-spinner :type="2" :size="35" color="#F7941E"></mt-spinner>
+		</div>
+		<mt-tab-container v-model="selected" v-if="!loading">
+			<mt-tab-container-item id="0">
+				<div class="list" v-for="item in recoInfo" @click="info(item.id)">
+					<div class="info" :class="infoClass(item.cid)">
+						<div class="title">
+							<span class="kind" v-if="item.cid == 1">修真</span>
+							<span class="kind" v-else-if="item.cid == 2">都市</span>
+							<span class="kind" v-else-if="item.cid == 3">穿越</span>
+							<span class="kind" v-else-if="item.cid == 4">玄幻</span>
+							<span class="kind" v-else-if="item.cid == 5">科幻</span>
+							<span class="kind" v-else>修真</span>
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
+						</div>
+						<div class="brief" v-if="item.brief != ''">简介：{{item.brief}}</div>
+						<div class="brief" v-else>还没获取到该小说的简介。</div>
+					</div>
+				</div>
+			</mt-tab-container-item>
+			<mt-tab-container-item id="1">
+				<div class="list" v-for="item in coatInfo" @click="info(item.id)">
+					<div class="info coatard">
+						<div class="title">
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
+						</div>
+						<div class="brief">简介：{{item.brief}}</div>
+					</div>
+				</div>
+			</mt-tab-container-item>
+			<mt-tab-container-item id="2">
+				<div class="list" v-for="item in cityInfo" @click="info(item.id)">
+					<div class="info city">
+						<div class="title">
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
+						</div>
+						<div class="brief">简介：{{item.brief}}</div>
+					</div>
+				</div>
+			</mt-tab-container-item>
+			<mt-tab-container-item id="3">
+				<div class="list" v-for="item in acroInfo" @click="info(item.id)">
+					<div class="info across">
+						<div class="title">
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
+						</div>
+						<div class="brief">简介：{{item.brief}}</div>
+					</div>
+				</div>
+			</mt-tab-container-item>
+			<mt-tab-container-item id="4">
+				<div class="list" v-for="item in fantInfo" @click="info(item.id)">
+					<div class="info fantasy">
+						<div class="title">
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
+						</div>
+						<div class="brief">简介：{{item.brief}}</div>
+					</div>
+				</div>
+			</mt-tab-container-item>
+			<mt-tab-container-item id="5">
+				<div class="list" v-for="item in scieInfo" @click="info(item.id)">
+					<div class="info science">
+						<div class="title">
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
+						</div>
+						<div class="brief">简介：{{item.brief}}</div>
+					</div>
+				</div>
+			</mt-tab-container-item>
+			<mt-tab-container-item id="6">
+				<div class="list" v-for="item in gameInfo" @click="info(item.id)">
+					<div class="info game">
+						<div class="title">
+							<span>{{item.name}}</span>
+							<span class="time">{{item.uptime}}</span>
+						</div>
+						<div class="brief">简介：{{item.brief}}</div>
+					</div>
+				</div>
+			</mt-tab-container-item>
+		</mt-tab-container>
+		<div class="more" v-if="!loading">
+			<mt-button type="default" size="small" @click="more">查看所有</mt-button>
+		</div>
+	</div>
+	<footer class="footer">Copyright &copy; 2017-2018 可读网 粤ICP备17005112号</footer>
+</div>
+</body>
+<script type="text/javascript" src="/js/mobi/main.min.js"></script>
+<script type="text/javascript">
+    (function() {
+        var s = "_" + Math.random().toString(36).slice(2);
+        document.write('<div style="" id="' + s + '"></div>');
+        (window.slotbydup = window.slotbydup || []).push({
+            id: "u3616794",
+            container:  s
+        });
+    })();
+</script>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" ></script>
+</html>
