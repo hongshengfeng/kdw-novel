@@ -19,8 +19,8 @@ public class NovelSchedule {
 
     private volatile BlockingQueue<NovelColl> novelQueue = new LinkedBlockingQueue<NovelColl>(10000 * 10);
 
-    //每月10凌晨3点启动爬取小说
-    @Scheduled(cron = "0 35 23 * * ?")
+    //每天凌晨23点启动爬取小说
+    @Scheduled(cron = "0 55 23 * * ?")
     public void novelCollect() throws Exception{
         ReentrantLock lock = new ReentrantLock();
         NovelCrawler crawl = new NovelCrawler("crawl", true, novelQueue, lock);
@@ -30,8 +30,8 @@ public class NovelSchedule {
         crawl.start(5);
     }
 
-    //每天3点检查连载中小说的章节更新情况
-    @Scheduled(cron = "0 0 3 * * ?")
+    //每天0点检查连载中小说的章节更新情况
+    @Scheduled(cron = "0 0 2 * * ?")
     public void infoCheck() throws Exception{
         //小说总数
         NovelService novelService = (NovelService) ApplicationUtil.getBean("novelService");
@@ -55,20 +55,20 @@ public class NovelSchedule {
         }
     }
 
-    //每月1号凌晨3点爬取章节内容
-    @Scheduled(cron = "0 0 3 1 * ?")
+    //每周六凌晨0点爬取章节内容
+    @Scheduled(cron = "0 0 0 ? * SAT")
     public void infoCollect() throws Exception{
         //获取总章节数
         System.out.println("开始查询...");
         ChapterService chapterService = (ChapterService) ApplicationUtil.getBean("chapterService");
         //启动爬取线程
         ThreadPoolExecutor executor = new ThreadPoolExecutor(25, 30, 200, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(5));
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < 5; i++){
             NovelCrawelThread thread = new NovelCrawelThread(chapterQueue, updateQueue);
             executor.execute(thread);
         }
         //启动爬取下一页和数据保存线程
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < 5; i++){
             NextContentThread nextPage = new NextContentThread(chapterQueue, updateQueue);
             executor.execute(nextPage);
         }
