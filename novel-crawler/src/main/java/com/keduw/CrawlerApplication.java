@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-@EnableRabbit
 @MapperScan("com.keduw.dao")
 public class CrawlerApplication {
 
