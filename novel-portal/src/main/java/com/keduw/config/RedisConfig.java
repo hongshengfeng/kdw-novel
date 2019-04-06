@@ -8,7 +8,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
-@PropertySource("classpath:redis.properties")
+@PropertySource("classpath:application.properties")
 public class RedisConfig {
  
     @Value("${spring.redis.host}")
