@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keduw.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.keduw.model.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sacct" jdbcType="VARCHAR" property="sacct"/>
+        <result column="pwd" jdbcType="VARCHAR" property="pwd"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="registTime" jdbcType="TIMESTAMP" property="registTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, sacct, pwd, name, registTime
+    </sql>
+    <insert id="addUser" parameterType="com.keduw.model.User">
+         INSERT INTO user(id,sacct, pwd,name, registTime)
+         VALUES (#{id},#{sacct},#{pwd},#{name},#{registTime})
+    </insert>
+</mapper>

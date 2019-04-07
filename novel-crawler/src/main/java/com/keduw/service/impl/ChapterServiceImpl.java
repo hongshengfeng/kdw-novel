@@ -113,4 +113,9 @@ public class ChapterServiceImpl implements ChapterService {
         return list;
     }
 
+    @Override
+    public int getInfoCounts() {
+        return chapterMapper.selectCounts();
+    }
+
 }

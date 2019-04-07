@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>可读小说</title>
+    <link rel="stylesheet" href="/css/index.min.css" />
+    <link rel="stylesheet" href="/css/iconfont.css" />
+    <link rel="stylesheet" href="/css/public.css" />
+    <link rel="stylesheet" href="/css/search.css" />
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <script type="text/javascript" src="/js/index.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<div th:replace="header::top"></div>
+<el-main id="search">
+    <div class="nov_info" v-loading="loading">
+        <el-card shadow="hover" v-for="novel in novelList" :class="infoClass(novel.cid)" @click.native="info(novel.id)">
+            <div class="base-info">
+                <span class="classify coatard" v-if="novel.cid == 1">修真</span>
+                <span class="classify city" v-else-if="novel.cid == 2">都市</span>
+                <span class="classify across" v-else-if="novel.cid == 3">穿越</span>
+                <span class="classify fantasy" v-else-if="novel.cid == 4">玄幻</span>
+                <span class="classify science" v-else-if="novel.cid == 5">科幻</span>
+                <span class="classify game" v-else>网游</span>
+                <span class="name"><a href="#">{{novel.name}}</a></span>
+                <span class="updateTime">{{novel.uptime}}</span>
+            </div>
+            <div class="brief-info">
+                <span>简介：</span>
+                <span v-if="novel.brief != ''" v-html="novel.brief" :title="novel.brief"></span>
+                <span v-else>还没获取到该小说的简介。</span>
+            </div>
+        </el-card>
+        <div class="tip" v-show="isEnd">-没有更多的数据了-</div>
+        <div class="spinner" v-show="isMore">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
+</el-main>
+<div th:replace="footer::bottom"></div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+    var wd = [[${wd}]];
+</script>
+<script type="text/javascript" src="/js/public.min.js"></script>
+<script type="text/javascript" src="/js/search.min.js"></script>
+</html>

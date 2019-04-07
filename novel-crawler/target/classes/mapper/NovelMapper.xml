@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.keduw.dao.NovelMapper">
+    <resultMap id="BaseResultMap" type="com.keduw.model.Novel">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="author" jdbcType="VARCHAR" property="author"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="uptime" jdbcType="VARCHAR" property="uptime"/>
+        <result column="link" jdbcType="VARCHAR" property="link"/>
+        <result column="size" jdbcType="INTEGER" property="size"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.keduw.model.Novel">
+        <result column="brief" jdbcType="LONGVARCHAR" property="brief"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, cid, name, author, status, uptime, link, size, brief
+    </sql>
+    <!--新增小说详细信息，返回新插入的主键 -->
+    <insert id="insertNovel" parameterType="com.keduw.model.Novel" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO novel(cid,name,author,brief,status,uptime,link,size)
+        VALUES(#{cid},#{name},#{author},#{brief},#{status},#{uptime},#{link},#{size})
+    </insert>
+    <!--查询所有小说的列表-->
+    <select id="selectNovel" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM novel WHERE id in
+        (SELECT n.id from (SELECT id from novel limit #{curr},#{size}) as n)
+        ORDER BY id DESC
+    </select>
+    <!--根据类别查询小说列表-->
+    <select id="selectNovelByCategory" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM novel WHERE id in
+        (SELECT n.id from (SELECT id from novel where cid=#{categoryId} limit #{curr},#{size}) as n)
+        ORDER BY id DESC
+    </select>
+    <!-- 通过名字和作者获取小说信息 -->
+    <select id="selectInfoByName" resultType="com.keduw.model.Novel">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM novel WHERE name = #{name} AND author = #{author}
+    </select>
+    <!-- 查询小说总数 -->
+    <select id="selectInfoCount" resultType="java.lang.Integer">
+        SELECT count(id) FROM novel
+    </select>
+    <select id="selectSizeByNovelId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT size FROM novel WHERE id = #{id}
+    </select>
+</mapper>

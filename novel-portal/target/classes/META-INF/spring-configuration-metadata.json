@@ -1,0 +1,12 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.keduw.config.DruidConfig",
+      "name": "spring.datasource.druid",
+      "sourceMethod": "druidDataSource()",
+      "type": "javax.sql.DataSource"
+    }
+  ],
+  "properties": []
+}
