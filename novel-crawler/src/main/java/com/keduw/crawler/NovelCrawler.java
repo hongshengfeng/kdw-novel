@@ -10,6 +10,7 @@ import com.keduw.utils.BaseUtil;
 import com.keduw.utils.CateUtil;
 import com.keduw.utils.Encoder;
 import com.keduw.utils.JsonUtils;
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -39,10 +40,8 @@ public class NovelCrawler extends BreadthCrawler {
         this.addRegex(REGEX);
         this.addRegex("-.*\\.(jpg|png|gif).*"); //不匹配图片
         this.addRegex("-.*#.*"); //不匹配#**的链接
-        this.setThreads(10); //线程数
+        this.setThreads(5); //线程数
         this.setResumable(true); //停止后下次继续爬取
-        getConf().setExecuteInterval(1000); //设置线程之间的等待时间
-        getConf().setTopN(100000); //爬取URL上限
         this.amqpTemplate = amqpTemplate;
         this.novelExchange = novelExchange;
         this.novelRouting = novelRouting;
@@ -74,7 +73,7 @@ public class NovelCrawler extends BreadthCrawler {
             }
             //简介
             Elements intro = document.select("div[id=intro]");
-            if (!intro.isEmpty()) {
+            if (intro.isEmpty()) {
                 String brief = intro.get(0).getElementsByTag("p").get(0).html();
                 novel.setBrief(Encoder.encodeHtml(brief));
             }
