@@ -98,11 +98,11 @@ public class NovelCrawler extends BreadthCrawler {
             novelColl.setNovel(novel);
             novelColl.setChapters(chapterList);
             amqpTemplate.convertAndSend(novelExchange, novelRouting, JsonUtils.objectToJson(novelColl));
-/*            try {
+            try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }*/
+            }
         }
     }
 }

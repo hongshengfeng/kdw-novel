@@ -40,8 +40,7 @@ public class NovelSchedule {
     private String chapterUpdateRouting;
 
     //每周六凌晨0点启动爬取小说
-    //@Scheduled(cron = "0 0 0 ? * SAT")
-    @Scheduled(cron = "0 58 10 * * ?")
+    @Scheduled(cron = "0 0 0 ? * SAT")
     public void novelCollect() throws Exception{
         NovelCrawler crawl = new NovelCrawler("crawl", true, amqpTemplate, novelExchange, novelRouting);
         crawl.start(5);
@@ -49,7 +48,7 @@ public class NovelSchedule {
 
     //每周六凌晨1点爬取章节内容
     //@Scheduled(cron = "0 0 1 ? * SAT")
-    @Scheduled(cron = "0 58 10 * * ?")
+    @Scheduled(cron = "0 3 11 * * ?")
     public void chapterCollect() throws Exception{
         int counts = chapterService.getInfoCounts();
         List<Chapter> chapterList = null;
@@ -58,7 +57,7 @@ public class NovelSchedule {
             for(Chapter chapter : chapterList){
                 amqpTemplate.convertAndSend(novelExchange, chapterRouting, JsonUtils.objectToJson(chapter));
             }
-            TimeUnit.SECONDS.sleep(10);
+            TimeUnit.MINUTES.sleep(1);
         }
     }
 

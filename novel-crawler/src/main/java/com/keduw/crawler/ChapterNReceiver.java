@@ -65,9 +65,9 @@ public class ChapterNReceiver {
         CloseableHttpResponse response = null;
         try {
             HttpGet httpget = new HttpGet(novel.getLink());
-            //HttpHost proxy = new HttpHost(hostName,port);
-            //RequestConfig requestConfig = RequestConfig.custom().setProxy(proxy).setConnectTimeout(10000).setSocketTimeout(10000).setConnectionRequestTimeout(3000).build();
-            //httpget.setConfig(requestConfig);
+            HttpHost proxy = new HttpHost(hostName,port);
+            RequestConfig requestConfig = RequestConfig.custom().setProxy(proxy).setConnectTimeout(10000).setSocketTimeout(10000).setConnectionRequestTimeout(3000).build();
+            httpget.setConfig(requestConfig);
             httpget.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
             response = httpclient.execute(httpget); //执行
             int code = response.getStatusLine().getStatusCode(); //获取响应状态码

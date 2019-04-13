@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.xml.ws.WebServiceException;
+
 /**
  * 从消息队列中获取章节信息
  * 爬取章节内容, 存在分页添加到消息队列里继续爬
@@ -60,9 +62,9 @@ public class ChapterCrawler {
         CloseableHttpResponse response = null;
         try {
             HttpGet httpget = new HttpGet(chapter.getLink());
-            //HttpHost proxy = new HttpHost(hostName,port);
-            //RequestConfig requestConfig = RequestConfig.custom().setProxy(proxy).setConnectTimeout(10000).setSocketTimeout(10000).setConnectionRequestTimeout(3000).build();
-            //httpget.setConfig(requestConfig);
+            HttpHost proxy = new HttpHost(hostName,port);
+            RequestConfig requestConfig = RequestConfig.custom().setProxy(proxy).setConnectTimeout(10000).setSocketTimeout(10000).setConnectionRequestTimeout(3000).build();
+            httpget.setConfig(requestConfig);
             httpget.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36");
             response = httpclient.execute(httpget); //执行
             int code = response.getStatusLine().getStatusCode(); //获取响应状态码
@@ -95,10 +97,10 @@ public class ChapterCrawler {
                 chapter.setLink(nextUrl);
                 //添加到消息队列，再爬取
                 amqpTemplate.convertAndSend(novelExchange, chapterRouting, JsonUtils.objectToJson(chapter));
-                System.out.println("next");
+                System.out.println("next;info=" + msg);
             } else {
                 chapterService.updateChapterContent(chapter);
-                System.out.println("success");
+                System.out.println("success;info=" + msg);
             }
         }finally {
             if(response != null){
