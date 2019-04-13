@@ -38,9 +38,6 @@ public class NovelReceiver {
 
     @RabbitHandler
     public void novelInfo(String msg){
-        if(StringUtil.isBlank(msg)){
-            return;
-        }
         NovelColl novelColl = JsonUtils.jsonToPojo(msg, NovelColl.class);
         Novel novel = novelColl.getNovel(); //小说
         List<Chapter> chapterList = novelColl.getChapters(); //章节列表

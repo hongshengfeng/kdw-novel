@@ -55,10 +55,6 @@ public class ChapterCrawler {
 
     @RabbitHandler
     public void chapterInfo(String msg) throws Exception{
-        if(StringUtil.isBlank(msg)){
-            return;
-        }
-        System.out.println(msg);
         Chapter chapter = JsonUtils.jsonToPojo(msg, Chapter.class);
         CloseableHttpClient httpclient = HttpClients.createDefault();
         CloseableHttpResponse response = null;
@@ -99,8 +95,10 @@ public class ChapterCrawler {
                 chapter.setLink(nextUrl);
                 //添加到消息队列，再爬取
                 amqpTemplate.convertAndSend(novelExchange, chapterRouting, JsonUtils.objectToJson(chapter));
+                System.out.println("next");
             } else {
                 chapterService.updateChapterContent(chapter);
+                System.out.println("success");
             }
         }finally {
             if(response != null){

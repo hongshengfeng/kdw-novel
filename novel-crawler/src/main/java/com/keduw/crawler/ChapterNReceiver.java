@@ -60,9 +60,6 @@ public class ChapterNReceiver {
 
     @RabbitHandler
     public void novelInfo(String msg) throws Exception{
-        if(StringUtil.isBlank(msg)){
-            return;
-        }
         Novel novel = JsonUtils.jsonToPojo(msg, Novel.class);
         CloseableHttpClient httpclient = HttpClients.createDefault();
         CloseableHttpResponse response = null;

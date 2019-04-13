@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 小说爬虫，包含小说内容爬取，章节爬取，章节内容更新日常检查
@@ -40,7 +41,7 @@ public class NovelSchedule {
 
     //每周六凌晨0点启动爬取小说
     //@Scheduled(cron = "0 0 0 ? * SAT")
-    @Scheduled(cron = "0 52 18 * * ?")
+    @Scheduled(cron = "0 58 10 * * ?")
     public void novelCollect() throws Exception{
         NovelCrawler crawl = new NovelCrawler("crawl", true, amqpTemplate, novelExchange, novelRouting);
         crawl.start(5);
@@ -48,7 +49,7 @@ public class NovelSchedule {
 
     //每周六凌晨1点爬取章节内容
     //@Scheduled(cron = "0 0 1 ? * SAT")
-    @Scheduled(cron = "0 53 18 * * ?")
+    @Scheduled(cron = "0 58 10 * * ?")
     public void chapterCollect() throws Exception{
         int counts = chapterService.getInfoCounts();
         List<Chapter> chapterList = null;
@@ -57,11 +58,11 @@ public class NovelSchedule {
             for(Chapter chapter : chapterList){
                 amqpTemplate.convertAndSend(novelExchange, chapterRouting, JsonUtils.objectToJson(chapter));
             }
+            TimeUnit.SECONDS.sleep(10);
         }
     }
 
     //每天0点检查连载中小说的章节更新情况
-    //@Scheduled(cron = "0 0 0 * * ?")
     @Scheduled(cron = "0 0 0 * * ?")
     public void infoCheck() throws Exception{
         //小说总数
@@ -75,5 +76,5 @@ public class NovelSchedule {
         }
     }
 
-    private static final int SIZE = 20;
+    private static final int SIZE = 100;
 }

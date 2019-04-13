@@ -73,10 +73,14 @@ public class NovelCrawler extends BreadthCrawler {
             }
             //简介
             Elements intro = document.select("div[id=intro]");
-            if (intro.isEmpty()) {
+            if (!intro.isEmpty()) {
                 String brief = intro.get(0).getElementsByTag("p").get(0).html();
+                if(StringUtils.isBlank(brief)){
+                    return;
+                }
                 novel.setBrief(Encoder.encodeHtml(brief));
             }
+
             //章节
             Elements element = document.select("ul[class=_chapter] li a");
             List<Chapter> chapterList = new ArrayList<>();
@@ -94,11 +98,11 @@ public class NovelCrawler extends BreadthCrawler {
             novelColl.setNovel(novel);
             novelColl.setChapters(chapterList);
             amqpTemplate.convertAndSend(novelExchange, novelRouting, JsonUtils.objectToJson(novelColl));
-            try {
+/*            try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
     }
 }
