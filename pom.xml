@@ -4,6 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.keduw</groupId>
 	<artifactId>keduw-novel</artifactId>
+	<packaging>pom</packaging>
 	<version>1.0.1</version>
 	<name>keduw-novel</name>
 
@@ -17,7 +18,6 @@
 		<module>novel-common</module>
 		<module>novel-portal</module>
 		<module>novel-crawler</module>
-		<module>novel-admin</module>
 	</modules>
 
 	<properties>

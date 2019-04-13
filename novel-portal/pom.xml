@@ -4,6 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.keduw</groupId>
 	<artifactId>novel-portal</artifactId>
+	<packaging>jar</packaging>
 	<version>1.0.1</version>
 	<name>novel</name>
 
@@ -39,4 +40,12 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

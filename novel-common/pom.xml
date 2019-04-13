@@ -4,6 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.keduw</groupId>
 	<artifactId>novel-common</artifactId>
+	<packaging>jar</packaging>
 	<version>1.0.1</version>
 	<name>novel-common</name>
 
