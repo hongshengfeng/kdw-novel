@@ -26,7 +26,7 @@ public class LogAspect {
     @Autowired
     private ExceptionHandle handle;
 
-    @Pointcut("execution(public * com.keduw.crawler.*.*(..))")
+    @Pointcut("execution(public * com.keduw.controller.*.*(..))")
     public void log(){}
 
     @Before("log()")

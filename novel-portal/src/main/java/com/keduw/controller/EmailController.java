@@ -1,4 +1,4 @@
-package com.keduw.crawler;
+package com.keduw.controller;
 
 import com.keduw.model.User;
 import com.keduw.service.UserService;
@@ -14,7 +14,7 @@ import java.util.Date;
 
 /**
  * @ProjectName: novelSpider
- * @Package: com.keduw.crawler
+ * @Package: com.keduw.controller
  * @ClassName: EmailController
  * @Description: java类作用描述
  * @Author: 林浩东

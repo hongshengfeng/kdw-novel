@@ -1,4 +1,4 @@
-package com.keduw.crawler;
+package com.keduw.controller;
 
 import com.keduw.model.User;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package com.keduw.crawler;
+package com.keduw.controller;
 
 import com.keduw.model.Novel;
 import com.keduw.service.NovelService;
@@ -37,7 +37,7 @@ public class IndexController {
             jedisClient.hset(keys, fields, ip);
         }
         if(BaseUtil.isMoblie(request)){
-            return "/mobi/index";
+            return "mobi/index";
         }
         return "index";
     }

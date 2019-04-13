@@ -1,4 +1,4 @@
-package com.keduw.crawler;
+package com.keduw.controller;
 
 import com.keduw.model.Ipinfo;
 import com.keduw.service.SeoService;

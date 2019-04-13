@@ -1,11 +1,11 @@
-package com.keduw.crawler;
+package com.keduw.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @ProjectName: novelSpider
- * @Package: com.keduw.crawler
+ * @Package: com.keduw.controller
  * @ClassName: LoginController
  * @Description: java类作用描述
  * @Author: 林浩东

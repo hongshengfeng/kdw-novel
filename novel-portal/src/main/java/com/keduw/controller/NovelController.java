@@ -1,4 +1,4 @@
-package com.keduw.crawler;
+package com.keduw.controller;
 
 import com.keduw.model.Category;
 import com.keduw.model.Novel;

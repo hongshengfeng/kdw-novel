@@ -1,4 +1,4 @@
-package com.keduw.crawler;
+package com.keduw.controller;
 
 import com.keduw.model.Chapter;
 import com.keduw.model.Novel;
@@ -53,7 +53,7 @@ public class MIndexController {
         model.addAttribute("title", title);
         model.addAttribute("start", start);
         model.addAttribute("end", end);
-        return "/mobi/info";
+        return "mobi/info";
     }
 
     @RequestMapping("/chapter/{nId}")
@@ -65,6 +65,6 @@ public class MIndexController {
         }
         model.addAttribute("id", id);
         model.addAttribute("novel", novel);
-        return "/mobi/chapter";
+        return "mobi/chapter";
     }
 }
