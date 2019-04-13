@@ -39,15 +39,15 @@ public class NovelSchedule {
     @Value("${mq.config.routing.chapter.update.key}")
     private String chapterUpdateRouting;
 
-    //每周六凌晨0点启动爬取小说
-    @Scheduled(cron = "0 0 13 ? * SAT")
+    //每周六凌晨3点启动爬取小说
+    @Scheduled(cron = "0 0 3 ? * SUN")
     public void novelCollect() throws Exception{
         NovelCrawler crawl = new NovelCrawler("crawl", true, amqpTemplate, novelExchange, novelRouting);
         crawl.start(5);
     }
 
     //每周六下午13点爬取章节内容
-    @Scheduled(cron = "0 0 13 ? * SAT")
+    @Scheduled(cron = "0 30 14 ? * SAT")
     public void chapterCollect() throws Exception{
         int counts = chapterService.getInfoCounts();
         List<Chapter> chapterList = null;
