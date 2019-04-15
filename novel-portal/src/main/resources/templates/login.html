@@ -1,34 +1,173 @@
-﻿<!DOCTYPE html>
-<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>后台登录</title>
-    <!-- for-mobile-apps -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!doctype html>
+<html class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>登陆界面</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/amazeui.min.js"></script>
+		<script src="/js/app.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				if(IsPC){
+					$('.am-g').width(450);
+					
+				}
+			});
+			function IsPC() {
+			    var userAgentInfo = navigator.userAgent;
+			    var Agents = ["Android", "iPhone",
+			                "SymbianOS", "Windows Phone",
+			                "iPad", "iPod"];
+			    var flag = true;
+			    for (var v = 0; v < Agents.length; v++) {
+			        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+			            flag = false;
+			            break;
+			        }
+			    }
+			    return flag;
+			}
+		</script>
+		<link rel="stylesheet" href="/css/amazeui.min.css">
+		<link rel="stylesheet" href="/css/app.css">
+		<style type="text/css">
+			#register {
+				text-align: right;
+			}
+			#register a,
+			#tip_1,
+			#tip_2 {
+				font-size: small;
+			}
+			.am-g{
+				width: 100%;
+			}
 
-    <!-- //for-mobile-apps -->
-    <link href="/css/login.css" rel="stylesheet" type="text/css" media="all" />
+		</style>
+	</head>
+	<body>
+		<div class="am-g">
+			<!-- LOGO -->
+			<div class="am-u-sm-12 am-text-center" >
+				<i class="myapp-login-logo">
+					<img src="../image/logo.png">
 
-</head>
-<body>
-    <!-- main -->
-    <div class="main">
-        <h1>
-            后台登录系统
-        </h1>
-        <form>
-            <input type="text" value="用户名" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = '用户名';}"
-                   required="">
-            <input type="password" value="Password" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = '';}"
-                   required="">
-            <input type="submit" value="登录">
-        </form>
-    </div>
-    <div class="footer">
-        <p>
-            &copy 2018 Welcome Login keduw:<a href="http://www.keduw.com/" target="_blank">可读小说</a>
-        </p>
-    </div>
-    <!-- //main -->
-</body>
+				</i>
+			</div>
+			<!-- 登陆框 -->
+			<div class="am-u-sm-11 am-u-sm-centered" id="form">
+				<form class="am-form">
+					<fieldset class="myapp-login-form am-form-set">
+						<div class="am-form-group am-form-icon">
+							<i class="am-icon-user"></i>
+							<input type="text" class="myapp-login-input-text am-form-field" id="user" placeholder="请输入您的账号">
+						</div>
+						<div id="tip_1"></div>
+						<div class="am-form-group am-form-icon">
+							<i class="am-icon-lock"></i>
+							<input type="password" class="myapp-login-input-text am-form-field" id="password" placeholder="至少6个字符">
+						</div>
+						<div id="tip_2"></div>
+					</fieldset>
+					<button type="submit" class="myapp-login-form-submit am-btn am-btn-primary am-btn-block " id="submit" onclick="login()">登
+						陆</button>
+					<div id="register">
+						<u><a href="/register">没有账号，请先注册</a></u>
+					</div>
+				</form>
+
+			</div>
+			<div class="am-text-center am-u-sm-11 am-u-sm-centered myapp-login-form-shortcut">
+				<hr class="myapp-login-form-hr" />
+				<span class="myapp-login-form-hr-font">第三方登陆</span>
+			</div>
+
+			<div class="am-u-sm-12 am-text-center myapp-login-form-listico">
+				<div class="am-u-sm-4 am-text-center" onclick="alert('暂不支持')">
+					<i class="am-icon-btn am-primary am-icon-qq"></i>
+				</div>
+				<div class="am-u-sm-4 am-text-center">
+					<i class="am-icon-btn am-danger am-icon-weibo" onclick="alert('暂不支持')"></i>
+				</div>
+				<div class="am-u-sm-4 am-text-center">
+					<i class="am-icon-btn am-success am-icon-weixin" onclick="alert('暂不支持')"></i>
+				</div>
+			</div>
+
+		</div>
+
+			<script type="text/javascript">
+				function login() {
+					getRootPath();
+					var user = $('#user').val();
+					var password = $('#password').val();
+					if (user == "" || user == null) {
+						$('#tip_1').html("<font color='red'>账号不能为空</font>");
+						$('#submit').attr('disabled', true);
+						return;
+					} else if (password == "" || password == null) {
+						$('#tip_2').html("<font color='red'>密码不能为空</font>");
+						$('#submit').attr('disabled', true);
+					}
+
+
+					$.ajax({
+						type: "POST",
+						url: getRootPath()+"/test",
+						data: {
+							'user': user,
+							'password': password
+						},
+						success: function(data) {
+							if (data.status == "0") {
+								mui.alert("提交成功");
+								location.href = "";
+
+							}
+						}
+					})
+				};
+				$('#user').blur(function() {
+					var user = $('#user').val();
+					if (user == "" || user == null) {
+						$('#tip_1').html("<font color='red'>账号不能为空</font>");
+						$('#submit').attr('disabled', true);
+					} else {
+						$('#tip_1').html("<font color='red'></font>");
+						$('#submit').attr('disabled', false);
+					}
+				});
+				$('#password').blur(function() {
+					var password = $('#password').val();
+					if (password == "" || password == null) {
+						$('#tip_2').html("<font color='red'>密码不能为空</font>");
+						$('#submit').attr('disabled', true);
+					} else {
+						$('#tip_2').html("<font color='red'></font>");
+						$('#submit').attr('disabled', false);
+					}
+				});
+				
+				//很多时候我们需要使用当前项目路径，但是如果把项目路径写死，会带来很多不便，此时就需要自动获取项目路径。
+				//我们可以根据jquery来进行自动获取项目路径，获取方法如下
+				function getRootPath() {
+					// 1、获取当前全路径，如： http://localhost:8080/springmvc/page/frame/test.html
+					var curWwwPath = window.location.href;
+					// 获取当前相对路径： /springmvc/page/frame/test.html
+					var pathName = window.location.pathname; // 获取主机地址,如： http://localhost:8080
+					var local = curWwwPath.substring(0, curWwwPath.indexOf(pathName));
+					// 获取带"/"的项目名，如：/springmvc  
+					var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+					var rootPath = local + projectName;
+					return rootPath;
+				}
+				  
+			</script>
+	</body>
 </html>

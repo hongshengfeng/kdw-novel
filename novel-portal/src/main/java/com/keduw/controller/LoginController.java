@@ -3,6 +3,9 @@ package com.keduw.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @ProjectName: novelSpider
  * @Package: com.keduw.controller
@@ -19,7 +22,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
     @RequestMapping("/login")
     public String login(){
-        System.out.println("test");
         return "login";
     }
+    @RequestMapping("/register")
+    public String register(){
+        return "register";
+    }
+    @RequestMapping("/loginCheck")
+    public String loginCheck(HttpServletRequest request, HttpServletResponse response){
+
+
+        response.setContentType("text/html;charset=utf-8");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        return "login";
+    }
+
+
+
 }
