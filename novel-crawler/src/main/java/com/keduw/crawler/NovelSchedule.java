@@ -47,7 +47,7 @@ public class NovelSchedule {
     }
 
     //每周六下午13点爬取章节内容
-    @Scheduled(cron = "0 30 14 ? * SAT")
+    @Scheduled(cron = "0 19 9 * * ?")
     public void chapterCollect() throws Exception{
         int counts = chapterService.getInfoCounts();
         List<Chapter> chapterList = null;

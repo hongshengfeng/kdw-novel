@@ -3,8 +3,6 @@ package com.keduw.crawler;
 import com.keduw.model.Chapter;
 import com.keduw.service.ChapterService;
 import com.keduw.utils.JsonUtils;
-import org.apache.http.HttpHost;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
