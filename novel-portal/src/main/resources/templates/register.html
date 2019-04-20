@@ -1,0 +1,211 @@
+<!doctype html>
+<html class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>登陆界面</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="stylesheet" href="/css/amazeui.min.css">
+		<link rel="stylesheet" href="/css/app.css">
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/amazeui.min.js"></script>
+		<script src="/js/app.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				if(IsPC){
+					$('.am-g').width(450);
+				}
+			});
+		</script>
+		<style type="text/css">
+			.login {
+				text-align: right
+				
+			}
+			#tip_1,#tip_2,#tip_3,.login a{
+				font-size: small;
+			}
+			.am-g{
+				width: 100%;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="am-g">
+			<!-- LOGO -->
+			<div class="am-u-sm-12 am-text-center">
+				<i class="myapp-login-logo">
+					<img src="../image/logo.png">
+					
+				</i>
+			</div>
+			<!-- 注册框 -->
+			<div class="am-u-sm-11 am-u-sm-centered">
+				<form class="am-form">
+					<fieldset class="myapp-login-form am-form-set">
+						<div class="am-form-group am-form-icon">
+							<i class="am-icon-user"></i>
+							<input type="text" class="myapp-login-input-text am-form-field" id="user" placeholder="请输入您的账号">
+						</div>
+						<div id="tip_1"></div>
+						<div class="am-form-group am-form-icon">
+							<i class="am-icon-lock"></i>
+							<input type="password" class="myapp-login-input-text am-form-field" id="password-1" placeholder="输入密码,至少6个字符">
+						</div>
+						<div id="tip_2"></div>
+						<div class="am-form-group am-form-icon">
+							<i class="am-icon-lock"></i>
+							<input type="password" class="myapp-login-input-text am-form-field" id="password-2" placeholder="重复输入密码" >
+						</div>
+						<div id="tip_3"></div>
+					</fieldset>
+					<button type="button" class="myapp-login-form-submit am-btn am-btn-primary am-btn-block " id="register" onclick="registerCheck()">注 册</button>
+					<div class="login">
+						<u><a href="/login">已有账号，点击跳转到登录界面</a></u>
+					</div>
+				</form>
+
+			</div>
+			<div class=" am-text-center am-u-sm-11 am-u-sm-centered
+					 myapp-login-form-shortcut">
+				<hr class="myapp-login-form-hr" />
+				<span class="myapp-login-form-hr-font">第三方授权</span>
+			</div>
+
+			<div class="am-u-sm-12 am-text-center myapp-login-form-listico">
+				<div class="am-u-sm-4 am-text-center" onclick="alert('暂不支持')">
+					<i class="am-icon-btn am-primary am-icon-qq"></i>
+				</div>
+				<div class="am-u-sm-4 am-text-center">
+					<i class="am-icon-btn am-danger am-icon-weibo" onclick="alert('暂不支持')"></i>
+				</div>
+				<div class="am-u-sm-4 am-text-center">
+					<i class="am-icon-btn am-success am-icon-weixin" onclick="alert('暂不支持')"></i>
+				</div>
+			</div>
+
+		</div>
+
+			
+			<script type="text/javascript">
+				function registerCheck() {
+					
+					var user = $('#user').val();
+					var password = $('#password-1').val();
+					var Repassword = $('#password-2').val();
+					if(user==""||user==null){
+						$("#tip_1").html("<font color='red'>帐户不能为空</font>");
+						return;
+					}else if(password==""||password==null){
+						$("#tip_2").html("<font color='red'>密码不能为空</font>");
+						return;
+					}else if(Repassword==""||Repassword==null){
+						$("#tip_3").html("<font color='red'>重复密码不能为空</font>");
+						return;
+					}else if(Repassword != password ){
+						$("#tip_3").html("<font color='red'>两次密码不同</font>");
+						return;
+					}
+					alert("登录成功");
+					$.ajax({
+						type: "POST",
+						url: "/test",
+						data: {
+							'user': user,
+							'password': password
+						},
+						success: function(data) {
+							if (data.status == "0") {
+								location.href = "${ctx}/goOut/goOutIndex";
+
+							}
+						}
+					});
+				}
+				$("#user").blur(function() {
+					var value = $("#user").val();
+					if(value==""||value==null){
+						$("#tip_1").html("<font color='red'>帐户不能为空</font>");
+						return;
+					}
+					if (value.length > 5 && value.match(/[\da-zA-Z]+/)) {
+						$('#register').attr('disabled',false);
+						$('#tip_1').html("<font color='red'></font>");
+					} else {
+						$('#tip_1').html("<font color='red'>帐号格式不对</font>");
+						$('#register').attr('disabled',true);
+					}
+
+				});
+				$("#password-1").blur(function() {
+					var value = $("#password-1").val();
+					if(value==""||value==null){
+						$("#tip_2").html("<font color='red'>密码不能为空</font>");
+						return;
+					}
+					if (value.length > 5 && value.match(/[\da-zA-Z]+/)) {
+						$('#register').attr('disabled',false);
+						$('#tip_2').html("<font color='red'></font>");
+					} else {
+						$('#tip_2').html("<font color='red'>密码格式不对</font>");
+						$('#register').attr('disabled',true);
+					}
+				
+				
+				});
+				
+				$("#password-2").blur(function() {
+					var pwd1 = $("#password-1").val();
+					var pwd2 = $("#password-2").val();
+					<!-- 对比两次输入的密码 -->
+					if(pwd2==""||pwd2==null){
+						$("#tip_3").html("<font color='red'>重复密码不能为空</font>");
+						return;
+					}
+					if (pwd1 == pwd2) {
+						$("#tip_3").html("<font color='green'>两次密码相同</font>");
+						$("#register").attr('disabled',false);
+					} else {
+						$("#tip_3").html("<font color='red'>两次密码不相同</font>");
+						$("#register").attr('disabled',true);
+					}
+				}
+				);
+				
+				
+				
+				//很多时候我们需要使用当前项目路径，但是如果把项目路径写死，会带来很多不便，此时就需要自动获取项目路径。
+				//我们可以根据jquery来进行自动获取项目路径，获取方法如下
+				function getRootPath() {
+					// 1、获取当前全路径，如： http://localhost:8080/springmvc/page/frame/test.html
+					var curWwwPath = window.location.href;
+					// 获取当前相对路径： /springmvc/page/frame/test.html
+					var pathName = window.location.pathname; // 获取主机地址,如： http://localhost:8080
+					var local = curWwwPath.substring(0, curWwwPath.indexOf(pathName));
+					// 获取带"/"的项目名，如：/springmvc  
+					var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+					var rootPath = local + projectName;
+					return rootPath;
+				}
+				  function IsPC() {
+				    var userAgentInfo = navigator.userAgent;
+				    var Agents = ["Android", "iPhone",
+				                "SymbianOS", "Windows Phone",
+				                "iPad", "iPod"];
+				    var flag = true;
+				    for (var v = 0; v < Agents.length; v++) {
+				        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+				            flag = false;
+				            break;
+				        }
+				    }
+				    return flag;
+				}
+			</script>
+	</body>
+</html>

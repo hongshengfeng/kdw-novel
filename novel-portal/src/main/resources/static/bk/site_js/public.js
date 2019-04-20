@@ -8,10 +8,8 @@ var header = new Vue({
             window.location.href = "/";
         },
         login: function () {
-            this.$message({
-                message: "测试",
-                type: 'warning'
-            });
+            window.location.href = "/login";
+
         },
         search: function() {
             var wd = $.trim(this.wd);
