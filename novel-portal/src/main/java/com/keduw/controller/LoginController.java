@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @ProjectName: novelSpider
- * @Package: com.keduw.controller
+ * @Package: com.keduw.crawler
  * @ClassName: LoginController
  * @Description: java类作用描述
  * @Author: 林浩东

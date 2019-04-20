@@ -24,12 +24,12 @@ public class MIndexController {
 
     @RequestMapping("/search")
     public String mobiSearch(){
-        return "/mobi/search";
+        return "mobi/search";
     }
 
     @RequestMapping("/more")
     public String mobiCategory(){
-        return "/mobi/more";
+        return "mobi/more";
     }
 
     @RequestMapping("/info/{nId}/{cId}")
@@ -37,7 +37,7 @@ public class MIndexController {
         int novelId = Parser.parserInt(nId, 0);
         int chapterId = Parser.parserInt(cId, 0);
         if(novelId == 0 || chapterId == 0){
-            return "/index";
+            return "index";
         }
         //小说标题
         Novel novel = novelService.getNovelById(novelId);
