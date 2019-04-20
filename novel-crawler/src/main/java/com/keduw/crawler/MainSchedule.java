@@ -34,14 +34,14 @@ public class MainSchedule {
     private String chapterUpdateRouting;
 
     //每天凌晨3点启动爬取小说
-    @Scheduled(cron = "0 04 10 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void novelCollect() throws Exception{
         NovelCrawler crawl = new NovelCrawler("crawl", true, amqpTemplate, novelExchange, novelRouting);
-        crawl.start(5);
+        crawl.start(1);
     }
 
     //每天0点检查连载中小说的章节更新情况
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 3 0 * * ?")
     public void infoCheck() throws Exception{
         //小说总数
         int counts = novelServicel.getNovelCount();
