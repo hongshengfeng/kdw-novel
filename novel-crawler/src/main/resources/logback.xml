@@ -1,5 +1,5 @@
 <configuration debug="false">
-    <property name="LOG_PATH" value="/home/logs"/>
+    <property name="LOG_PATH" value="/home/logs/crawler"/>
     <!-- 控制台输出 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
