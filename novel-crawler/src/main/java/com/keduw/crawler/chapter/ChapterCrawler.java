@@ -1,10 +1,7 @@
-package com.keduw.crawler;
+package com.keduw.crawler.chapter;
 
 import com.keduw.model.Chapter;
-import com.keduw.model.Novel;
-import com.keduw.model.NovelColl;
-import com.keduw.service.NovelService;
-import com.keduw.utils.Encoder;
+import com.keduw.service.ChapterService;
 import com.keduw.utils.JsonUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -22,12 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * 从消息队列中获取小说爬取的章节和基本信息
- * 日常更新检查，有变化添加到小说队列里
+ * 从消息队列中获取章节信息
+ * 爬取章节内容, 存在分页添加到消息队列里继续爬
  * @author hsfeng
  * @date 2019-04-07
  */
@@ -35,33 +29,30 @@ import java.util.List;
 @Component
 @RabbitListener(
         bindings = @QueueBinding(
-                value = @Queue(value = "${mq.config.queue.chapter.update}", autoDelete = "false"),
+                value = @Queue(value = "${mq.config.queue.chapter}", autoDelete = "false"),
                 exchange = @Exchange(value = "${mq.config.exchange}", type = ExchangeTypes.DIRECT),
-                key = "${mq.config.routing.chapter.update.key}"
+                key = "${mq.config.routing.chapter.key}"
         )
 )
-public class ChapterNReceiver {
+public class ChapterCrawler {
 
-    @Autowired
-    private NovelService novelService;
     @Autowired
     private AmqpTemplate amqpTemplate;
+    @Autowired
+    private ChapterService chapterService;
     @Value("${mq.config.exchange}")
     private String novelExchange;
-    @Value("${mq.config.routing.novel.key}")
-    private String novelRouting;
-    @Value("${crawler.proxy.host}")
-    private String hostName;
-    @Value("${crawler.proxy.port}")
-    private int port;
+    @Value("${mq.config.routing.chapter.key}")
+    private String chapterRouting;
+
 
     @RabbitHandler
-    public void novelInfo(String msg) throws Exception{
-        Novel novel = JsonUtils.jsonToPojo(msg, Novel.class);
+    public void chapterInfo(String msg) throws Exception{
+        Chapter chapter = JsonUtils.jsonToPojo(msg, Chapter.class);
         CloseableHttpClient httpclient = HttpClients.createDefault();
         CloseableHttpResponse response = null;
         try {
-            HttpGet httpget = new HttpGet(novel.getLink());
+            HttpGet httpget = new HttpGet(chapter.getLink());
             //HttpHost proxy = new HttpHost(hostName,port);
             //RequestConfig requestConfig = RequestConfig.custom().setProxy(proxy).setConnectTimeout(10000).setSocketTimeout(10000).setConnectionRequestTimeout(3000).build();
             //httpget.setConfig(requestConfig);
@@ -79,26 +70,28 @@ public class ChapterNReceiver {
             }
             // 解析数据
             Document document = Jsoup.parse(html);
-            Elements chapter = document.select("ul[class=_chapter] li a");
-            //章节列表
-            List<Chapter> chapterList = new ArrayList<Chapter>();
-            int nId = novel.getId();
-            for (Element element : chapter) {
-                Chapter info = new Chapter();
-                String url = Encoder.encodeUrl(element.attr("href"));
-                String content = Encoder.encodeHtml(element.text());
-                info.setId(nId);
-                info.setName(content);
-                info.setLink(url);
-                chapterList.add(info);
+            Elements contents = document.select("div[id=content]");
+            String content = contents.get(0).html();
+            //同一章节分多页则拼接内容
+            String preContent = chapter.getContent();
+            if (preContent != null) {
+                content = preContent + content;
             }
-            int size = novelService.getNovelSize(nId);
-            //大小有变化则加入消费队列
-            if(size != chapterList.size()){
-                NovelColl novelColl = new NovelColl();
-                novelColl.setNovel(novel);
-                novelColl.setChapters(chapterList);
-                amqpTemplate.convertAndSend(novelExchange, novelRouting, JsonUtils.objectToJson(novelColl));
+            chapter.setContent(content);
+            Elements nextPage = document.select("div[class=bottem1]");
+            Element element = nextPage.get(0).getElementsByTag("a").get(4);
+            String nextContent = element.text();
+            if (nextContent.equals("下一页")) {
+                String nextUrl = element.attr("href");
+                String preUrl = chapter.getLink();
+                nextUrl = preUrl.substring(0, preUrl.lastIndexOf("/") + 1) + nextUrl;
+                chapter.setLink(nextUrl);
+                //添加到消息队列，再爬取
+                amqpTemplate.convertAndSend(novelExchange, chapterRouting, JsonUtils.objectToJson(chapter));
+                System.out.println("next;info=" + msg);
+            } else {
+                chapterService.updateChapterContent(chapter);
+                System.out.println("success;info=" + msg);
             }
         }finally {
             if(response != null){

@@ -1,4 +1,4 @@
-package com.keduw.crawler;
+package com.keduw.crawler.novel;
 
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.model.Page;
