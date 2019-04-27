@@ -68,7 +68,6 @@ public class ChapterCrawler {
             } else {
                 EntityUtils.consume(response.getEntity());
             }
-            System.out.println(html);
             if ("".equals(html)) {
                 return;
             }
@@ -85,7 +84,6 @@ public class ChapterCrawler {
             Elements nextPage = document.select("div[class=bottem1]");
             Element element = nextPage.get(0).getElementsByTag("a").get(4);
             String nextContent = element.text();
-            System.out.println(nextContent);
             if (nextContent.equals("下一页")) {
                 String nextUrl = element.attr("href");
                 String preUrl = chapter.getLink();
