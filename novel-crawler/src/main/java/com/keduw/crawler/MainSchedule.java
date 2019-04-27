@@ -34,7 +34,7 @@ public class MainSchedule {
     private String chapterUpdateRouting;
 
     //每天凌晨3点启动爬取小说
-    @Scheduled(cron = "0 09 19 * * ?")
+    @Scheduled(cron = "0 36 23 * * ?")
     public void novelCollect() throws Exception{
         NovelCrawler crawl = new NovelCrawler("crawl", true, amqpTemplate, novelExchange, novelRouting);
         crawl.start(1);

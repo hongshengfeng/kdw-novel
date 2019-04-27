@@ -9,6 +9,7 @@ import com.keduw.utils.JsonUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
@@ -56,7 +57,9 @@ public class ChapterReceiver {
     @RabbitHandler
     public void novelInfo(String msg) throws Exception{
         Novel novel = JsonUtils.jsonToPojo(msg, Novel.class);
-        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpClientBuilder builder = HttpClients.custom();
+        builder.setUserAgent("Mozilla/5.0(Windows;U;Windows NT 5.1;en-US;rv:0.9.4)");
+        CloseableHttpClient httpclient = builder.build();
         CloseableHttpResponse response = null;
         try {
             HttpGet httpget = new HttpGet(novel.getLink());

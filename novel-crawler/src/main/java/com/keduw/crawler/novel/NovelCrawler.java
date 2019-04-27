@@ -99,7 +99,7 @@ public class NovelCrawler extends BreadthCrawler {
             novelColl.setChapters(chapterList);
             amqpTemplate.convertAndSend(novelExchange, novelRouting, JsonUtils.objectToJson(novelColl));
             try {
-                TimeUnit.SECONDS.sleep(5);
+                TimeUnit.SECONDS.sleep(30);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

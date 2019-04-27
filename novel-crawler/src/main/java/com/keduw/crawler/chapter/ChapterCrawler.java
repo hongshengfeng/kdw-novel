@@ -6,6 +6,7 @@ import com.keduw.utils.JsonUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
@@ -49,7 +50,9 @@ public class ChapterCrawler {
     @RabbitHandler
     public void chapterInfo(String msg) throws Exception{
         Chapter chapter = JsonUtils.jsonToPojo(msg, Chapter.class);
-        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpClientBuilder builder = HttpClients.custom();
+        builder.setUserAgent("Mozilla/5.0(Windows;U;Windows NT 5.1;en-US;rv:0.9.4)");
+        CloseableHttpClient httpclient = builder.build();
         CloseableHttpResponse response = null;
         try {
             HttpGet httpget = new HttpGet(chapter.getLink());
@@ -65,6 +68,7 @@ public class ChapterCrawler {
             } else {
                 EntityUtils.consume(response.getEntity());
             }
+            System.out.println(html);
             if ("".equals(html)) {
                 return;
             }
@@ -81,6 +85,7 @@ public class ChapterCrawler {
             Elements nextPage = document.select("div[class=bottem1]");
             Element element = nextPage.get(0).getElementsByTag("a").get(4);
             String nextContent = element.text();
+            System.out.println(nextContent);
             if (nextContent.equals("下一页")) {
                 String nextUrl = element.attr("href");
                 String preUrl = chapter.getLink();

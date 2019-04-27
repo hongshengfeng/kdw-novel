@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit;
  */
 
 @Component
-@Order(value = 1)
 public class ChapterInfoSync implements ApplicationRunner{
 
     @Autowired
@@ -42,7 +41,7 @@ public class ChapterInfoSync implements ApplicationRunner{
                 for(Chapter chapter : chapterList){
                     amqpTemplate.convertAndSend(novelExchange, chapterRouting, JsonUtils.objectToJson(chapter));
                 }
-                TimeUnit.MINUTES.sleep(5);
+                TimeUnit.MINUTES.sleep(1);
             }
         }
     }
