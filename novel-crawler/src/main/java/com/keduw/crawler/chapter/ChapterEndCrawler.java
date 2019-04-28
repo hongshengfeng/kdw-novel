@@ -21,8 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * 从消息队列中获取章节信息
- * 爬取章节内容, 存在分页添加到消息队列里继续爬
+ * 从消息队列中获取分页章节信息
  * @author hsfeng
  * @date 2019-04-07
  */
@@ -30,12 +29,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RabbitListener(
         bindings = @QueueBinding(
-                value = @Queue(value = "${mq.config.queue.chapter}", autoDelete = "false"),
+                value = @Queue(value = "${mq.config.queue.end.chapter}", autoDelete = "false"),
                 exchange = @Exchange(value = "${mq.config.exchange}", type = ExchangeTypes.DIRECT),
-                key = "${mq.config.routing.chapter.key}"
+                key = "${mq.config.routing.end.chapter.key}"
         )
 )
-public class ChapterCrawler {
+public class ChapterEndCrawler {
 
     @Autowired
     private AmqpTemplate amqpTemplate;
@@ -43,12 +42,12 @@ public class ChapterCrawler {
     private ChapterService chapterService;
     @Value("${mq.config.exchange}")
     private String novelExchange;
-    @Value("${mq.config.routing.next.chapter.key}")
+    @Value("${mq.config.routing.end.chapter.key}")
     private String chapterRouting;
 
 
     @RabbitHandler
-    public void chapterInfo(String msg) throws Exception{
+    public void chapterNextInfo(String msg) throws Exception{
         Chapter chapter = JsonUtils.jsonToPojo(msg, Chapter.class);
         HttpClientBuilder builder = HttpClients.custom();
         builder.setUserAgent("Mozilla/5.0(Windows;U;Windows NT 5.1;en-US;rv:0.9.4)");

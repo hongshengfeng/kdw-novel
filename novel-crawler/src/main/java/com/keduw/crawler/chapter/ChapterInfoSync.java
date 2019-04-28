@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 每隔10分钟去爬取没有章节的内容
+ * 随系统启动
+ * 每隔10分钟爬取没有内容的章节
  * @author hsfeng
  */
 
