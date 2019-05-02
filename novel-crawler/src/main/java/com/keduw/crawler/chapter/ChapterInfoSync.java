@@ -42,10 +42,10 @@ public class ChapterInfoSync implements ApplicationRunner{
                 for(Chapter chapter : chapterList){
                     amqpTemplate.convertAndSend(novelExchange, chapterRouting, JsonUtils.objectToJson(chapter));
                 }
-                TimeUnit.MINUTES.sleep(4);
+                TimeUnit.MINUTES.sleep(5);
             }
         }
     }
 
-    private static final int SIZE = 200;
+    private static final int SIZE = 500;
 }

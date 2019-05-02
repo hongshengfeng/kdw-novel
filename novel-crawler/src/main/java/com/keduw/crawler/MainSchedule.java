@@ -36,22 +36,22 @@ public class MainSchedule {
     //每天凌晨3点启动爬取小说
     @Scheduled(cron = "0 36 23 * * ?")
     public void novelCollect() throws Exception{
-        NovelCrawler crawl = new NovelCrawler("crawl", true, amqpTemplate, novelExchange, novelRouting);
-        crawl.start(1);
+        /*NovelCrawler crawl = new NovelCrawler("crawl", true, amqpTemplate, novelExchange, novelRouting);
+        crawl.start(1);*/
     }
 
     //每天0点检查连载中小说的章节更新情况
     @Scheduled(cron = "0 3 0 * * ?")
     public void infoCheck() throws Exception{
         //小说总数
-        int counts = novelServicel.getNovelCount();
+        /*int counts = novelServicel.getNovelCount();
         List<Novel> novelList = null;
         for(int i = 1; i <= counts; i++){
             novelList = novelServicel.getNovelList(i, SIZE);
             for(Novel novel : novelList){
                 amqpTemplate.convertAndSend(novelExchange, chapterUpdateRouting, JsonUtils.objectToJson(novel));
             }
-        }
+        }*/
     }
 
     private static final int SIZE = 100;

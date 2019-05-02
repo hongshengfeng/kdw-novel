@@ -74,6 +74,9 @@ public class ChapterStartCrawler {
             // 解析数据
             Document document = Jsoup.parse(html);
             Elements contents = document.select("div[id=content]");
+            if(contents == null || contents.isEmpty()){
+                return;
+            }
             String content = contents.get(0).html();
             //同一章节分多页则拼接内容
             String preContent = chapter.getContent();
